@@ -1,0 +1,5386 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-21T07:57:19.245Z",
+  "generator": "fb-skill/scripts/build-legacy-catalog.cjs",
+  "package": {
+    "name": "fb-rules",
+    "version": "1.0.13"
+  },
+  "sources": [
+    {
+      "id": "fb-rules-repo",
+      "root": "D:/projects/fb-rules/packages/fb-rules",
+      "name": "fb-rules",
+      "version": "1.0.13",
+      "fileCount": 228
+    },
+    {
+      "id": "topinfo-fb-rules-copy",
+      "root": "D:/projects/topinfo/fb-rules/packages/fb-rules",
+      "name": "fb-rules",
+      "version": "1.0.13",
+      "fileCount": 228
+    }
+  ],
+  "emptyDirs": [
+    {
+      "source": "fb-rules-repo",
+      "path": ".cursor"
+    },
+    {
+      "source": "fb-rules-repo",
+      "path": ".amazonq"
+    }
+  ],
+  "matching": {
+    "rule": "target file matches a variant when contentSha256 equals the variant sha256 (byte-exact) or when canonicalLfSha256 equals (CRLF/LF-only difference under autocrlf); no other normalization",
+    "anchorRule": "kind=generic or empty files are cleanup candidates only when strong bundle anchor holds: exact .lingma/index.json match (fb-rules install metadata) or >= 8 exact exclusive-file matches",
+    "anchorMinExclusiveMatches": 8
+  },
+  "notes": [
+    {
+      "source": "D:\\projects\\topinfo\\fb-rules\\packages\\fb-rules",
+      "path": ".cursor",
+      "note": "directory absent in this copy"
+    },
+    {
+      "source": "D:\\projects\\topinfo\\fb-rules\\packages\\fb-rules",
+      "path": ".amazonq",
+      "note": "directory absent in this copy"
+    }
+  ],
+  "files": [
+    {
+      "path": ".agent/.rules/agent_guide.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo",
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 3154,
+          "contentSha256": "87a240f01973c14b1ccc1646422678daacedafeb59b6042186a5148f17a48a88",
+          "canonicalLfSha256": "ceb4b2803fefef9c6c987b6a30f7ab32972f557b542536a547025e98d75822a1"
+        }
+      ]
+    },
+    {
+      "path": ".calude/CLAUDE.md",
+      "kind": "generic",
+      "empty": true,
+      "requiresAnchor": true,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo",
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 0,
+          "contentSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "canonicalLfSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    {
+      "path": ".calude/settings.json",
+      "kind": "generic",
+      "empty": false,
+      "requiresAnchor": true,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo",
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 10,
+          "contentSha256": "756318ad96090e8a592df9d71a7579cc949c792604f98af299868297ec9142e5",
+          "canonicalLfSha256": "2aa9b98dada10cc8e73a2958221ed883e3d336e96abebb43cb82cc158167a91e"
+        }
+      ]
+    },
+    {
+      "path": ".codebuddy/.rules/agent_guide.mdc",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo",
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 3262,
+          "contentSha256": "8b8f386c91d1c812177108a93e254aeacac5ce4d10f04de8774e42a7507e4384",
+          "canonicalLfSha256": "275d4c4fd56a0290100ebd3768106ecce76cc6bcd152b7055c99329bfc481711"
+        }
+      ]
+    },
+    {
+      "path": ".comate/mcp.json",
+      "kind": "generic",
+      "empty": false,
+      "requiresAnchor": true,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo",
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 316,
+          "contentSha256": "d8822bafb4adc1d0efb42c1b434ebba73d93517f2e1f9603450a8d7030f85288",
+          "canonicalLfSha256": "667992adcbb9b6aba800d9b8c63777781b0dabb868b467258fd842b2e624110e"
+        }
+      ]
+    },
+    {
+      "path": ".fb/README.md",
+      "kind": "generic",
+      "empty": false,
+      "requiresAnchor": true,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo",
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 780,
+          "contentSha256": "117c843a14a234e8076a2a2855f2196271bf321ea91e1b494e66f13933b54901",
+          "canonicalLfSha256": "a9fa51d4766986c31fcf0891b4e233cd3e7b646ddafea6a49710e94f85ac819a"
+        }
+      ]
+    },
+    {
+      "path": ".fb/agents/default/code-reviewer.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo",
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 822,
+          "contentSha256": "0e0c0f75f83ceec35097203850d4c7cc42777fc5b35fe740efb31313124450a7",
+          "canonicalLfSha256": "145d4098b3447ea653ba5897525e065a872fb5f27dda3bbb46c94ce228763074"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/COMMON/COMMON--QUALITY--confidence-assessment.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo",
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 10512,
+          "contentSha256": "d1af68243e3cb15e09acb0eb913b91bcaf1bf280436ab33c9893a9bb59802546",
+          "canonicalLfSha256": "67e9af5345a29744383109b2534ef9b676213ee70814712ca2b9bc9574f8d424"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/COMMON/COMMON--QUALITY--unit-testing.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 13151,
+          "contentSha256": "c8f215061deb01f802d38863ca1fc672898f6903819056f0d115fe85a04dbfab",
+          "canonicalLfSha256": "c8f215061deb01f802d38863ca1fc672898f6903819056f0d115fe85a04dbfab"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 13820,
+          "contentSha256": "75ce02a260f0bd22aebce4791c09744e684a794956b14520aff9e95334b862c9",
+          "canonicalLfSha256": "c8f215061deb01f802d38863ca1fc672898f6903819056f0d115fe85a04dbfab"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/COMMON/COMMON--STANDARDS--api-request-response.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 9590,
+          "contentSha256": "0cab53fd309392165aa9b522afbb95a09018d549f4837910bcf149101a4ad769",
+          "canonicalLfSha256": "0cab53fd309392165aa9b522afbb95a09018d549f4837910bcf149101a4ad769"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 10060,
+          "contentSha256": "ea4d0ef990bf8ac80d797245648c4a9225e37bccccd111198596e387bc3da38e",
+          "canonicalLfSha256": "0cab53fd309392165aa9b522afbb95a09018d549f4837910bcf149101a4ad769"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/COMMON/COMMON--STANDARDS--code-comments.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 8226,
+          "contentSha256": "e2da3af6dd0dabaceaa0ef8bd13ddc16d0302456698d3f78eebd94ad60af066d",
+          "canonicalLfSha256": "e2da3af6dd0dabaceaa0ef8bd13ddc16d0302456698d3f78eebd94ad60af066d"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 8575,
+          "contentSha256": "7b15a7dbee4c193dfe00350f1fa55b9a3d41694885bb8c0f42b0c543ea4459af",
+          "canonicalLfSha256": "e2da3af6dd0dabaceaa0ef8bd13ddc16d0302456698d3f78eebd94ad60af066d"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/COMMON/COMMON--STANDARDS--date-time-format.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 192,
+          "contentSha256": "97f434268e46bce8e7c9072bd5505b838fd77cb061ecd6f2f266e9deef8bb691",
+          "canonicalLfSha256": "97f434268e46bce8e7c9072bd5505b838fd77cb061ecd6f2f266e9deef8bb691"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 198,
+          "contentSha256": "040f5d2ec3264ccb19497b67be65c9b66eecf0b3df037cb79a97d1ee52b020f6",
+          "canonicalLfSha256": "97f434268e46bce8e7c9072bd5505b838fd77cb061ecd6f2f266e9deef8bb691"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/COMMON/COMMON--STANDARDS--developer-info.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 2999,
+          "contentSha256": "b18770de42b983d5240b3932fbb74eb8a6ca55e666a383c5390a5c320412e2eb",
+          "canonicalLfSha256": "b18770de42b983d5240b3932fbb74eb8a6ca55e666a383c5390a5c320412e2eb"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 3165,
+          "contentSha256": "6b8a714675c9af5ee5aae309c0bf177d2e006f4331bc5206acb3454b1be678b5",
+          "canonicalLfSha256": "b18770de42b983d5240b3932fbb74eb8a6ca55e666a383c5390a5c320412e2eb"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/COMMON/COMMON--STANDARDS--naming-conventions.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 12122,
+          "contentSha256": "34feabf8c5c9fdcb184feab006d4c12b65d4c6f82f9c82b9faee9f1debed707f",
+          "canonicalLfSha256": "34feabf8c5c9fdcb184feab006d4c12b65d4c6f82f9c82b9faee9f1debed707f"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 12718,
+          "contentSha256": "a5d84e2d67fadd147e0d0b20aec5ad3c8993e0b11af102b73abad8bb272839d2",
+          "canonicalLfSha256": "34feabf8c5c9fdcb184feab006d4c12b65d4c6f82f9c82b9faee9f1debed707f"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/DATABASE/DATABASE--SCHEMA--core-entities.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 16677,
+          "contentSha256": "6901885ae8b7bd353ada1a50743d73537d4fc7fbc2a64761bab54685ca53ec64",
+          "canonicalLfSha256": "6901885ae8b7bd353ada1a50743d73537d4fc7fbc2a64761bab54685ca53ec64"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 17428,
+          "contentSha256": "c94c916d734847b432c97332471c9b411e582e327e19415cc12905d00605c712",
+          "canonicalLfSha256": "6901885ae8b7bd353ada1a50743d73537d4fc7fbc2a64761bab54685ca53ec64"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/MOBILE-FRONTEND/MOBILE-FRONTEND--ARCHITECTURE--project-structure.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 10392,
+          "contentSha256": "9841830040400060ba98d69fa68838706267ed98e2f73efcdabded85144ff402",
+          "canonicalLfSha256": "9841830040400060ba98d69fa68838706267ed98e2f73efcdabded85144ff402"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 10791,
+          "contentSha256": "d8f5c1778c835d24bac8795a543ed8145f0d2f9165b0e576c710baf5f61944f4",
+          "canonicalLfSha256": "9841830040400060ba98d69fa68838706267ed98e2f73efcdabded85144ff402"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/MOBILE-FRONTEND/MOBILE-FRONTEND--COMPONENTS--custom.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 12314,
+          "contentSha256": "54b23ecd3b8467842f088a9ffdf4d70a76b664f841d320614d9ca59f92818d33",
+          "canonicalLfSha256": "54b23ecd3b8467842f088a9ffdf4d70a76b664f841d320614d9ca59f92818d33"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 12839,
+          "contentSha256": "767fed789b8d5aa461e29fcbc7cefc3cc61ff5ddbe8d132c8ff99f2d30918da4",
+          "canonicalLfSha256": "54b23ecd3b8467842f088a9ffdf4d70a76b664f841d320614d9ca59f92818d33"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/MOBILE-FRONTEND/MOBILE-FRONTEND--COMPONENTS--ta-ui.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 14871,
+          "contentSha256": "442a69ae90ef9ef2c20c36a5b7c8bdd88977b6de8cd100d083eabdadd09b7f61",
+          "canonicalLfSha256": "442a69ae90ef9ef2c20c36a5b7c8bdd88977b6de8cd100d083eabdadd09b7f61"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 15503,
+          "contentSha256": "7c7b351633aefd989aaaa18442bf0ae12de57ecc8c913be886112a362e820733",
+          "canonicalLfSha256": "442a69ae90ef9ef2c20c36a5b7c8bdd88977b6de8cd100d083eabdadd09b7f61"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/MOBILE-FRONTEND/MOBILE-FRONTEND--DEVELOPMENT--business-logic.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 12568,
+          "contentSha256": "156446bae0109f0d82739868b9d1e9335b673a03080e7a6074d16b6dd62be936",
+          "canonicalLfSha256": "156446bae0109f0d82739868b9d1e9335b673a03080e7a6074d16b6dd62be936"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 13203,
+          "contentSha256": "f8ac67a0c2a2de512e487eeb1b5f14a3dfd42a9c8a1357a898e5d6c4306ce4f5",
+          "canonicalLfSha256": "156446bae0109f0d82739868b9d1e9335b673a03080e7a6074d16b6dd62be936"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/MOBILE-FRONTEND/MOBILE-FRONTEND--DEVELOPMENT--page-templates.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 15438,
+          "contentSha256": "20060e416a1bf76b807c0af826dc805b63cbe0424cef1a3896d4a45f6ceb5d93",
+          "canonicalLfSha256": "20060e416a1bf76b807c0af826dc805b63cbe0424cef1a3896d4a45f6ceb5d93"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 16146,
+          "contentSha256": "f31c6cc286ac89018d99f10dfa7b53e7a0c2c39924756607f866ee8e5c5d883e",
+          "canonicalLfSha256": "20060e416a1bf76b807c0af826dc805b63cbe0424cef1a3896d4a45f6ceb5d93"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/MOBILE-FRONTEND/MOBILE-FRONTEND--DEVELOPMENT--style-guide.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 12237,
+          "contentSha256": "ab468a681c971ecd35bb5e68d5dc2997ccd8000e08d02890d28347b0acea9ecf",
+          "canonicalLfSha256": "ab468a681c971ecd35bb5e68d5dc2997ccd8000e08d02890d28347b0acea9ecf"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 12960,
+          "contentSha256": "c2cdd716c4431f25f69bd53fb9d6f7ff90763c8b591bdc52e6171b577a020978",
+          "canonicalLfSha256": "ab468a681c971ecd35bb5e68d5dc2997ccd8000e08d02890d28347b0acea9ecf"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/MOBILE-FRONTEND/MOBILE-FRONTEND--GUIDE--index.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 4538,
+          "contentSha256": "6d0c56c0ab6b150eeb2185673a0ce220c468f456f072887457f9c54bf89d69cf",
+          "canonicalLfSha256": "6d0c56c0ab6b150eeb2185673a0ce220c468f456f072887457f9c54bf89d69cf"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 4629,
+          "contentSha256": "76932797e7382a2a1d41bf65581b45909189b8c3bdab669426a2a71f2b14b72d",
+          "canonicalLfSha256": "6d0c56c0ab6b150eeb2185673a0ce220c468f456f072887457f9c54bf89d69cf"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/MOBILE-FRONTEND/MOBILE-FRONTEND--QUALITY--best-practices.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 12803,
+          "contentSha256": "8a9aa731e28a5c75d649a024aef7e29614ee48d4d221f53a9eeeb96dc6ff9094",
+          "canonicalLfSha256": "8a9aa731e28a5c75d649a024aef7e29614ee48d4d221f53a9eeeb96dc6ff9094"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 13503,
+          "contentSha256": "4da8e7e95dbc2a90966e2063d31b2d3da7bbf5a679e891220b8f5a59834b2af4",
+          "canonicalLfSha256": "8a9aa731e28a5c75d649a024aef7e29614ee48d4d221f53a9eeeb96dc6ff9094"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/MOBILE-FRONTEND/MOBILE-FRONTEND--QUALITY--common-errors.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 10767,
+          "contentSha256": "ea82563eaf7061c1dcf9085bff7807772f90287f3bf782d3661783e6b43a86ea",
+          "canonicalLfSha256": "ea82563eaf7061c1dcf9085bff7807772f90287f3bf782d3661783e6b43a86ea"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 11289,
+          "contentSha256": "4142e99326af3cbe81c500cf1cdf459a3890fc57dcef45a6dd7c08b88fde2e98",
+          "canonicalLfSha256": "ea82563eaf7061c1dcf9085bff7807772f90287f3bf782d3661783e6b43a86ea"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/MOBILE-FRONTEND/MOBILE-FRONTEND--STANDARDS--code-standards.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 8136,
+          "contentSha256": "0b081920c440a53ef7524d29b06506169a6c68be85a9174272dd32c0eb933353",
+          "canonicalLfSha256": "0b081920c440a53ef7524d29b06506169a6c68be85a9174272dd32c0eb933353"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 8585,
+          "contentSha256": "8cb7bacd5100689b1188857cb853edd8bc2b123f576de410ccbd703f7ff08467",
+          "canonicalLfSha256": "0b081920c440a53ef7524d29b06506169a6c68be85a9174272dd32c0eb933353"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-BACKEND/PC-BACKEND--ARCHITECTURE--dependency-management.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 10181,
+          "contentSha256": "dddefe8ca5aab960a28bdf4071fffe6fd56203ba225794dce5ffd9713dc555f7",
+          "canonicalLfSha256": "dddefe8ca5aab960a28bdf4071fffe6fd56203ba225794dce5ffd9713dc555f7"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 10601,
+          "contentSha256": "df30a2cacc3deae7dbb01dcc95b808d030703cc115bec7d2aad8d102f1ca9cde",
+          "canonicalLfSha256": "dddefe8ca5aab960a28bdf4071fffe6fd56203ba225794dce5ffd9713dc555f7"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-BACKEND/PC-BACKEND--ARCHITECTURE--project-structure.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 9360,
+          "contentSha256": "812032eb3c1d50003eb957466ceb0bd5f22a3d3919767b7d795a0d26d82adfcb",
+          "canonicalLfSha256": "812032eb3c1d50003eb957466ceb0bd5f22a3d3919767b7d795a0d26d82adfcb"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 9700,
+          "contentSha256": "e876c786cea0780dc56575bf6e89f2ed95ad5f6f8f69635e3b316249df9e42b9",
+          "canonicalLfSha256": "812032eb3c1d50003eb957466ceb0bd5f22a3d3919767b7d795a0d26d82adfcb"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-BACKEND/PC-BACKEND--COMPONENTS--constant.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 4390,
+          "contentSha256": "40a31818a9279e8131d3cd0fa2827e73742d70f62d37a0ba40a2c47249dc6c99",
+          "canonicalLfSha256": "40a31818a9279e8131d3cd0fa2827e73742d70f62d37a0ba40a2c47249dc6c99"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 4602,
+          "contentSha256": "f349c083db35c1fd08d3ef82b548ce522e7cede59ccced20ab7de89f44e27fe5",
+          "canonicalLfSha256": "40a31818a9279e8131d3cd0fa2827e73742d70f62d37a0ba40a2c47249dc6c99"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-BACKEND/PC-BACKEND--COMPONENTS--entity-bean.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 4904,
+          "contentSha256": "18b92278ba64d2b51c976f31ad512de3b00c76d3e88f6020bbb5b8cc48b49140",
+          "canonicalLfSha256": "18b92278ba64d2b51c976f31ad512de3b00c76d3e88f6020bbb5b8cc48b49140"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 5207,
+          "contentSha256": "6475cf8cca286b09b658200de28fabfac47cf76eb1b872d7ac485aa3dc16b778",
+          "canonicalLfSha256": "18b92278ba64d2b51c976f31ad512de3b00c76d3e88f6020bbb5b8cc48b49140"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-BACKEND/PC-BACKEND--COMPONENTS--enum.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 3269,
+          "contentSha256": "394af24534246e2d45a59e270f9fcb6621f19fe0e55697284a7fcb2ac9d0d539",
+          "canonicalLfSha256": "394af24534246e2d45a59e270f9fcb6621f19fe0e55697284a7fcb2ac9d0d539"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 3457,
+          "contentSha256": "2e3c091eb68914ecdb6e9c7c15ad704b72b3c620055efeeae8e4593b6c4b56ae",
+          "canonicalLfSha256": "394af24534246e2d45a59e270f9fcb6621f19fe0e55697284a7fcb2ac9d0d539"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-BACKEND/PC-BACKEND--COMPONENTS--query.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 12669,
+          "contentSha256": "4c352a9d86900cf758ad1880cf8ececf55df7c3c63c64b3bfc9650ed237c237a",
+          "canonicalLfSha256": "4c352a9d86900cf758ad1880cf8ececf55df7c3c63c64b3bfc9650ed237c237a"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 13223,
+          "contentSha256": "864b5643fedeb8f8c33fec42982e7fc988fbe2ffd2d8d04977efa0f0df34a51a",
+          "canonicalLfSha256": "4c352a9d86900cf758ad1880cf8ececf55df7c3c63c64b3bfc9650ed237c237a"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-BACKEND/PC-BACKEND--COMPONENTS--util.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 13135,
+          "contentSha256": "319a169d718027437a1c8ed20cf46067cc264e80b6120d9cd92b70d79577a69b",
+          "canonicalLfSha256": "319a169d718027437a1c8ed20cf46067cc264e80b6120d9cd92b70d79577a69b"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 13707,
+          "contentSha256": "3f79906f51715b703de281956bfb8b6540265c2d889c360c48524068aa4867e3",
+          "canonicalLfSha256": "319a169d718027437a1c8ed20cf46067cc264e80b6120d9cd92b70d79577a69b"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-BACKEND/PC-BACKEND--COMPONENTS--vo-dto.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 9301,
+          "contentSha256": "3d1c9ac59ac41da909f80115d5e3fd7424ca57bab70ded757ed7488210a532fa",
+          "canonicalLfSha256": "3d1c9ac59ac41da909f80115d5e3fd7424ca57bab70ded757ed7488210a532fa"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 9698,
+          "contentSha256": "5f724cb5910e66474bfd88804f82eba99b7ffa68e1ef501dd1dd4a316d3a19c8",
+          "canonicalLfSha256": "3d1c9ac59ac41da909f80115d5e3fd7424ca57bab70ded757ed7488210a532fa"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-BACKEND/PC-BACKEND--DEVELOPMENT--controller-layer.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 9789,
+          "contentSha256": "3c6c435a3e071506446e730e22855e48ff02c78d212a79eb1f6d2ce73c60b438",
+          "canonicalLfSha256": "3c6c435a3e071506446e730e22855e48ff02c78d212a79eb1f6d2ce73c60b438"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 10220,
+          "contentSha256": "001cd0ca43733ac8333d23aaaf85b5c3c2a2b437032ea06c318cf58656ba801f",
+          "canonicalLfSha256": "3c6c435a3e071506446e730e22855e48ff02c78d212a79eb1f6d2ce73c60b438"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-BACKEND/PC-BACKEND--DEVELOPMENT--mapper-layer.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 13738,
+          "contentSha256": "87d5b21458d48637ebf269f2da04d9859c88646d9effe399cbf0edaeadf51c29",
+          "canonicalLfSha256": "87d5b21458d48637ebf269f2da04d9859c88646d9effe399cbf0edaeadf51c29"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 14356,
+          "contentSha256": "f4c149f97202e9654074510709e897ff08bd0c00e425366e0ae0b846069e0b46",
+          "canonicalLfSha256": "87d5b21458d48637ebf269f2da04d9859c88646d9effe399cbf0edaeadf51c29"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-BACKEND/PC-BACKEND--DEVELOPMENT--response-standard.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 7942,
+          "contentSha256": "3d6183482f08f75eee9ef4094e8e1865ab7881182752b605bfcdae99da3a0ffb",
+          "canonicalLfSha256": "3d6183482f08f75eee9ef4094e8e1865ab7881182752b605bfcdae99da3a0ffb"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 8335,
+          "contentSha256": "d2c4539499f047e14d302dde929abc4e9f98998f5973cf28ddfa36325949da1a",
+          "canonicalLfSha256": "3d6183482f08f75eee9ef4094e8e1865ab7881182752b605bfcdae99da3a0ffb"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-BACKEND/PC-BACKEND--DEVELOPMENT--service-layer.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 13642,
+          "contentSha256": "d3ad30dd54509a66e9ad6c4668687d408360fb12cc52eda08793dd1c57f45674",
+          "canonicalLfSha256": "d3ad30dd54509a66e9ad6c4668687d408360fb12cc52eda08793dd1c57f45674"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 14255,
+          "contentSha256": "819105a458c77397703d2cea1e9c83086f714af9144ed538cf40ef8bec9eca8d",
+          "canonicalLfSha256": "d3ad30dd54509a66e9ad6c4668687d408360fb12cc52eda08793dd1c57f45674"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-BACKEND/PC-BACKEND--GUIDE--index.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 6328,
+          "contentSha256": "11719049fd41f6dd490afc99a9b238fe8bfe016312f2da701efa70c3627d6055",
+          "canonicalLfSha256": "11719049fd41f6dd490afc99a9b238fe8bfe016312f2da701efa70c3627d6055"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 6484,
+          "contentSha256": "8b59d9de6552885a930522a159b83fe1d6c6b8147aea566899a40cccdab0517f",
+          "canonicalLfSha256": "11719049fd41f6dd490afc99a9b238fe8bfe016312f2da701efa70c3627d6055"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-BACKEND/PC-BACKEND--QUALITY--cache-strategy.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 13364,
+          "contentSha256": "0350157fac2438267ab6c546184a3ad0f69fe3f8157e6ec32a89dd04d8d38be9",
+          "canonicalLfSha256": "0350157fac2438267ab6c546184a3ad0f69fe3f8157e6ec32a89dd04d8d38be9"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 13878,
+          "contentSha256": "a7a10980a334cda868b79388a03991970a863b8fb966cb52f744630e026741c0",
+          "canonicalLfSha256": "0350157fac2438267ab6c546184a3ad0f69fe3f8157e6ec32a89dd04d8d38be9"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-BACKEND/PC-BACKEND--QUALITY--common-pitfalls.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 12989,
+          "contentSha256": "a3a26ac7248c24150cf3e5175b0aad5dca5e9443efa5f77582eb616b31a4fc79",
+          "canonicalLfSha256": "a3a26ac7248c24150cf3e5175b0aad5dca5e9443efa5f77582eb616b31a4fc79"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 13606,
+          "contentSha256": "8671516f29ae1941d9563698d2559cb0c6753bb988e7e2878bf9ae66d41683b1",
+          "canonicalLfSha256": "a3a26ac7248c24150cf3e5175b0aad5dca5e9443efa5f77582eb616b31a4fc79"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-BACKEND/PC-BACKEND--QUALITY--exception-handling.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 12168,
+          "contentSha256": "1ebb5214ada252bd502fa0640782c4036b9711ad9a445cf00bc9eefa8c18a635",
+          "canonicalLfSha256": "1ebb5214ada252bd502fa0640782c4036b9711ad9a445cf00bc9eefa8c18a635"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 12584,
+          "contentSha256": "90bbc7dd6cd9300df02b8c6930a201e950667f7bc39b380595bea9b91dd24e0e",
+          "canonicalLfSha256": "1ebb5214ada252bd502fa0640782c4036b9711ad9a445cf00bc9eefa8c18a635"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-BACKEND/PC-BACKEND--QUALITY--transaction-management.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 13197,
+          "contentSha256": "5b4998a432948a748af789d418e22776c5483e593f2cadf0deb953a6fa58b750",
+          "canonicalLfSha256": "5b4998a432948a748af789d418e22776c5483e593f2cadf0deb953a6fa58b750"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 13695,
+          "contentSha256": "b1bb796ad03d7286b2aa999fe6a6c24f1f477025534aeb3c9204b04acca56c8b",
+          "canonicalLfSha256": "5b4998a432948a748af789d418e22776c5483e593f2cadf0deb953a6fa58b750"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-BACKEND/PC-BACKEND--SECURITY--authorization.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 11503,
+          "contentSha256": "e0386f415d30a90acf0a86f841ae7e4af836f0952f02dfb65ffa86e173e709c2",
+          "canonicalLfSha256": "e0386f415d30a90acf0a86f841ae7e4af836f0952f02dfb65ffa86e173e709c2"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 11997,
+          "contentSha256": "fd52cb5acef790be2a70bcece0cd0fbf66da8ed584339891dac5be4ede00032d",
+          "canonicalLfSha256": "e0386f415d30a90acf0a86f841ae7e4af836f0952f02dfb65ffa86e173e709c2"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-BACKEND/PC-BACKEND--STANDARDS--annotation-usage.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 11548,
+          "contentSha256": "c5376053be5e63710bed53f4db24089d892bf2ca3e33544e1e692c33f9361100",
+          "canonicalLfSha256": "c5376053be5e63710bed53f4db24089d892bf2ca3e33544e1e692c33f9361100"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 12010,
+          "contentSha256": "f277dafe848b66c0ab0afa7b315f4ae46712acc9fd533ee57eaaaa2d1ee5d023",
+          "canonicalLfSha256": "c5376053be5e63710bed53f4db24089d892bf2ca3e33544e1e692c33f9361100"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-BACKEND/PC-BACKEND--STANDARDS--comment-style.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 12882,
+          "contentSha256": "1399dc68e9ace182d690c42619107e779d76be368af9530112662e9e4e11b6b0",
+          "canonicalLfSha256": "1399dc68e9ace182d690c42619107e779d76be368af9530112662e9e4e11b6b0"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 13524,
+          "contentSha256": "e613cfbc931805db7da1da5e9dd641cc3a52fc837cfdac1b9b35c275120a54da",
+          "canonicalLfSha256": "1399dc68e9ace182d690c42619107e779d76be368af9530112662e9e4e11b6b0"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-BACKEND/PC-BACKEND--STANDARDS--naming-conventions.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 10248,
+          "contentSha256": "abca8d04520e631edade8075f049f489928fd121b3160bda33dd338162b44c8f",
+          "canonicalLfSha256": "abca8d04520e631edade8075f049f489928fd121b3160bda33dd338162b44c8f"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 10736,
+          "contentSha256": "ecd5cbbc63fa4b6e2715452574eb9ae2a3153b559017fb2c7ee6a46924e894ec",
+          "canonicalLfSha256": "abca8d04520e631edade8075f049f489928fd121b3160bda33dd338162b44c8f"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-BACKEND/PC-BACKEND--WORKFLOW--confidence-assessment.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 9784,
+          "contentSha256": "2d6cb852450c4a04edbd1dc837b8a6a52cfd78d9c7af6e2c699d60978e583e36",
+          "canonicalLfSha256": "2d6cb852450c4a04edbd1dc837b8a6a52cfd78d9c7af6e2c699d60978e583e36"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 10170,
+          "contentSha256": "6ac19f7a31a938ed4b5925d2a0f5c837643613dffb9aca8c0dafc8bddf7e261d",
+          "canonicalLfSha256": "2d6cb852450c4a04edbd1dc837b8a6a52cfd78d9c7af6e2c699d60978e583e36"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-BACKEND/PC-BACKEND--WORKFLOW--task-planning.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 7961,
+          "contentSha256": "7f6be1366429b1b116f500dc3e7af9e747dba8be0d084a46afb11da20df21cbf",
+          "canonicalLfSha256": "7f6be1366429b1b116f500dc3e7af9e747dba8be0d084a46afb11da20df21cbf"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 8271,
+          "contentSha256": "6709831a4ff55ea0a917b5bd1b6aa2a6f4102c16e411eb5499e3ae630ba506dd",
+          "canonicalLfSha256": "7f6be1366429b1b116f500dc3e7af9e747dba8be0d084a46afb11da20df21cbf"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbAjaxUpload.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 14927,
+          "contentSha256": "2a5720b24321b2946dde677aae2b8244d7e2d25b1fedbd6ba7272844ecb19831",
+          "canonicalLfSha256": "2a5720b24321b2946dde677aae2b8244d7e2d25b1fedbd6ba7272844ecb19831"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 15659,
+          "contentSha256": "d80768b064c82e86dcc43c935fb01bf3542cd10282e1b92557115a4e2526fc58",
+          "canonicalLfSha256": "2a5720b24321b2946dde677aae2b8244d7e2d25b1fedbd6ba7272844ecb19831"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbAlert.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 6046,
+          "contentSha256": "76831ae748c386ad1fe9eb08f44ff826063b5052c51557738bdf1de290c8c94c",
+          "canonicalLfSha256": "76831ae748c386ad1fe9eb08f44ff826063b5052c51557738bdf1de290c8c94c"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 6269,
+          "contentSha256": "2c73aa04ccbc0f80eca47bb27a301d76e127a5a3114779101255966cf6f1e8e8",
+          "canonicalLfSha256": "76831ae748c386ad1fe9eb08f44ff826063b5052c51557738bdf1de290c8c94c"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbAvatar.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 7086,
+          "contentSha256": "bc41310b392110511d1ca6520511ce0b311c98dc911ee3e8a9bcd81ef5921286",
+          "canonicalLfSha256": "bc41310b392110511d1ca6520511ce0b311c98dc911ee3e8a9bcd81ef5921286"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 7464,
+          "contentSha256": "a3f53c576f1135e638aca68211b98e973a1582c53151407cbc1da105dca8abba",
+          "canonicalLfSha256": "bc41310b392110511d1ca6520511ce0b311c98dc911ee3e8a9bcd81ef5921286"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbAvatarBox.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 12018,
+          "contentSha256": "322264491599180eebb8026dd7bb726492def7eb0ddcd54356e18a641de03fef",
+          "canonicalLfSha256": "322264491599180eebb8026dd7bb726492def7eb0ddcd54356e18a641de03fef"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 12621,
+          "contentSha256": "bf33b51ccbb83e32da6aa9534c7d9c3ecbbd5487ac318c70e462370b88ced850",
+          "canonicalLfSha256": "322264491599180eebb8026dd7bb726492def7eb0ddcd54356e18a641de03fef"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbBackTop.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 8923,
+          "contentSha256": "060cb65b7cd2e1bffe989fc83345516d43a7393b0b04ff1a7b988b24a2f7d88d",
+          "canonicalLfSha256": "060cb65b7cd2e1bffe989fc83345516d43a7393b0b04ff1a7b988b24a2f7d88d"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 9404,
+          "contentSha256": "7bcf1bffc9790a71cceb51eaa056648f02388029fa84fbba68bf17a8ae537b08",
+          "canonicalLfSha256": "060cb65b7cd2e1bffe989fc83345516d43a7393b0b04ff1a7b988b24a2f7d88d"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbBadge.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 6433,
+          "contentSha256": "751fcdf1e5829fb9346ea65a7a7b35f364a9225cde28f9fff2430b2a808a2dca",
+          "canonicalLfSha256": "751fcdf1e5829fb9346ea65a7a7b35f364a9225cde28f9fff2430b2a808a2dca"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 6738,
+          "contentSha256": "0220951409ab029246f80bfc9eceecd4c13fcaa4cb45ecc28fc9afd36bd178b9",
+          "canonicalLfSha256": "751fcdf1e5829fb9346ea65a7a7b35f364a9225cde28f9fff2430b2a808a2dca"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbBreadcrumb.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 2682,
+          "contentSha256": "250254e4c1d64d4b5d5f45b3f79a5554169ffda80f3462c92ef550c726faec9a",
+          "canonicalLfSha256": "250254e4c1d64d4b5d5f45b3f79a5554169ffda80f3462c92ef550c726faec9a"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 2797,
+          "contentSha256": "268a42a95eb52437fe8702cf729ca99045a3bdfc837264d77fc4042efad011f9",
+          "canonicalLfSha256": "250254e4c1d64d4b5d5f45b3f79a5554169ffda80f3462c92ef550c726faec9a"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbBreadcrumbItem.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 2564,
+          "contentSha256": "7324b8bc35f810115f1eb044cdc34aa8ddc2fd635525201260d5cd8fbba61f02",
+          "canonicalLfSha256": "7324b8bc35f810115f1eb044cdc34aa8ddc2fd635525201260d5cd8fbba61f02"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 2676,
+          "contentSha256": "80f9cdba79b1468f04a6b7dd9330c5edaa4e4ed6bc76700d74dcc59c8efb846e",
+          "canonicalLfSha256": "7324b8bc35f810115f1eb044cdc34aa8ddc2fd635525201260d5cd8fbba61f02"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbBreadcrumbSeparator.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 7166,
+          "contentSha256": "8adc9d375d3f3e32b39f3259b2de52483b76264cc95fa7159089731f20d91133",
+          "canonicalLfSha256": "8adc9d375d3f3e32b39f3259b2de52483b76264cc95fa7159089731f20d91133"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 7441,
+          "contentSha256": "f7ab39f2a874c0224a891a08c4e1cfa27a82a8e9198e723e1e8d78899614dc42",
+          "canonicalLfSha256": "8adc9d375d3f3e32b39f3259b2de52483b76264cc95fa7159089731f20d91133"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbButton.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 2956,
+          "contentSha256": "0d0bb0872a33d9bcda7f8d03339504ca0d91614e919742477e55e0e2d7a67f31",
+          "canonicalLfSha256": "0d0bb0872a33d9bcda7f8d03339504ca0d91614e919742477e55e0e2d7a67f31"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 3056,
+          "contentSha256": "8d1001a996f135e32452b745e9655866c8f92111ad385eafcd4a8c7f39d00ec3",
+          "canonicalLfSha256": "0d0bb0872a33d9bcda7f8d03339504ca0d91614e919742477e55e0e2d7a67f31"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbCalendar.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 7751,
+          "contentSha256": "a9f97c12120a4381a280cda307ec250640214900ef2d448f2861aaaf089d548f",
+          "canonicalLfSha256": "a9f97c12120a4381a280cda307ec250640214900ef2d448f2861aaaf089d548f"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 8180,
+          "contentSha256": "d5cc76b31b9952b80427d6e6a5a384dae77fb8b91fba20db585b30cd11f4b690",
+          "canonicalLfSha256": "a9f97c12120a4381a280cda307ec250640214900ef2d448f2861aaaf089d548f"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbCalendars.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 10152,
+          "contentSha256": "8d13e4eb208d6d185093ea8869104d0b38d7d6aa25ed04034dc01ea4e0c0e13e",
+          "canonicalLfSha256": "8d13e4eb208d6d185093ea8869104d0b38d7d6aa25ed04034dc01ea4e0c0e13e"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 10583,
+          "contentSha256": "bcbc6bd0cc7c4f1f8ac93862bff48cfb4e01d1019f7fb8615235261561c7db7f",
+          "canonicalLfSha256": "8d13e4eb208d6d185093ea8869104d0b38d7d6aa25ed04034dc01ea4e0c0e13e"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbCard.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 5460,
+          "contentSha256": "46e0b0b4900b9a2afec40b0a2b8f02f2dbaba26baf8fef1aeff7dba2648d76f5",
+          "canonicalLfSha256": "46e0b0b4900b9a2afec40b0a2b8f02f2dbaba26baf8fef1aeff7dba2648d76f5"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 5662,
+          "contentSha256": "e789ae71075256e692de3c49079fc0c924031553f36819c8e89dba1305489934",
+          "canonicalLfSha256": "46e0b0b4900b9a2afec40b0a2b8f02f2dbaba26baf8fef1aeff7dba2648d76f5"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbCardx.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 10685,
+          "contentSha256": "1a8e2a1a7721823059fb3994df0f77566c868a3e550abc01ae5bbe41f72cc624",
+          "canonicalLfSha256": "1a8e2a1a7721823059fb3994df0f77566c868a3e550abc01ae5bbe41f72cc624"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 11150,
+          "contentSha256": "e9d11f088493b18afb9df54f50ace18a4b5a4280bc490c1ea6fa06fd437b0738",
+          "canonicalLfSha256": "1a8e2a1a7721823059fb3994df0f77566c868a3e550abc01ae5bbe41f72cc624"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbCardxBreath.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 13381,
+          "contentSha256": "bd67bbe7fdfbc81f8ff03197ff6a2d9172708c9cf86573c2387e61bf5fb4ea79",
+          "canonicalLfSha256": "bd67bbe7fdfbc81f8ff03197ff6a2d9172708c9cf86573c2387e61bf5fb4ea79"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 13962,
+          "contentSha256": "c4f62c5bb63618c8dab5f2a01f3c1680c16feafcdc6a96855c604bc2711ad737",
+          "canonicalLfSha256": "bd67bbe7fdfbc81f8ff03197ff6a2d9172708c9cf86573c2387e61bf5fb4ea79"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbCascader.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 12984,
+          "contentSha256": "e5825a52d2a38ce6fb14a639b82add8aed0eef6a53b0e2bcc2793b64a18b8d06",
+          "canonicalLfSha256": "e5825a52d2a38ce6fb14a639b82add8aed0eef6a53b0e2bcc2793b64a18b8d06"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 13590,
+          "contentSha256": "c0a68488a445c88baf8e1650b50cc1f67c2a67c7fc53054d31c46e9e7c14f43a",
+          "canonicalLfSha256": "e5825a52d2a38ce6fb14a639b82add8aed0eef6a53b0e2bcc2793b64a18b8d06"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbCascaderPanel.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 13772,
+          "contentSha256": "1784d4f7fd05ed0fa85dcf716da566ed1be2de6b9e671d8c5f90dcba793806ae",
+          "canonicalLfSha256": "1784d4f7fd05ed0fa85dcf716da566ed1be2de6b9e671d8c5f90dcba793806ae"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 14351,
+          "contentSha256": "0196b0ae0f39d339e529b18f275064c2a7cc6d04cb585dd4bb3b1fd88cc66adc",
+          "canonicalLfSha256": "1784d4f7fd05ed0fa85dcf716da566ed1be2de6b9e671d8c5f90dcba793806ae"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbCheckbox.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 15905,
+          "contentSha256": "9664a8b166764c9e1dd6f6fb00e7dddcd4eb5ab0d803701d211e94622012689c",
+          "canonicalLfSha256": "9664a8b166764c9e1dd6f6fb00e7dddcd4eb5ab0d803701d211e94622012689c"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 16569,
+          "contentSha256": "b77ff6702382d02f11a86303272729b275da3467bada339ffd36c50beed0a26a",
+          "canonicalLfSha256": "9664a8b166764c9e1dd6f6fb00e7dddcd4eb5ab0d803701d211e94622012689c"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbCheckboxGroup.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 8893,
+          "contentSha256": "b0a5bfb6f79597d803d0fe81c6c0cf16e80da1d9ee6fd5bce4bffe61fa3746b1",
+          "canonicalLfSha256": "b0a5bfb6f79597d803d0fe81c6c0cf16e80da1d9ee6fd5bce4bffe61fa3746b1"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 9304,
+          "contentSha256": "96c686523f5220645a2d0ae9376c172690c23b1b05e993c1e376882d67fd950a",
+          "canonicalLfSha256": "b0a5bfb6f79597d803d0fe81c6c0cf16e80da1d9ee6fd5bce4bffe61fa3746b1"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbCol.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 6819,
+          "contentSha256": "6ac11c75c2111bdea7f52e0b13825f64cce305d9bb2c2653fa8f12d21a915997",
+          "canonicalLfSha256": "6ac11c75c2111bdea7f52e0b13825f64cce305d9bb2c2653fa8f12d21a915997"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 7118,
+          "contentSha256": "0d4a9d1f91f84f737206b1de8e898f4f525653a8bc4d106ab1a8037bd71a71bd",
+          "canonicalLfSha256": "6ac11c75c2111bdea7f52e0b13825f64cce305d9bb2c2653fa8f12d21a915997"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbCollapse.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 12485,
+          "contentSha256": "da648b1e6048437b44c55da38765f7af047e34b7ba9e20f4f78ead06c1930d78",
+          "canonicalLfSha256": "da648b1e6048437b44c55da38765f7af047e34b7ba9e20f4f78ead06c1930d78"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 13077,
+          "contentSha256": "b170b58e2e7bc1089ad3cee9ccb4cf66a5ba310ee32e54613f59d3ad31d9a3a4",
+          "canonicalLfSha256": "da648b1e6048437b44c55da38765f7af047e34b7ba9e20f4f78ead06c1930d78"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbCollapseItem.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 13400,
+          "contentSha256": "36eb6e64a19d1fdd74766ac2ea8ddec7622b91d6f6e1a1c54cbec5da439a2d82",
+          "canonicalLfSha256": "36eb6e64a19d1fdd74766ac2ea8ddec7622b91d6f6e1a1c54cbec5da439a2d82"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 14019,
+          "contentSha256": "ca8dec300d021fe323ab77501434959ecc7cd82be5c9a9557f3821383c69b946",
+          "canonicalLfSha256": "36eb6e64a19d1fdd74766ac2ea8ddec7622b91d6f6e1a1c54cbec5da439a2d82"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbCollapseTransition.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 15361,
+          "contentSha256": "67a66e1eed2fed391b4f505cc87fa4dd30fbd9591cd4167b0c54b95e65e4fa01",
+          "canonicalLfSha256": "67a66e1eed2fed391b4f505cc87fa4dd30fbd9591cd4167b0c54b95e65e4fa01"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 16071,
+          "contentSha256": "be760b0f99005ed65a88ab53958b758ebe1b664a4df27da3ba0086200fa18659",
+          "canonicalLfSha256": "67a66e1eed2fed391b4f505cc87fa4dd30fbd9591cd4167b0c54b95e65e4fa01"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbColorPicker.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 10886,
+          "contentSha256": "8be7197fe73bf010ff76bb284a9fa0468cef3aab1c027d54790be8fe35195b20",
+          "canonicalLfSha256": "8be7197fe73bf010ff76bb284a9fa0468cef3aab1c027d54790be8fe35195b20"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 11441,
+          "contentSha256": "931dc1a19c23a6c57181f364ba007f5e258aaece4b0a942a0ddf9ccb8f0481f4",
+          "canonicalLfSha256": "8be7197fe73bf010ff76bb284a9fa0468cef3aab1c027d54790be8fe35195b20"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbComponent.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 12579,
+          "contentSha256": "bb7a3b76f15a2097cd49b9bc5258ba3dccf7b664021285ba6d46536ee3a669b8",
+          "canonicalLfSha256": "bb7a3b76f15a2097cd49b9bc5258ba3dccf7b664021285ba6d46536ee3a669b8"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 13171,
+          "contentSha256": "54e7bd466ff4a4f2e080cb3d44b17bdab01452daef6022df977fe7a48e1be20e",
+          "canonicalLfSha256": "bb7a3b76f15a2097cd49b9bc5258ba3dccf7b664021285ba6d46536ee3a669b8"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbContainer.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 10060,
+          "contentSha256": "cf7cf5d9e01c047e3ccfa0d9250ead9f395e1fcac73637adaa535a06d89ad490",
+          "canonicalLfSha256": "cf7cf5d9e01c047e3ccfa0d9250ead9f395e1fcac73637adaa535a06d89ad490"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 10464,
+          "contentSha256": "4bf8c2a2006d57715982e3ede5ac5d3a8f2e5bba4a515b0b4e62b08021e70753",
+          "canonicalLfSha256": "cf7cf5d9e01c047e3ccfa0d9250ead9f395e1fcac73637adaa535a06d89ad490"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbDatepicker.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 5655,
+          "contentSha256": "a98d3d13f298800c6ebc3b75797732075ef7aeafeb16d65ce2244265ab03f06c",
+          "canonicalLfSha256": "a98d3d13f298800c6ebc3b75797732075ef7aeafeb16d65ce2244265ab03f06c"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 5948,
+          "contentSha256": "844d2196a69d88ddd3ae82934f62befb796b71af06e25e1f41d5ab0a57d26009",
+          "canonicalLfSha256": "a98d3d13f298800c6ebc3b75797732075ef7aeafeb16d65ce2244265ab03f06c"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbDialog.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 2924,
+          "contentSha256": "2468d8398b3402d3fca46a3ad7274872c35903153769c1eb7bf1e1afd71d9cf6",
+          "canonicalLfSha256": "2468d8398b3402d3fca46a3ad7274872c35903153769c1eb7bf1e1afd71d9cf6"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 3039,
+          "contentSha256": "3a8f71fcc5088e4ae5c674470d26897b506ec3d0c9b719e33e434fe03a967e90",
+          "canonicalLfSha256": "2468d8398b3402d3fca46a3ad7274872c35903153769c1eb7bf1e1afd71d9cf6"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbDialogTable.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 10485,
+          "contentSha256": "ed217fcd5ffc7732e20c8c8b927b53166a690a31d020b5ef4e653353a876fbc7",
+          "canonicalLfSha256": "ed217fcd5ffc7732e20c8c8b927b53166a690a31d020b5ef4e653353a876fbc7"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 10947,
+          "contentSha256": "2e5657d3f47436fde991948a309b1902191224ac0c630be5cd47d711db00f2f0",
+          "canonicalLfSha256": "ed217fcd5ffc7732e20c8c8b927b53166a690a31d020b5ef4e653353a876fbc7"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbDialogTableSelect.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 15499,
+          "contentSha256": "c8b0429102ed8b334d658887990aacd1896b0a526b50ecc0931a4da80971b429",
+          "canonicalLfSha256": "c8b0429102ed8b334d658887990aacd1896b0a526b50ecc0931a4da80971b429"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 16131,
+          "contentSha256": "997088dc87995220352ccc108cb586ca40d68721aebed5b1485cb8a33327fee1",
+          "canonicalLfSha256": "c8b0429102ed8b334d658887990aacd1896b0a526b50ecc0931a4da80971b429"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbDialogTreeSelect.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 14933,
+          "contentSha256": "9212c6c6bbf3e0c708b8300894bc234670ec0c87d2adddda82f49e652b928f02",
+          "canonicalLfSha256": "9212c6c6bbf3e0c708b8300894bc234670ec0c87d2adddda82f49e652b928f02"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 15588,
+          "contentSha256": "0341b5861420770c1358c42f67ab8996afd11aaa375b2ce6cb8407fcbf21e7ca",
+          "canonicalLfSha256": "9212c6c6bbf3e0c708b8300894bc234670ec0c87d2adddda82f49e652b928f02"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbDivider.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 5756,
+          "contentSha256": "fd0009a682585f7bcde68cae812050145369293539dfb0cbeba88e6419257af9",
+          "canonicalLfSha256": "fd0009a682585f7bcde68cae812050145369293539dfb0cbeba88e6419257af9"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 6056,
+          "contentSha256": "a369e4b08b84106c8e2c3ef89f5f8de4cee680995fe14bfbf2f3a94747308e0d",
+          "canonicalLfSha256": "fd0009a682585f7bcde68cae812050145369293539dfb0cbeba88e6419257af9"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbDot.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 6588,
+          "contentSha256": "4a994d7b7111f6c9ba434ae26bb6b1eb9b14de8218b01d1d8dde433fcdc8f1dd",
+          "canonicalLfSha256": "4a994d7b7111f6c9ba434ae26bb6b1eb9b14de8218b01d1d8dde433fcdc8f1dd"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 7001,
+          "contentSha256": "37fe882dab07536324424def046ae3926fc3ef0fb8480a31819cb408ebb2d0e6",
+          "canonicalLfSha256": "4a994d7b7111f6c9ba434ae26bb6b1eb9b14de8218b01d1d8dde433fcdc8f1dd"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbDragVerify.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 12573,
+          "contentSha256": "535a132ad0525f9b6991e50a856ed86615be3438377e659e2aa3f86e14bd17e4",
+          "canonicalLfSha256": "535a132ad0525f9b6991e50a856ed86615be3438377e659e2aa3f86e14bd17e4"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 13205,
+          "contentSha256": "1975f543323e1316c077a4d139a2dab97cd9e81965fd9d690b8f53b7f985256f",
+          "canonicalLfSha256": "535a132ad0525f9b6991e50a856ed86615be3438377e659e2aa3f86e14bd17e4"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbDragVerifyImg.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 19993,
+          "contentSha256": "d3cd728824a28b7f2e60cf7a9f651a09b28235dbb15071a706b096d1666baae2",
+          "canonicalLfSha256": "d3cd728824a28b7f2e60cf7a9f651a09b28235dbb15071a706b096d1666baae2"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 20794,
+          "contentSha256": "745d2e1ebe7a112d2fc32c1b3f8eaa086f448c67169fd1af6d6c9f682318638e",
+          "canonicalLfSha256": "d3cd728824a28b7f2e60cf7a9f651a09b28235dbb15071a706b096d1666baae2"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbDragVerifyRotateImg.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 18337,
+          "contentSha256": "3bda9776f36e27e7f823420791ab8f11f127a9fddaf37b9cef71bdca3e8b0629",
+          "canonicalLfSha256": "3bda9776f36e27e7f823420791ab8f11f127a9fddaf37b9cef71bdca3e8b0629"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 19071,
+          "contentSha256": "3151aed3e244c3738e5e1c7396b6d0f24163142255a1d208a8ae4be4ca371e8b",
+          "canonicalLfSha256": "3bda9776f36e27e7f823420791ab8f11f127a9fddaf37b9cef71bdca3e8b0629"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbDrawer.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 11305,
+          "contentSha256": "5801b123d183f6d6d4602174d7cafa545c9fd2b806d302fe2c72fd80a3792c57",
+          "canonicalLfSha256": "5801b123d183f6d6d4602174d7cafa545c9fd2b806d302fe2c72fd80a3792c57"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 11833,
+          "contentSha256": "ae7fcc7ef1209f4395772906aadcd58b1dd1f1afbed552e7e010effe0245b4c4",
+          "canonicalLfSha256": "5801b123d183f6d6d4602174d7cafa545c9fd2b806d302fe2c72fd80a3792c57"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbEcharts.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 13107,
+          "contentSha256": "3d7d16481d9437105dfb33abc547aa96569f6cccffbc7117196503c29fc00926",
+          "canonicalLfSha256": "3d7d16481d9437105dfb33abc547aa96569f6cccffbc7117196503c29fc00926"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 13680,
+          "contentSha256": "ef40638d4609e3eb68b3edc0c6ca5ebb9a749f27ff8a9379c08cdeb00a8ea388",
+          "canonicalLfSha256": "3d7d16481d9437105dfb33abc547aa96569f6cccffbc7117196503c29fc00926"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbEditor.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 11492,
+          "contentSha256": "0142cd18f6a84681ac7e18c99730a033453e6ee2ca35430d7a186651243c542c",
+          "canonicalLfSha256": "0142cd18f6a84681ac7e18c99730a033453e6ee2ca35430d7a186651243c542c"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 12007,
+          "contentSha256": "b22e7c1d82ef68f574c7ae6cfb58e5b52d3acd4cb96d3721e5eda8c13487929f",
+          "canonicalLfSha256": "0142cd18f6a84681ac7e18c99730a033453e6ee2ca35430d7a186651243c542c"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbEmpty.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 5862,
+          "contentSha256": "9a942b8853379360dfc188f1ecd42a3f54e72873f4a2be7dc0b5f3038eca0de7",
+          "canonicalLfSha256": "9a942b8853379360dfc188f1ecd42a3f54e72873f4a2be7dc0b5f3038eca0de7"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 6206,
+          "contentSha256": "afd60f9dc4595855d4aa76fb34dff5e626aac4b88ca76ff94373194309143080",
+          "canonicalLfSha256": "9a942b8853379360dfc188f1ecd42a3f54e72873f4a2be7dc0b5f3038eca0de7"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbFieldset.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 12390,
+          "contentSha256": "f626eaa21034818bf334a90f3479948105fdbd59058de4ba06c5f33bb5694432",
+          "canonicalLfSha256": "f626eaa21034818bf334a90f3479948105fdbd59058de4ba06c5f33bb5694432"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 12978,
+          "contentSha256": "2eda855ce26bf758a44b2ebee24b660f1973fe119b607b573ebfcae195eb1a41",
+          "canonicalLfSha256": "f626eaa21034818bf334a90f3479948105fdbd59058de4ba06c5f33bb5694432"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbFlex.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 15774,
+          "contentSha256": "e85c3f7880230338a2493bb5386334243734367bad38ea876b2c706742e1e8db",
+          "canonicalLfSha256": "e85c3f7880230338a2493bb5386334243734367bad38ea876b2c706742e1e8db"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 16324,
+          "contentSha256": "204600447783bdba8e67878af10d4d1b9cfbe19f7ead9222ef3e0b856bb954c8",
+          "canonicalLfSha256": "e85c3f7880230338a2493bb5386334243734367bad38ea876b2c706742e1e8db"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbFlop.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 12527,
+          "contentSha256": "9711f82400978ebe90e21216ee65f318e579cd893181d465b8f8c0599fda8c73",
+          "canonicalLfSha256": "9711f82400978ebe90e21216ee65f318e579cd893181d465b8f8c0599fda8c73"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 13086,
+          "contentSha256": "3437d4eb8455fbe7cc4d6ee55b733ea146d121632efa950f35151dd377e6da67",
+          "canonicalLfSha256": "9711f82400978ebe90e21216ee65f318e579cd893181d465b8f8c0599fda8c73"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbFlopper.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 12722,
+          "contentSha256": "08604ab40465374d0a5a49ffb953b35a12c07ff0025caecf5658afcc5582e78b",
+          "canonicalLfSha256": "08604ab40465374d0a5a49ffb953b35a12c07ff0025caecf5658afcc5582e78b"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 13312,
+          "contentSha256": "e19bc29321ea36ec9b88059959d24f9e5261b8c6858be5a823222fc0c24d3dbe",
+          "canonicalLfSha256": "08604ab40465374d0a5a49ffb953b35a12c07ff0025caecf5658afcc5582e78b"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbForm.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 4021,
+          "contentSha256": "774afa55f09707a5f8798d6831956b3b9fc68d6840094bfe354cc7b85856589b",
+          "canonicalLfSha256": "774afa55f09707a5f8798d6831956b3b9fc68d6840094bfe354cc7b85856589b"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 4163,
+          "contentSha256": "5ac715ceece473d98a32129da1897b8832e5da4366d38d57d6f3d27e74652481",
+          "canonicalLfSha256": "774afa55f09707a5f8798d6831956b3b9fc68d6840094bfe354cc7b85856589b"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbFormItem.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 5265,
+          "contentSha256": "f65ad928e7f18e13b96a9e2aaf30c5e0b4e1e08c354a13662216f94a12581791",
+          "canonicalLfSha256": "f65ad928e7f18e13b96a9e2aaf30c5e0b4e1e08c354a13662216f94a12581791"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 5473,
+          "contentSha256": "8a2690f2db1b483299a4ecc0df69ff0f93afd482e86d41b5c99e170c98e4b75b",
+          "canonicalLfSha256": "f65ad928e7f18e13b96a9e2aaf30c5e0b4e1e08c354a13662216f94a12581791"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbHeader.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 15143,
+          "contentSha256": "5a2e8ee29af62b8b6cf9955af3c055a1fbada0630e4e269ea9103fbe15937467",
+          "canonicalLfSha256": "5a2e8ee29af62b8b6cf9955af3c055a1fbada0630e4e269ea9103fbe15937467"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 15853,
+          "contentSha256": "bdbb0edff0bd9ab2f3804568c392a68fc2025d66be51d12feaad6dc07a059728",
+          "canonicalLfSha256": "5a2e8ee29af62b8b6cf9955af3c055a1fbada0630e4e269ea9103fbe15937467"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbIcon.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 23358,
+          "contentSha256": "bb531711d92c269be05bdf990d0df98b4280c0ee76ce51d1e1310893a21c1a7f",
+          "canonicalLfSha256": "bb531711d92c269be05bdf990d0df98b4280c0ee76ce51d1e1310893a21c1a7f"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 24248,
+          "contentSha256": "5a46af201093c9e7377af7cd716b99454a8b60fc4f3865c6f3c4e031eb02020d",
+          "canonicalLfSha256": "bb531711d92c269be05bdf990d0df98b4280c0ee76ce51d1e1310893a21c1a7f"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbIconSelect.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 8964,
+          "contentSha256": "f169b0689d38890d3e3cb1be849f526e2ed96add83ea78f3041864916b2815bf",
+          "canonicalLfSha256": "f169b0689d38890d3e3cb1be849f526e2ed96add83ea78f3041864916b2815bf"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 9453,
+          "contentSha256": "ebdb60df541d8412da2acc3a3bbe5613510f4f8b3a70e12b8063fbaffe6c4dbb",
+          "canonicalLfSha256": "f169b0689d38890d3e3cb1be849f526e2ed96add83ea78f3041864916b2815bf"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbIframeUpload.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 16219,
+          "contentSha256": "292d62ad2c2446ae4b57e27c707194ba2115c14f6270d363d7409b353d37b82f",
+          "canonicalLfSha256": "292d62ad2c2446ae4b57e27c707194ba2115c14f6270d363d7409b353d37b82f"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 16931,
+          "contentSha256": "cfbf2208b4cac1448a0cf7775b58b2c60d0ed2da59ca7fd475561eb4f7baa0ba",
+          "canonicalLfSha256": "292d62ad2c2446ae4b57e27c707194ba2115c14f6270d363d7409b353d37b82f"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbImageViewer.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 14211,
+          "contentSha256": "c47f13cd58e1d428c027680a827ceb114b42238e80b65fc37423ed8a7540ea25",
+          "canonicalLfSha256": "c47f13cd58e1d428c027680a827ceb114b42238e80b65fc37423ed8a7540ea25"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 14911,
+          "contentSha256": "eb350eab863016ec17bd11e9963dc5024370f39a53b32fd5b345a7ecbdfa986a",
+          "canonicalLfSha256": "c47f13cd58e1d428c027680a827ceb114b42238e80b65fc37423ed8a7540ea25"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbInput.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 3149,
+          "contentSha256": "c6cbc655396f9f8b0522e33c5e31a0d93f5426c615aab5e41d372a3ec143254d",
+          "canonicalLfSha256": "c6cbc655396f9f8b0522e33c5e31a0d93f5426c615aab5e41d372a3ec143254d"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 3252,
+          "contentSha256": "789ff90917774e20a35bd44ad56bff6ebdbcb3c2c635d5c037bbece5a6d61e2e",
+          "canonicalLfSha256": "c6cbc655396f9f8b0522e33c5e31a0d93f5426c615aab5e41d372a3ec143254d"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbInputNumber.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 17073,
+          "contentSha256": "f460288a895ef7fbc9cbc6cc01e93ae941aa6f703ccd1c7f8f62be2497331922",
+          "canonicalLfSha256": "f460288a895ef7fbc9cbc6cc01e93ae941aa6f703ccd1c7f8f62be2497331922"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 17826,
+          "contentSha256": "f1c989d21faaafa668633990d536bd3fe1f2dda4f939a636ca4caa85ffd875a9",
+          "canonicalLfSha256": "f460288a895ef7fbc9cbc6cc01e93ae941aa6f703ccd1c7f8f62be2497331922"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbLayout.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 1699,
+          "contentSha256": "3f86202ab90f18d48175efec4e299e271d4fce8ddc66d983ef917ef1e372a883",
+          "canonicalLfSha256": "3f86202ab90f18d48175efec4e299e271d4fce8ddc66d983ef917ef1e372a883"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 1772,
+          "contentSha256": "f74f3c3c9f3ef39e457e174a09db7f38bf97b410f06cc5eba271c41e08ee65af",
+          "canonicalLfSha256": "3f86202ab90f18d48175efec4e299e271d4fce8ddc66d983ef917ef1e372a883"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbLayoutBody.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 4315,
+          "contentSha256": "0ffdf1d13158331c38ee243ba877a451f323228bdac5ca284d2f6113b222dc04",
+          "canonicalLfSha256": "0ffdf1d13158331c38ee243ba877a451f323228bdac5ca284d2f6113b222dc04"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 4528,
+          "contentSha256": "6237269193086918c0aa5b6d9cc2917e43dbeb43eee71117c61489218745abc6",
+          "canonicalLfSha256": "0ffdf1d13158331c38ee243ba877a451f323228bdac5ca284d2f6113b222dc04"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbLayoutFooter.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 1649,
+          "contentSha256": "abc3477122124be7d3e4abbcd6e077b3d47f7b376289e12415c89165be634d57",
+          "canonicalLfSha256": "abc3477122124be7d3e4abbcd6e077b3d47f7b376289e12415c89165be634d57"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 1725,
+          "contentSha256": "0f2ebc3427722b476fed986bd63f572aeccb0cbc75afd0eca9bfd3d27f4d7f9f",
+          "canonicalLfSha256": "abc3477122124be7d3e4abbcd6e077b3d47f7b376289e12415c89165be634d57"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbLayoutHeader.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 1746,
+          "contentSha256": "13f7c1af3d32aaec89b69aaab0dd29f2fc845802e37deccb13ef41d39da5fcc8",
+          "canonicalLfSha256": "13f7c1af3d32aaec89b69aaab0dd29f2fc845802e37deccb13ef41d39da5fcc8"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 1824,
+          "contentSha256": "b1bf0d132659d04e02c735110103ab4a71ab1568061b6ac43f0b92fcabf4924f",
+          "canonicalLfSha256": "13f7c1af3d32aaec89b69aaab0dd29f2fc845802e37deccb13ef41d39da5fcc8"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbLayoutSider.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 1173,
+          "contentSha256": "57e24cc1606733c744549d36a2c7a756e59bf00b305d0e0d47dbb2b7e02f559e",
+          "canonicalLfSha256": "57e24cc1606733c744549d36a2c7a756e59bf00b305d0e0d47dbb2b7e02f559e"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 1216,
+          "contentSha256": "28fe2b981f30cd1d2606e5f0e390f628ac5628edb2004b554f7f6e4b5026aa00",
+          "canonicalLfSha256": "57e24cc1606733c744549d36a2c7a756e59bf00b305d0e0d47dbb2b7e02f559e"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbLink.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 7175,
+          "contentSha256": "6da34bfa0675dc17d35a749cf4809a062bbc4db715473e6f581a6ee2ab75fedd",
+          "canonicalLfSha256": "6da34bfa0675dc17d35a749cf4809a062bbc4db715473e6f581a6ee2ab75fedd"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 7494,
+          "contentSha256": "2a8ac1a9d0c612ad81e1cd049bfee4c220cfe5d3d206ec81d2af85b7f3f6ea60",
+          "canonicalLfSha256": "6da34bfa0675dc17d35a749cf4809a062bbc4db715473e6f581a6ee2ab75fedd"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbLinkGroup.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 8021,
+          "contentSha256": "47f0d93a2ad28bea34ad53f63e928069a138e6f1f997f8363ba25187de43283f",
+          "canonicalLfSha256": "47f0d93a2ad28bea34ad53f63e928069a138e6f1f997f8363ba25187de43283f"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 8356,
+          "contentSha256": "e5d8037fa9fe13f39d604a5be13915c6ddf984c554e80b6d84222f3091ebb518",
+          "canonicalLfSha256": "47f0d93a2ad28bea34ad53f63e928069a138e6f1f997f8363ba25187de43283f"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbList.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 8073,
+          "contentSha256": "8d0452c612e44f6ae56f5da921134c172eea996de95804cbc27dea96d35061b3",
+          "canonicalLfSha256": "8d0452c612e44f6ae56f5da921134c172eea996de95804cbc27dea96d35061b3"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 8472,
+          "contentSha256": "b1fa365bd9983143c8a8e699cb58b5f8440ba250a7b5ecbbc5fc311d497b20ad",
+          "canonicalLfSha256": "8d0452c612e44f6ae56f5da921134c172eea996de95804cbc27dea96d35061b3"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbListItem.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 1808,
+          "contentSha256": "379823980ac252c9bb5a5f5a88173060f3bc98b79d5b6c7f735cb96ed6b57b36",
+          "canonicalLfSha256": "379823980ac252c9bb5a5f5a88173060f3bc98b79d5b6c7f735cb96ed6b57b36"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 1901,
+          "contentSha256": "8c30d368bc6878dad8b0eac3fa844f99d7eb259ac8f9437c86bf7575ec0d1c59",
+          "canonicalLfSha256": "379823980ac252c9bb5a5f5a88173060f3bc98b79d5b6c7f735cb96ed6b57b36"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbListItemMeta.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 14915,
+          "contentSha256": "b1637b33cc607d892871eb3e48a1e11286818f71073bfcf8c48fcbb3b4f53172",
+          "canonicalLfSha256": "b1637b33cc607d892871eb3e48a1e11286818f71073bfcf8c48fcbb3b4f53172"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 15664,
+          "contentSha256": "239b40d1837929011446c968b025207cea21e92bc7d7d0dc0df6cee3abd51a7f",
+          "canonicalLfSha256": "b1637b33cc607d892871eb3e48a1e11286818f71073bfcf8c48fcbb3b4f53172"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbListRoll.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 8913,
+          "contentSha256": "8c66cd0bf7c8160e0bf367794bf80e1cd4ab6dcbe64007af1bc1e32b4df0e747",
+          "canonicalLfSha256": "8c66cd0bf7c8160e0bf367794bf80e1cd4ab6dcbe64007af1bc1e32b4df0e747"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 9368,
+          "contentSha256": "ff03f3d537ec0dc5dc2544033cad17568321376ece465c94f8002bfb435cca7e",
+          "canonicalLfSha256": "8c66cd0bf7c8160e0bf367794bf80e1cd4ab6dcbe64007af1bc1e32b4df0e747"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbLoading.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 6630,
+          "contentSha256": "b8532d4da2f0b38216bbeec985c18926fd8d365e1e93100e9a89a997e213386a",
+          "canonicalLfSha256": "b8532d4da2f0b38216bbeec985c18926fd8d365e1e93100e9a89a997e213386a"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 6916,
+          "contentSha256": "e875e11a1e2cc0e5c25b893d0f5a5c324ff41de89a02be4223deb3723165b162",
+          "canonicalLfSha256": "b8532d4da2f0b38216bbeec985c18926fd8d365e1e93100e9a89a997e213386a"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbLottie.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 10496,
+          "contentSha256": "1d8209270143c9021b6be24beed2321ec5a9425473a160ff91d9986a278f9114",
+          "canonicalLfSha256": "1d8209270143c9021b6be24beed2321ec5a9425473a160ff91d9986a278f9114"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 11036,
+          "contentSha256": "44e56991669ea41065a49fb3f26a1cfa62e4d1791c1d6f2d97697ea72bfceb0f",
+          "canonicalLfSha256": "1d8209270143c9021b6be24beed2321ec5a9425473a160ff91d9986a278f9114"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbMarquee.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 10046,
+          "contentSha256": "7034b53803190f0ac328568bfde256b160cfd38bf672379f5024512e63f922e0",
+          "canonicalLfSha256": "7034b53803190f0ac328568bfde256b160cfd38bf672379f5024512e63f922e0"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 10590,
+          "contentSha256": "82601152c6125994fa3ff158d406f86e0fe267dee40469b0b17632d11ca98fce",
+          "canonicalLfSha256": "7034b53803190f0ac328568bfde256b160cfd38bf672379f5024512e63f922e0"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbMenu.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 7416,
+          "contentSha256": "b6e17b1c7f342c72a81caae497e9551f425fa35e0df6e6f414baa4cc61a1c29f",
+          "canonicalLfSha256": "b6e17b1c7f342c72a81caae497e9551f425fa35e0df6e6f414baa4cc61a1c29f"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 7645,
+          "contentSha256": "37ba2ad7fc05ae98473402c3ecf71237b54e8e0449a4052e01be30a1568d0f03",
+          "canonicalLfSha256": "b6e17b1c7f342c72a81caae497e9551f425fa35e0df6e6f414baa4cc61a1c29f"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbMenuButton.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 13478,
+          "contentSha256": "5f1844901d883a50b17a6df45954626c1af3f30a2bf03d5c6db0cf576c8aacf9",
+          "canonicalLfSha256": "5f1844901d883a50b17a6df45954626c1af3f30a2bf03d5c6db0cf576c8aacf9"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 14063,
+          "contentSha256": "b18bfccaa7a25d682319ce03b7dfb175f28514be15ea63ac2463529bd7b0fc30",
+          "canonicalLfSha256": "5f1844901d883a50b17a6df45954626c1af3f30a2bf03d5c6db0cf576c8aacf9"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbMenuItem.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 4717,
+          "contentSha256": "8d5f414373e659551ea9b962ab4aeb645be0f181b914067039c56c921b8fcb8d",
+          "canonicalLfSha256": "8d5f414373e659551ea9b962ab4aeb645be0f181b914067039c56c921b8fcb8d"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 4919,
+          "contentSha256": "a07dbd8fb762721102c4c41cd5d73bd2a7a4a6d3d7a2d0505cf0f2b6adfba3c8",
+          "canonicalLfSha256": "8d5f414373e659551ea9b962ab4aeb645be0f181b914067039c56c921b8fcb8d"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbMenuItemGroup.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 10074,
+          "contentSha256": "0b83b2b38b30b6f145fc803235c3b92eb8a30a2fe32461ba31261e9d69189b1a",
+          "canonicalLfSha256": "0b83b2b38b30b6f145fc803235c3b92eb8a30a2fe32461ba31261e9d69189b1a"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 10516,
+          "contentSha256": "7fc4aa412b0d19eef89b422618ebcfadf63426e3151212edc7660b12fce1f2b5",
+          "canonicalLfSha256": "0b83b2b38b30b6f145fc803235c3b92eb8a30a2fe32461ba31261e9d69189b1a"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbMessage.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 6242,
+          "contentSha256": "b8d33fae50eb9915d2be68a832b9075e5718cf8d6ecc5979b73d63596829f41a",
+          "canonicalLfSha256": "b8d33fae50eb9915d2be68a832b9075e5718cf8d6ecc5979b73d63596829f41a"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 6552,
+          "contentSha256": "fc7b2478e78e09b6dca06fbeddc973ea61463370bb5210af6dea36ed98f8c29c",
+          "canonicalLfSha256": "b8d33fae50eb9915d2be68a832b9075e5718cf8d6ecc5979b73d63596829f41a"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbMessageBox.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 8927,
+          "contentSha256": "af6161b11e1245b3c1f878181ce157c72f3230a0b48b685465be1a733e98a7ee",
+          "canonicalLfSha256": "af6161b11e1245b3c1f878181ce157c72f3230a0b48b685465be1a733e98a7ee"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 9309,
+          "contentSha256": "0cf59fb32c0976157ec884e93e17a07c333525c1fef375f884b67930ab510b8f",
+          "canonicalLfSha256": "af6161b11e1245b3c1f878181ce157c72f3230a0b48b685465be1a733e98a7ee"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbMessageBoxWrapper.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 2716,
+          "contentSha256": "a3fd26aae0f54b12d2cd5a26f3b515c7ca8b30e6af29c1ab2112a30002042773",
+          "canonicalLfSha256": "a3fd26aae0f54b12d2cd5a26f3b515c7ca8b30e6af29c1ab2112a30002042773"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 2832,
+          "contentSha256": "bf5748342a15e2ab7f561eda05a311a4e68829d26c312ca2c2837c6df5c9f03b",
+          "canonicalLfSha256": "a3fd26aae0f54b12d2cd5a26f3b515c7ca8b30e6af29c1ab2112a30002042773"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbNotification.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 6932,
+          "contentSha256": "62763c41da15ab2bffece7b0141536cceb293f11d09f509d89e37cbfd66ed8f6",
+          "canonicalLfSha256": "62763c41da15ab2bffece7b0141536cceb293f11d09f509d89e37cbfd66ed8f6"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 7262,
+          "contentSha256": "745d24e4d07a900605e4bf57220ac5ec2044c8dd62bfe5c5fc256def85e3ba0a",
+          "canonicalLfSha256": "62763c41da15ab2bffece7b0141536cceb293f11d09f509d89e37cbfd66ed8f6"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbNumber.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 2757,
+          "contentSha256": "aab0b6bba52e40c9890070f639d6042bf082815a68674461aecf219b836eaa9c",
+          "canonicalLfSha256": "aab0b6bba52e40c9890070f639d6042bf082815a68674461aecf219b836eaa9c"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 2891,
+          "contentSha256": "9edf21f37982665ebc1bf3dd2878b43fd4d8284e3ac0cb685e9d57487eeb699e",
+          "canonicalLfSha256": "aab0b6bba52e40c9890070f639d6042bf082815a68674461aecf219b836eaa9c"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbNumberInput.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 4711,
+          "contentSha256": "2ffcbee183dddf21a110e5bb46d055ffddfa31c927be60b1935fc2f3d8d3f102",
+          "canonicalLfSha256": "2ffcbee183dddf21a110e5bb46d055ffddfa31c927be60b1935fc2f3d8d3f102"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 4870,
+          "contentSha256": "03e3cc89b82cd62b3ad17ca072f38d89ee573246b8d3230ca2e043e8805a6cba",
+          "canonicalLfSha256": "2ffcbee183dddf21a110e5bb46d055ffddfa31c927be60b1935fc2f3d8d3f102"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbPageEdit.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 13030,
+          "contentSha256": "7d9a70b785805e314f6a98685517ef59e98433e93f0b6c3fb9000bbf2d37cee8",
+          "canonicalLfSha256": "7d9a70b785805e314f6a98685517ef59e98433e93f0b6c3fb9000bbf2d37cee8"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 13585,
+          "contentSha256": "4b633bb52a22293caa57d596add9672832ccbf704933f3824304e0600cd4ef98",
+          "canonicalLfSha256": "7d9a70b785805e314f6a98685517ef59e98433e93f0b6c3fb9000bbf2d37cee8"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbPageHeader.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 10792,
+          "contentSha256": "79d0fe07b06d7e77165c9c3c0232ea273195e1ff3231ebe1382046ae45100dd2",
+          "canonicalLfSha256": "79d0fe07b06d7e77165c9c3c0232ea273195e1ff3231ebe1382046ae45100dd2"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 11262,
+          "contentSha256": "adbbb63b0e8ec8a8522a77d8341a9f4de626694987e8663630cb28c125a2db22",
+          "canonicalLfSha256": "79d0fe07b06d7e77165c9c3c0232ea273195e1ff3231ebe1382046ae45100dd2"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbPageSave.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 12041,
+          "contentSha256": "ca0deb6f1c84c9b57565a7a36b90e2ff528ca0ef77c2cef44179ad7b36de44fb",
+          "canonicalLfSha256": "ca0deb6f1c84c9b57565a7a36b90e2ff528ca0ef77c2cef44179ad7b36de44fb"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 12545,
+          "contentSha256": "9fa9d34c77219287b7ad7db5ce0890be2f215ae7753b1ba2579d60856f5f690e",
+          "canonicalLfSha256": "ca0deb6f1c84c9b57565a7a36b90e2ff528ca0ef77c2cef44179ad7b36de44fb"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbPageSearch.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 7493,
+          "contentSha256": "497962a1c0a3663af9066bf8f504f799ea76ba9f1dee7accebdf518f80fc60ef",
+          "canonicalLfSha256": "497962a1c0a3663af9066bf8f504f799ea76ba9f1dee7accebdf518f80fc60ef"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 7785,
+          "contentSha256": "bf16f41099347288fa29c20f94ea956a887df376348e6bcd008472c60e6348bd",
+          "canonicalLfSha256": "497962a1c0a3663af9066bf8f504f799ea76ba9f1dee7accebdf518f80fc60ef"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbPageTabs.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 14832,
+          "contentSha256": "d77163bbca5afe290d185b394b0bf129de04df911a0fed0f1c5c24f5c2a4c3eb",
+          "canonicalLfSha256": "d77163bbca5afe290d185b394b0bf129de04df911a0fed0f1c5c24f5c2a4c3eb"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 15434,
+          "contentSha256": "46dd0c27476fa7459ff35f50a5a18670f3ad89d9a55a3992d2d1a29ba6527fcd",
+          "canonicalLfSha256": "d77163bbca5afe290d185b394b0bf129de04df911a0fed0f1c5c24f5c2a4c3eb"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbPageTree.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 7086,
+          "contentSha256": "7f004278c96e0b74366efa26da8d0fb5c8bc7779d4f2f27468324d24cbdfa40d",
+          "canonicalLfSha256": "7f004278c96e0b74366efa26da8d0fb5c8bc7779d4f2f27468324d24cbdfa40d"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 7365,
+          "contentSha256": "00db27996af9a5251323194617d17ab3a45e48b93c714816ae44a1b9ddfed974",
+          "canonicalLfSha256": "7f004278c96e0b74366efa26da8d0fb5c8bc7779d4f2f27468324d24cbdfa40d"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbPageTreeEdit.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 13698,
+          "contentSha256": "a279999cee11f3077c0b1379eab7bf970e64702515a337056e4bc38c145ede04",
+          "canonicalLfSha256": "a279999cee11f3077c0b1379eab7bf970e64702515a337056e4bc38c145ede04"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 14247,
+          "contentSha256": "257432568f5b3d821067120b03156375ae62037461baf3ced964d7920cade2dd",
+          "canonicalLfSha256": "a279999cee11f3077c0b1379eab7bf970e64702515a337056e4bc38c145ede04"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbPageTreeTable.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 7231,
+          "contentSha256": "15ca8ae4058c50f50177ba7cbd2378c81b6e263e02d67decfbcf8c99c5d306c7",
+          "canonicalLfSha256": "15ca8ae4058c50f50177ba7cbd2378c81b6e263e02d67decfbcf8c99c5d306c7"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 7504,
+          "contentSha256": "aab78323a8864c16cddd654da07faf9bca7aaa092027a9c56970934831e868ce",
+          "canonicalLfSha256": "15ca8ae4058c50f50177ba7cbd2378c81b6e263e02d67decfbcf8c99c5d306c7"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbPageTreeTabs.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 6821,
+          "contentSha256": "32dce832c41cdc5fcbf480c26357c79f6c194954b518b6fb709b1318689c66cc",
+          "canonicalLfSha256": "32dce832c41cdc5fcbf480c26357c79f6c194954b518b6fb709b1318689c66cc"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 7062,
+          "contentSha256": "1f7be82c67b8d57134bb44dd58371e889ab405e1c545691f14e0aa52a6214e5e",
+          "canonicalLfSha256": "32dce832c41cdc5fcbf480c26357c79f6c194954b518b6fb709b1318689c66cc"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbPageView.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 14202,
+          "contentSha256": "547f9788de79d32ce91129daffc838986ac0d6229bd535d31813766a565a1544",
+          "canonicalLfSha256": "547f9788de79d32ce91129daffc838986ac0d6229bd535d31813766a565a1544"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 14794,
+          "contentSha256": "995e85a41f2c4f909d73ff871fd9a5e992e1b8f64c576080536b343f26a4a6a5",
+          "canonicalLfSha256": "547f9788de79d32ce91129daffc838986ac0d6229bd535d31813766a565a1544"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbPager.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 7688,
+          "contentSha256": "b01e7811f7f3e1e80d73915e3dce7966958a88cb7cc990f35553e582cec4d604",
+          "canonicalLfSha256": "b01e7811f7f3e1e80d73915e3dce7966958a88cb7cc990f35553e582cec4d604"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 8075,
+          "contentSha256": "bb0c6d012df1df9d466fc8f3ba5c65cc11849a8b071ecb8693f22ac782abfecb",
+          "canonicalLfSha256": "b01e7811f7f3e1e80d73915e3dce7966958a88cb7cc990f35553e582cec4d604"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbPagerModel.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 6979,
+          "contentSha256": "ce54971fa64ba28909a53c8035bd491c064a17eacc078079c60458a2417938bc",
+          "canonicalLfSha256": "ce54971fa64ba28909a53c8035bd491c064a17eacc078079c60458a2417938bc"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 7291,
+          "contentSha256": "1c26a8dfd3bca896b18f81ec8bda6fde1a7dfa3ccf1c6dd603d58e82af04fd06",
+          "canonicalLfSha256": "ce54971fa64ba28909a53c8035bd491c064a17eacc078079c60458a2417938bc"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbPdfViewer.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 3478,
+          "contentSha256": "6ff065ec957d2128b1f0f14121b867ecded1d30449ddbf6544a3b0c0420963b1",
+          "canonicalLfSha256": "6ff065ec957d2128b1f0f14121b867ecded1d30449ddbf6544a3b0c0420963b1"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 3643,
+          "contentSha256": "8e27ad320eb7cda8356ccb43d6e834f03e7e9c358192c08b5e309ff5b9ee49aa",
+          "canonicalLfSha256": "6ff065ec957d2128b1f0f14121b867ecded1d30449ddbf6544a3b0c0420963b1"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbPopupHeader.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 9512,
+          "contentSha256": "9a23aff1b3b2f34b01d043593bbbb6643ddce6e188c12a9323245b077a1a0e8b",
+          "canonicalLfSha256": "9a23aff1b3b2f34b01d043593bbbb6643ddce6e188c12a9323245b077a1a0e8b"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 10075,
+          "contentSha256": "de384834eac0322495c2a059db78a5ad1acf851281834aa135230cae7e866491",
+          "canonicalLfSha256": "9a23aff1b3b2f34b01d043593bbbb6643ddce6e188c12a9323245b077a1a0e8b"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbPopupPicker.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 19970,
+          "contentSha256": "9150f6bd75a332533dcebac6452e41ff84e5a1cc698d68313099386743735215",
+          "canonicalLfSha256": "9150f6bd75a332533dcebac6452e41ff84e5a1cc698d68313099386743735215"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 20936,
+          "contentSha256": "5665b45fc122c3212aba17039d26f0206173690ddeb50bc636307b5d97516ad2",
+          "canonicalLfSha256": "9150f6bd75a332533dcebac6452e41ff84e5a1cc698d68313099386743735215"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbPopupSelect.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 16324,
+          "contentSha256": "1e8af2a161f7c197dae93b81a9308e9567f7d99848e0c2ae32f9a0283539db9c",
+          "canonicalLfSha256": "1e8af2a161f7c197dae93b81a9308e9567f7d99848e0c2ae32f9a0283539db9c"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 17119,
+          "contentSha256": "c5112dd7b0a8a1c2f9f9e72b21caebac57d1fb04d62371176209bd3ccc0a730a",
+          "canonicalLfSha256": "1e8af2a161f7c197dae93b81a9308e9567f7d99848e0c2ae32f9a0283539db9c"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbProgress.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 10021,
+          "contentSha256": "0425aca0cd9fa0864275998168768fa5ccd216c61d533a56ae71359f521709d8",
+          "canonicalLfSha256": "0425aca0cd9fa0864275998168768fa5ccd216c61d533a56ae71359f521709d8"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 10554,
+          "contentSha256": "d81be0e72b2131585f3c94976733bc94c033cc657db302616a12f472ac24320d",
+          "canonicalLfSha256": "0425aca0cd9fa0864275998168768fa5ccd216c61d533a56ae71359f521709d8"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbProgressBox.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 6855,
+          "contentSha256": "f6d6e036f11b8a46a4c6ae70464f7fa1f63c0da99ee9a7101a7ec11d18d469a4",
+          "canonicalLfSha256": "f6d6e036f11b8a46a4c6ae70464f7fa1f63c0da99ee9a7101a7ec11d18d469a4"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 7149,
+          "contentSha256": "da790244b50069a9ca4af7be846ed9dde9d8dd78f10ab3b17b3e8f9f5d874e80",
+          "canonicalLfSha256": "f6d6e036f11b8a46a4c6ae70464f7fa1f63c0da99ee9a7101a7ec11d18d469a4"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbProperties.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 8412,
+          "contentSha256": "54baf502e2792bfed65b21f9965bd0883564de7b83d75e14f5fb560b11e2622b",
+          "canonicalLfSha256": "54baf502e2792bfed65b21f9965bd0883564de7b83d75e14f5fb560b11e2622b"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 8698,
+          "contentSha256": "90c48424f40a90fcf1c8a94210015ce4a34318af899c48f8d7ec1ee0b4f78ab5",
+          "canonicalLfSha256": "54baf502e2792bfed65b21f9965bd0883564de7b83d75e14f5fb560b11e2622b"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbPropertiesItem.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 6913,
+          "contentSha256": "9a512714f441c8ae2476c93e17cf4ee90c9573ecd87160b6bb69bc963f709bbc",
+          "canonicalLfSha256": "9a512714f441c8ae2476c93e17cf4ee90c9573ecd87160b6bb69bc963f709bbc"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 7179,
+          "contentSha256": "56f5330e01db878e94d656caba8b5d254afd344655203bf22e8b5ceb94c4c03c",
+          "canonicalLfSha256": "9a512714f441c8ae2476c93e17cf4ee90c9573ecd87160b6bb69bc963f709bbc"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbProperty.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 7259,
+          "contentSha256": "ffbba0a91e1b661841bade76f747dab7801ad6cec9051c7a15d8739859b1e5c7",
+          "canonicalLfSha256": "ffbba0a91e1b661841bade76f747dab7801ad6cec9051c7a15d8739859b1e5c7"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 7523,
+          "contentSha256": "caa7f6993ddd6b940dd7614630019398cc3436826f06cf4fe552e45b9de1a74f",
+          "canonicalLfSha256": "ffbba0a91e1b661841bade76f747dab7801ad6cec9051c7a15d8739859b1e5c7"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbPropertyItem.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 5015,
+          "contentSha256": "286f3d3c97b761bc1cd117d71da8a6af580bd0f11384a3854de2e0e09350fd7a",
+          "canonicalLfSha256": "286f3d3c97b761bc1cd117d71da8a6af580bd0f11384a3854de2e0e09350fd7a"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 5197,
+          "contentSha256": "247ecdf1acd1434ec28a3ee11f3018899babd0698d57ffaf78add083cbc99f0a",
+          "canonicalLfSha256": "286f3d3c97b761bc1cd117d71da8a6af580bd0f11384a3854de2e0e09350fd7a"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbPropertyRow.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 4450,
+          "contentSha256": "1435ed6c82924728cac1fa2a54793eacca2336ec8d505db85fd250946ae90763",
+          "canonicalLfSha256": "1435ed6c82924728cac1fa2a54793eacca2336ec8d505db85fd250946ae90763"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 4599,
+          "contentSha256": "f36c556903b12a89ac3e8fb9d00116b40ef662011a0e16407f57c0e84eca2260",
+          "canonicalLfSha256": "1435ed6c82924728cac1fa2a54793eacca2336ec8d505db85fd250946ae90763"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbQrcode.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 9397,
+          "contentSha256": "a48eb40541962079f7805d865060ada9c667b1f693bf7e878d74963823e28e1c",
+          "canonicalLfSha256": "a48eb40541962079f7805d865060ada9c667b1f693bf7e878d74963823e28e1c"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 9843,
+          "contentSha256": "2a610a515b41109c68f4558d269036a2364c493482c4ce84281cf6c2d8a0b0b2",
+          "canonicalLfSha256": "a48eb40541962079f7805d865060ada9c667b1f693bf7e878d74963823e28e1c"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbRadio.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 4029,
+          "contentSha256": "5919f065ab832188857930f6fada0f775994392e703200fbb7af7e712a78fdf9",
+          "canonicalLfSha256": "5919f065ab832188857930f6fada0f775994392e703200fbb7af7e712a78fdf9"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 4201,
+          "contentSha256": "41a9ce4fffb399406d3bbebb83185a6d8750fd47c90bdf9bd4ef6c8ae4c92742",
+          "canonicalLfSha256": "5919f065ab832188857930f6fada0f775994392e703200fbb7af7e712a78fdf9"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbRadioGroup.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 10331,
+          "contentSha256": "5423e83c22f8c6f8c2c58a6c5b40ac413c40fd4a8ba4f30b0c62796e7cc28471",
+          "canonicalLfSha256": "5423e83c22f8c6f8c2c58a6c5b40ac413c40fd4a8ba4f30b0c62796e7cc28471"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 10834,
+          "contentSha256": "40dcaf5435b3ea791650e4f898c41ebf3b41c0305e8013955407a2da42ca8253",
+          "canonicalLfSha256": "5423e83c22f8c6f8c2c58a6c5b40ac413c40fd4a8ba4f30b0c62796e7cc28471"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbRankList.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 6052,
+          "contentSha256": "894ccb5e03afa8710ce4b1277171b2bbb42f60ac68fd8b577821667633181395",
+          "canonicalLfSha256": "894ccb5e03afa8710ce4b1277171b2bbb42f60ac68fd8b577821667633181395"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 6334,
+          "contentSha256": "fbe2e72242a749b3f4f05b3c068b2ed50058302408a8557984f82c4c4fb5c4c9",
+          "canonicalLfSha256": "894ccb5e03afa8710ce4b1277171b2bbb42f60ac68fd8b577821667633181395"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbRankListItem.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 4498,
+          "contentSha256": "2ab1c0d43255109fb9c53c1f73ed1059cc36de12902aed42d5f006f6cef5aa45",
+          "canonicalLfSha256": "2ab1c0d43255109fb9c53c1f73ed1059cc36de12902aed42d5f006f6cef5aa45"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 4686,
+          "contentSha256": "c7e16cd344760491429f02978f8ecac81dab456097013d474975a33f3e855b23",
+          "canonicalLfSha256": "2ab1c0d43255109fb9c53c1f73ed1059cc36de12902aed42d5f006f6cef5aa45"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbRate.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 8874,
+          "contentSha256": "eb2af6567790d31d4c3d7f58bf4a3811d3925875496a060bea6a5223eb4a9d28",
+          "canonicalLfSha256": "eb2af6567790d31d4c3d7f58bf4a3811d3925875496a060bea6a5223eb4a9d28"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 9345,
+          "contentSha256": "48986d59d7da29db53cc4e64c4868c7abe15752accb845ae35a9c268be29a309",
+          "canonicalLfSha256": "eb2af6567790d31d4c3d7f58bf4a3811d3925875496a060bea6a5223eb4a9d28"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbRateBox.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 5645,
+          "contentSha256": "a7e593d2339de6377fbca906b7021cc59942bfa0cc4749d206ee7728fa87ab95",
+          "canonicalLfSha256": "a7e593d2339de6377fbca906b7021cc59942bfa0cc4749d206ee7728fa87ab95"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 5893,
+          "contentSha256": "dc3058a662efc4f2e465a57ed99ac911aaa605f0daa634725893bb6479a0f896",
+          "canonicalLfSha256": "a7e593d2339de6377fbca906b7021cc59942bfa0cc4749d206ee7728fa87ab95"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbResult.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 8465,
+          "contentSha256": "ad477af4604552f97df18a02197e566986b632ff6199fcf26d86caa4f2446180",
+          "canonicalLfSha256": "ad477af4604552f97df18a02197e566986b632ff6199fcf26d86caa4f2446180"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 8903,
+          "contentSha256": "af4fb950e85affd2cb011c43ef4ee0661346a7a1b56b5f6c2589c7fc75182dde",
+          "canonicalLfSha256": "ad477af4604552f97df18a02197e566986b632ff6199fcf26d86caa4f2446180"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbRow.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 6171,
+          "contentSha256": "30f6774981302e396ca0e6bffb98827d62722dd089f2e236fea027adb70dba32",
+          "canonicalLfSha256": "30f6774981302e396ca0e6bffb98827d62722dd089f2e236fea027adb70dba32"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 6409,
+          "contentSha256": "94c0cf44727d7a75875dcb600e26621f66f91d28b0a580f9a6f588f12e99646c",
+          "canonicalLfSha256": "30f6774981302e396ca0e6bffb98827d62722dd089f2e236fea027adb70dba32"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbSegmenter.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 7657,
+          "contentSha256": "221334e1a91f4559486f38a640d178cbdeabed096294d5ad66dd5bde5dcea4bf",
+          "canonicalLfSha256": "221334e1a91f4559486f38a640d178cbdeabed096294d5ad66dd5bde5dcea4bf"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 8017,
+          "contentSha256": "30018ae2fb9a1471486c5d3bf14a07fd02b5e0c2b34871c146549c937bfb428a",
+          "canonicalLfSha256": "221334e1a91f4559486f38a640d178cbdeabed096294d5ad66dd5bde5dcea4bf"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbSelect.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 12729,
+          "contentSha256": "0ec671ca62a3c8687f0aeb4b926450480fe03e622d60e149d5abeb80e2b73249",
+          "canonicalLfSha256": "0ec671ca62a3c8687f0aeb4b926450480fe03e622d60e149d5abeb80e2b73249"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 13370,
+          "contentSha256": "4ae54454e858facded87ab071563963a9ac348246ffc58b6a1086293e5375df4",
+          "canonicalLfSha256": "0ec671ca62a3c8687f0aeb4b926450480fe03e622d60e149d5abeb80e2b73249"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbSelectOption.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 9373,
+          "contentSha256": "b6989d569d69c033d747e66a2d3849e21aea29a5a7166aea017a6ce759bae52f",
+          "canonicalLfSha256": "b6989d569d69c033d747e66a2d3849e21aea29a5a7166aea017a6ce759bae52f"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 9847,
+          "contentSha256": "d03398252c6ceae3cf785652a340fae854cdf474c94cd8863e681e22d6b871b3",
+          "canonicalLfSha256": "b6989d569d69c033d747e66a2d3849e21aea29a5a7166aea017a6ce759bae52f"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbSelectOptionGroup.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 6713,
+          "contentSha256": "f032386592b76d49e9cf910e539594511f613d13d390b5199ce3aaa8f1a03222",
+          "canonicalLfSha256": "f032386592b76d49e9cf910e539594511f613d13d390b5199ce3aaa8f1a03222"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 7014,
+          "contentSha256": "ebde20b1ba97274e6272b689f8e0c5b5fbf3102ef1c7b37af701314b33462886",
+          "canonicalLfSha256": "f032386592b76d49e9cf910e539594511f613d13d390b5199ce3aaa8f1a03222"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbSign.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 1617,
+          "contentSha256": "8563cf400de9155058a78e9ec619436ea685754966351641f1f6652ca3d24954",
+          "canonicalLfSha256": "8563cf400de9155058a78e9ec619436ea685754966351641f1f6652ca3d24954"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 1703,
+          "contentSha256": "5e17b1f0694bb09f57580fbf07dbd0d6083bb4be922ceb0e2453873e8e2244c6",
+          "canonicalLfSha256": "8563cf400de9155058a78e9ec619436ea685754966351641f1f6652ca3d24954"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbSimpleTable.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 10765,
+          "contentSha256": "99653ffcf4243feb0313f9b291b923972fa91f117b49d2f7d86f5e9305fa3b3f",
+          "canonicalLfSha256": "99653ffcf4243feb0313f9b291b923972fa91f117b49d2f7d86f5e9305fa3b3f"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 11102,
+          "contentSha256": "b4e30c61c383aeaf433ca2f00b62e37250e115879e0210f80031dc890fbf1e1d",
+          "canonicalLfSha256": "99653ffcf4243feb0313f9b291b923972fa91f117b49d2f7d86f5e9305fa3b3f"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbSlider.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 8741,
+          "contentSha256": "65315e08bc0efa0846beb556efcd191909dbe2f62eafa0f61932dd6275fdf636",
+          "canonicalLfSha256": "65315e08bc0efa0846beb556efcd191909dbe2f62eafa0f61932dd6275fdf636"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 9273,
+          "contentSha256": "5f02e9e48d176e7c47ddcf270b126c4158440cb611c0b051b0cb51485c208a68",
+          "canonicalLfSha256": "65315e08bc0efa0846beb556efcd191909dbe2f62eafa0f61932dd6275fdf636"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbSliderTimeline.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 6692,
+          "contentSha256": "86560bde365bba5f5dcc5c38ac32c611b6bc2810009fc73daf34e5c6abdc9979",
+          "canonicalLfSha256": "86560bde365bba5f5dcc5c38ac32c611b6bc2810009fc73daf34e5c6abdc9979"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 6943,
+          "contentSha256": "25e3cae302cb3f38f2e737dbb8a78e3899267eddd3fecf7d4a00043ded463c35",
+          "canonicalLfSha256": "86560bde365bba5f5dcc5c38ac32c611b6bc2810009fc73daf34e5c6abdc9979"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbSpace.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 3060,
+          "contentSha256": "718abb1d2a4edf0b821dec116bc1cc4518deb0960c6535c31fd254357dc3077c",
+          "canonicalLfSha256": "718abb1d2a4edf0b821dec116bc1cc4518deb0960c6535c31fd254357dc3077c"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 3184,
+          "contentSha256": "90b6144880121642c56ae64d87a79e6c0db8fc6e3236b2a5081eb7c1a34590a6",
+          "canonicalLfSha256": "718abb1d2a4edf0b821dec116bc1cc4518deb0960c6535c31fd254357dc3077c"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbSpin.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 10025,
+          "contentSha256": "a5cc0b8ad42c2bb62b56db48d53ee363cd187ddd3bc3e522d258530a466f9918",
+          "canonicalLfSha256": "a5cc0b8ad42c2bb62b56db48d53ee363cd187ddd3bc3e522d258530a466f9918"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 10559,
+          "contentSha256": "e6d920f312eda38967d02e61a494cfd1705c69c688e6dd041743df628c27e1a0",
+          "canonicalLfSha256": "a5cc0b8ad42c2bb62b56db48d53ee363cd187ddd3bc3e522d258530a466f9918"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbSpliter.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 8628,
+          "contentSha256": "3d8d20ff8cdc35a918cc09092a343b24f705a54fe433e41de54f34eec35735f6",
+          "canonicalLfSha256": "3d8d20ff8cdc35a918cc09092a343b24f705a54fe433e41de54f34eec35735f6"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 8950,
+          "contentSha256": "72883300cdf778f77ae42ed66b65492bdab039b51a4dc689c830562663318046",
+          "canonicalLfSha256": "3d8d20ff8cdc35a918cc09092a343b24f705a54fe433e41de54f34eec35735f6"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbState.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 10816,
+          "contentSha256": "ef680c1be1a563f2db1879c3e3fd783260b5039965915d3ac9a1fdd58576a2de",
+          "canonicalLfSha256": "ef680c1be1a563f2db1879c3e3fd783260b5039965915d3ac9a1fdd58576a2de"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 11338,
+          "contentSha256": "fe7ac2d43e30464511dbad20527ce9591ed3521cd111716c58522a8082f3133b",
+          "canonicalLfSha256": "ef680c1be1a563f2db1879c3e3fd783260b5039965915d3ac9a1fdd58576a2de"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbStep.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 6076,
+          "contentSha256": "fb1b86f14b2cf61dfbc0197c8b6357a2bd9aaa4d2e4dd43e2d89e687d02d4ff3",
+          "canonicalLfSha256": "fb1b86f14b2cf61dfbc0197c8b6357a2bd9aaa4d2e4dd43e2d89e687d02d4ff3"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 6352,
+          "contentSha256": "784db1d5a65ec2572975a1a27b7e6a86d3aa1b9c48024bfbb065ae04a817149e",
+          "canonicalLfSha256": "fb1b86f14b2cf61dfbc0197c8b6357a2bd9aaa4d2e4dd43e2d89e687d02d4ff3"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbSteps.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 10380,
+          "contentSha256": "902532fc9fb914beabd7a7cf063bc368453748da09e40fd33549afa29d215dbe",
+          "canonicalLfSha256": "902532fc9fb914beabd7a7cf063bc368453748da09e40fd33549afa29d215dbe"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 10878,
+          "contentSha256": "4aec58e909628ce30a71498ca0bbc2ea7c090edceef0a1ee60e5f04a29e7b6c9",
+          "canonicalLfSha256": "902532fc9fb914beabd7a7cf063bc368453748da09e40fd33549afa29d215dbe"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbSubmenu.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 4945,
+          "contentSha256": "797b3336cca6c2b5beca26751f5a66952f716e92d301637816f09f54573f2828",
+          "canonicalLfSha256": "797b3336cca6c2b5beca26751f5a66952f716e92d301637816f09f54573f2828"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 5156,
+          "contentSha256": "5957677bc87e15418a455fe264c4d1e8c9ebc7efe80abd23c12c7ee50f034f0a",
+          "canonicalLfSha256": "797b3336cca6c2b5beca26751f5a66952f716e92d301637816f09f54573f2828"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbSuggest.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 3354,
+          "contentSha256": "4093cbfc2824a03bb7525c02e75b5e5877a54355608c23dcdf630b3004544470",
+          "canonicalLfSha256": "4093cbfc2824a03bb7525c02e75b5e5877a54355608c23dcdf630b3004544470"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 3531,
+          "contentSha256": "734806eb80855fae6a0f6d73a6327cda20f5d1bf82e779b93a99b25506690fc0",
+          "canonicalLfSha256": "4093cbfc2824a03bb7525c02e75b5e5877a54355608c23dcdf630b3004544470"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbSwitch.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 5343,
+          "contentSha256": "699c8760cc8fbcbc5843becfd2d25b877050d70e2420eff95a40b7454551245c",
+          "canonicalLfSha256": "699c8760cc8fbcbc5843becfd2d25b877050d70e2420eff95a40b7454551245c"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 5609,
+          "contentSha256": "c2478d2c82cd2d38a14a89c61ecc3ed48085b79dd714896223aeabdee723b7ee",
+          "canonicalLfSha256": "699c8760cc8fbcbc5843becfd2d25b877050d70e2420eff95a40b7454551245c"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbSwitchAccordion.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 2109,
+          "contentSha256": "5531a43140ddf978e616580d3093f10db008437da2e9efbc673877d62baad3e0",
+          "canonicalLfSha256": "5531a43140ddf978e616580d3093f10db008437da2e9efbc673877d62baad3e0"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 2216,
+          "contentSha256": "a9af54a596a9817c9d62742d5006c8f6c142f6fe0bd70063f498dfa21e035dbd",
+          "canonicalLfSha256": "5531a43140ddf978e616580d3093f10db008437da2e9efbc673877d62baad3e0"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbSwitchAccordionGroup.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 1160,
+          "contentSha256": "c05a6b777409f4b9a14c42ac7fb501075b63a527cbea1cef8a034897bdc61526",
+          "canonicalLfSha256": "c05a6b777409f4b9a14c42ac7fb501075b63a527cbea1cef8a034897bdc61526"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 1209,
+          "contentSha256": "5ce663dfceb6ef5d61a949565a9aaf5c965fe11c0e665da587cf65e68ab73793",
+          "canonicalLfSha256": "c05a6b777409f4b9a14c42ac7fb501075b63a527cbea1cef8a034897bdc61526"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbTab.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 11671,
+          "contentSha256": "89f5a479c9d5fe86324522cbeb0995671b5d7cebc1ba3d6ee3ab186ec7f4b4ac",
+          "canonicalLfSha256": "89f5a479c9d5fe86324522cbeb0995671b5d7cebc1ba3d6ee3ab186ec7f4b4ac"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 12250,
+          "contentSha256": "e81bef8d0576ed8eb6eee3a3527ad28368b7505e211c7df5e0de1b939987e8ad",
+          "canonicalLfSha256": "89f5a479c9d5fe86324522cbeb0995671b5d7cebc1ba3d6ee3ab186ec7f4b4ac"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbTableSelect.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 16287,
+          "contentSha256": "2e455e288e3c27f400e37f5e64b7ad4b2b2c278eb7fe8bbf48e7f0ac77b1f93a",
+          "canonicalLfSha256": "2e455e288e3c27f400e37f5e64b7ad4b2b2c278eb7fe8bbf48e7f0ac77b1f93a"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 17025,
+          "contentSha256": "30a0dee8ed27160c32ebe06c1bfa2057e10b33d2aea7e3236f2432d61b23ea54",
+          "canonicalLfSha256": "2e455e288e3c27f400e37f5e64b7ad4b2b2c278eb7fe8bbf48e7f0ac77b1f93a"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbTabs.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 8904,
+          "contentSha256": "784ee62e81d9787daf6c99357268c879fdacf5f58b34de167cade7eb33bc7793",
+          "canonicalLfSha256": "784ee62e81d9787daf6c99357268c879fdacf5f58b34de167cade7eb33bc7793"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 9302,
+          "contentSha256": "c607a7562e320ade557087b3abc942486ea2e8e894d7230776d6232afd9a704b",
+          "canonicalLfSha256": "784ee62e81d9787daf6c99357268c879fdacf5f58b34de167cade7eb33bc7793"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbTag.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 7998,
+          "contentSha256": "71c1cecdff9fc1e23c37992dafaa687f2ea557aed2e9e7cac2e21c3c3533623a",
+          "canonicalLfSha256": "71c1cecdff9fc1e23c37992dafaa687f2ea557aed2e9e7cac2e21c3c3533623a"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 8388,
+          "contentSha256": "d97e0a6531132a295ffb355287103772a82f17a014287f38e816e5d835a3ea3e",
+          "canonicalLfSha256": "71c1cecdff9fc1e23c37992dafaa687f2ea557aed2e9e7cac2e21c3c3533623a"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbTags.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 11211,
+          "contentSha256": "0ca5d2cb39f7183a988fb0e60a27511c04ca5927e3d4a9df1455e91d7c9161ce",
+          "canonicalLfSha256": "0ca5d2cb39f7183a988fb0e60a27511c04ca5927e3d4a9df1455e91d7c9161ce"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 11771,
+          "contentSha256": "9b219062960aa63f1cefc2e7f77c6dd18f4246036166e73efd96a4e39d96766f",
+          "canonicalLfSha256": "0ca5d2cb39f7183a988fb0e60a27511c04ca5927e3d4a9df1455e91d7c9161ce"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbText.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 14813,
+          "contentSha256": "fcb6dad8ba0b37389ddb55bd87981bd8bf192ae5ec74118b0370d095f5bec898",
+          "canonicalLfSha256": "fcb6dad8ba0b37389ddb55bd87981bd8bf192ae5ec74118b0370d095f5bec898"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 15335,
+          "contentSha256": "ccba386a7fd8dbd1a870171d31e13814d8fba2f943ff0c93dc09563c48e44bc8",
+          "canonicalLfSha256": "fcb6dad8ba0b37389ddb55bd87981bd8bf192ae5ec74118b0370d095f5bec898"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbTextarea.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 2757,
+          "contentSha256": "cd3a1075b9527432d14e2a53e32e0146b52f7efcd30fe605073fb62968ef2fdb",
+          "canonicalLfSha256": "cd3a1075b9527432d14e2a53e32e0146b52f7efcd30fe605073fb62968ef2fdb"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 2901,
+          "contentSha256": "98b0ca1afb1aa8a418d51a4c8ad572ca80e62f50f205ae0a925f3b1b1bd9399b",
+          "canonicalLfSha256": "cd3a1075b9527432d14e2a53e32e0146b52f7efcd30fe605073fb62968ef2fdb"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbTimeline.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 9726,
+          "contentSha256": "47b10e49938e58bc60bab16678ff956ec847e9e932afdf57247b0693ca54184f",
+          "canonicalLfSha256": "47b10e49938e58bc60bab16678ff956ec847e9e932afdf57247b0693ca54184f"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 10207,
+          "contentSha256": "597610de3a5cec58b5b86fda43cbf8e3e8f6bcb69dc771ff6e91dc8c4140bc22",
+          "canonicalLfSha256": "47b10e49938e58bc60bab16678ff956ec847e9e932afdf57247b0693ca54184f"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbTimelineItem.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 8521,
+          "contentSha256": "6f3fa0018c472d530e5c3c7fef57ada4497d7ebe88212811b31abcc1d95bcac0",
+          "canonicalLfSha256": "6f3fa0018c472d530e5c3c7fef57ada4497d7ebe88212811b31abcc1d95bcac0"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 8912,
+          "contentSha256": "6969a523b8f34790b6a553585df8c019178cc1c26e849e87845e61a938d01e2f",
+          "canonicalLfSha256": "6f3fa0018c472d530e5c3c7fef57ada4497d7ebe88212811b31abcc1d95bcac0"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbTimepicker.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 3151,
+          "contentSha256": "8b938b3e422dc9a06074ec770506a71baaf8be6218e033c470d9276c33c1acd8",
+          "canonicalLfSha256": "8b938b3e422dc9a06074ec770506a71baaf8be6218e033c470d9276c33c1acd8"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 3318,
+          "contentSha256": "01ceb963ddeb8c7089eaa05f976dac4e2ce45c480d40e240d2f9472c49b93372",
+          "canonicalLfSha256": "8b938b3e422dc9a06074ec770506a71baaf8be6218e033c470d9276c33c1acd8"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbTmap.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 13961,
+          "contentSha256": "072f5f82781e68d356a3b54ef3748ae05b3c903e6a3ffdb7db567377c5a64067",
+          "canonicalLfSha256": "072f5f82781e68d356a3b54ef3748ae05b3c903e6a3ffdb7db567377c5a64067"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 14583,
+          "contentSha256": "b8f794abd92158709b99810f618321fcd57a20a4db680601cde51475daadf4b7",
+          "canonicalLfSha256": "072f5f82781e68d356a3b54ef3748ae05b3c903e6a3ffdb7db567377c5a64067"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbToast.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 2513,
+          "contentSha256": "e25d8351b7d7763844af6aaff8d3e37803d89cdc7f531ae783218275a9cef55d",
+          "canonicalLfSha256": "e25d8351b7d7763844af6aaff8d3e37803d89cdc7f531ae783218275a9cef55d"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 2664,
+          "contentSha256": "5972bc5107c86f1f36b6610a697667e55a8f7b35e217e5df1a1cb57d681c61d0",
+          "canonicalLfSha256": "e25d8351b7d7763844af6aaff8d3e37803d89cdc7f531ae783218275a9cef55d"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbToolbar.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 15524,
+          "contentSha256": "e66cda6712e87a15c9ed87540daffd31d234d36bbba00047272e645f1b9fb28d",
+          "canonicalLfSha256": "e66cda6712e87a15c9ed87540daffd31d234d36bbba00047272e645f1b9fb28d"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 16259,
+          "contentSha256": "4dc2f063486aa62c58754d43539efe2a6bca517e441515a5421e329c25198054",
+          "canonicalLfSha256": "e66cda6712e87a15c9ed87540daffd31d234d36bbba00047272e645f1b9fb28d"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbTooltip.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 12850,
+          "contentSha256": "ed9aac5477e1c61c97ffccda82c915bee6789b94cf549490d497e693e66cea4d",
+          "canonicalLfSha256": "ed9aac5477e1c61c97ffccda82c915bee6789b94cf549490d497e693e66cea4d"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 13425,
+          "contentSha256": "05474816112814f9fdee9f7bb535a3d64386677f24bc647a09d8b8153c2dd085",
+          "canonicalLfSha256": "ed9aac5477e1c61c97ffccda82c915bee6789b94cf549490d497e693e66cea4d"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbTransfer.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 14711,
+          "contentSha256": "85b2e738344c1779739857a0dffbfb321a39f7ac0aba1cf5dd7562252fac7703",
+          "canonicalLfSha256": "85b2e738344c1779739857a0dffbfb321a39f7ac0aba1cf5dd7562252fac7703"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 15426,
+          "contentSha256": "8c46396cee59189fd5a18e19362b9ea65df780e606ae52e75c5bd6422a175c80",
+          "canonicalLfSha256": "85b2e738344c1779739857a0dffbfb321a39f7ac0aba1cf5dd7562252fac7703"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbTree.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 7828,
+          "contentSha256": "b610549ffec3ec80c03d1c8250bee80ba0e1a37460e2ea506b79df96328eb552",
+          "canonicalLfSha256": "b610549ffec3ec80c03d1c8250bee80ba0e1a37460e2ea506b79df96328eb552"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 8114,
+          "contentSha256": "1a1ad9448763c9b09f42fc4ca21eaff0f277c0c8aebbde8471eb60baf925803d",
+          "canonicalLfSha256": "b610549ffec3ec80c03d1c8250bee80ba0e1a37460e2ea506b79df96328eb552"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbTreeNodeText.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 1038,
+          "contentSha256": "c2361ebb6b7236f1dbb9a9138bbaaa176b457d1037b8c2b1f6bea47ed17ef1c8",
+          "canonicalLfSha256": "c2361ebb6b7236f1dbb9a9138bbaaa176b457d1037b8c2b1f6bea47ed17ef1c8"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 1080,
+          "contentSha256": "306d0a6573ff43d7cede5bfce95d9378cf7409e571a5bf3d9a5a22148b503c80",
+          "canonicalLfSha256": "c2361ebb6b7236f1dbb9a9138bbaaa176b457d1037b8c2b1f6bea47ed17ef1c8"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbTreeSelect.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 14549,
+          "contentSha256": "c8fe3e9410669d168f4bc87d963cf4920381731eef3823a597c6ad77e70f4d4c",
+          "canonicalLfSha256": "c8fe3e9410669d168f4bc87d963cf4920381731eef3823a597c6ad77e70f4d4c"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 15205,
+          "contentSha256": "54e387ecf6a2f2942838c309fb396115f4242c38de90b108964bdf587c195e7d",
+          "canonicalLfSha256": "c8fe3e9410669d168f4bc87d963cf4920381731eef3823a597c6ad77e70f4d4c"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbUpload.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 8430,
+          "contentSha256": "82bee15eb88cdb5bf508621e104c5345f634d772c5aa53c4a185c9dbeb8f859c",
+          "canonicalLfSha256": "82bee15eb88cdb5bf508621e104c5345f634d772c5aa53c4a185c9dbeb8f859c"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 8835,
+          "contentSha256": "4c4d8029c7d1523ef58f915dbc31f7cb33c732381eeb176db16b7464605565be",
+          "canonicalLfSha256": "82bee15eb88cdb5bf508621e104c5345f634d772c5aa53c4a185c9dbeb8f859c"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbUploadList.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 11947,
+          "contentSha256": "db3d088101ad62bb50b5b19d8e4775f279ad4c928a803fd4ff9fac90ff7b85aa",
+          "canonicalLfSha256": "db3d088101ad62bb50b5b19d8e4775f279ad4c928a803fd4ff9fac90ff7b85aa"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 12565,
+          "contentSha256": "358908cef589a9bf0d71b82fd95a4367c978053b67ab2f2e60a230afd0b5e899",
+          "canonicalLfSha256": "db3d088101ad62bb50b5b19d8e4775f279ad4c928a803fd4ff9fac90ff7b85aa"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--FbWatermark.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 10574,
+          "contentSha256": "20cf2101f36623156ca493916475a975cf059590ca1371ad63baf2d92f0929b6",
+          "canonicalLfSha256": "20cf2101f36623156ca493916475a975cf059590ca1371ad63baf2d92f0929b6"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 11118,
+          "contentSha256": "8782aa34ecbbe4a317e1afcae1afd5d506d7d4c42b26de822313cb1196aad8c9",
+          "canonicalLfSha256": "20cf2101f36623156ca493916475a975cf059590ca1371ad63baf2d92f0929b6"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--Swiper.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 14500,
+          "contentSha256": "7cd93e86c64f608100c3f3388b669bca417df196f5525fa1dc9631b743332576",
+          "canonicalLfSha256": "7cd93e86c64f608100c3f3388b669bca417df196f5525fa1dc9631b743332576"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 15168,
+          "contentSha256": "876e41bdeb9fbb2bacc3ca50b91a6a44589d4e0864d27cde3d56363a2136086b",
+          "canonicalLfSha256": "7cd93e86c64f608100c3f3388b669bca417df196f5525fa1dc9631b743332576"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--api-reference.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 13975,
+          "contentSha256": "9cc73f25c8f9c15d12763eec4d474bcbc363274ab6add2945e06dc5f2858be7d",
+          "canonicalLfSha256": "9cc73f25c8f9c15d12763eec4d474bcbc363274ab6add2945e06dc5f2858be7d"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 14523,
+          "contentSha256": "63f9d147e88695dbe2797a44eb5b6a39896fd3ed71d6634ea839e98bec88fb31",
+          "canonicalLfSha256": "9cc73f25c8f9c15d12763eec4d474bcbc363274ab6add2945e06dc5f2858be7d"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--COMPONENTS--tp-usage.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 14030,
+          "contentSha256": "a9366e492dbd5aa8ca78785fdee5db8b82992a20d1c273a74e2bcc3c0d60023e",
+          "canonicalLfSha256": "a9366e492dbd5aa8ca78785fdee5db8b82992a20d1c273a74e2bcc3c0d60023e"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 14746,
+          "contentSha256": "8bc2c102925222a772b9442a488b93f7f26f65dfee09820eba85557538487797",
+          "canonicalLfSha256": "a9366e492dbd5aa8ca78785fdee5db8b82992a20d1c273a74e2bcc3c0d60023e"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--DEVELOPMENT--page-templates.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 8254,
+          "contentSha256": "1ee7ac6498c44ca43c385fb62708424c2377f276af73c4037ec79f127a5558bf",
+          "canonicalLfSha256": "1ee7ac6498c44ca43c385fb62708424c2377f276af73c4037ec79f127a5558bf"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 8594,
+          "contentSha256": "97468926f995f3c25a73a9ce09f19d7516b7e6bf8e3813713e8e9a60fd651a7f",
+          "canonicalLfSha256": "1ee7ac6498c44ca43c385fb62708424c2377f276af73c4037ec79f127a5558bf"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--DEVELOPMENT--service-layer.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 6851,
+          "contentSha256": "ffcf22bb4771cd93365629d984f90b8837d7a7123d1faf0a0b1ed9f9a654073d",
+          "canonicalLfSha256": "ffcf22bb4771cd93365629d984f90b8837d7a7123d1faf0a0b1ed9f9a654073d"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 7176,
+          "contentSha256": "1006ea06f424113b902b2af26c71da0537e3121e25a58acbbd06a85d4a96ccbc",
+          "canonicalLfSha256": "ffcf22bb4771cd93365629d984f90b8837d7a7123d1faf0a0b1ed9f9a654073d"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-FRONTEND/PC-FRONTEND--GUIDE--index.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 12979,
+          "contentSha256": "c2e69d15223b89381e0d2dab5456e19f5b6b9bdf7f331f7b9bcc9372494d47e4",
+          "canonicalLfSha256": "c2e69d15223b89381e0d2dab5456e19f5b6b9bdf7f331f7b9bcc9372494d47e4"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 13379,
+          "contentSha256": "2cbedd3f7b9bb68eae230da47c38e4848bce88c740b485fade3de39c6c7e5638",
+          "canonicalLfSha256": "c2e69d15223b89381e0d2dab5456e19f5b6b9bdf7f331f7b9bcc9372494d47e4"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-SCREEN/PC-SCREEN--ARCHITECTURE--project-structure.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 2675,
+          "contentSha256": "9b4622226396ded8c45799a62f3b4b487c4d6c5e023172dc96da2382a17503ba",
+          "canonicalLfSha256": "9b4622226396ded8c45799a62f3b4b487c4d6c5e023172dc96da2382a17503ba"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 2752,
+          "contentSha256": "ee89acc8de727872b49449a0a00f7fc0a395dfddf2ce327742e52ddd28d073b8",
+          "canonicalLfSha256": "9b4622226396ded8c45799a62f3b4b487c4d6c5e023172dc96da2382a17503ba"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-SCREEN/PC-SCREEN--COMPONENTS--custom.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 7181,
+          "contentSha256": "258187a4ac1f0b7de5f0aa260c748c963e40986138ba2daa1b960d104a3d9031",
+          "canonicalLfSha256": "258187a4ac1f0b7de5f0aa260c748c963e40986138ba2daa1b960d104a3d9031"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 7529,
+          "contentSha256": "c0fd044bb8f61d57e2035e8afb4cf6c8e702f5ff028cc76778cfd9076bae8cac",
+          "canonicalLfSha256": "258187a4ac1f0b7de5f0aa260c748c963e40986138ba2daa1b960d104a3d9031"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-SCREEN/PC-SCREEN--COMPONENTS--dialog.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 3677,
+          "contentSha256": "dcb0628b16518d0266c8a3a636f5f328c5b6a7a0f12c083a9b05a99f0a9aef11",
+          "canonicalLfSha256": "dcb0628b16518d0266c8a3a636f5f328c5b6a7a0f12c083a9b05a99f0a9aef11"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 3897,
+          "contentSha256": "400bd0d3ffbe2871f81e0d17a847cc2369f587af61c29590dcd0c88e2f73c61f",
+          "canonicalLfSha256": "dcb0628b16518d0266c8a3a636f5f328c5b6a7a0f12c083a9b05a99f0a9aef11"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-SCREEN/PC-SCREEN--COMPONENTS--map.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 4584,
+          "contentSha256": "e6e8d218d366e4adfae588490614d77b806cbc696bb3bc8c94a74613b6027b68",
+          "canonicalLfSha256": "e6e8d218d366e4adfae588490614d77b806cbc696bb3bc8c94a74613b6027b68"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 4807,
+          "contentSha256": "20a0bae0f72808b1bdd1cc0c3c4414759f09c9a0b42842702bb698f2d9a9eea5",
+          "canonicalLfSha256": "e6e8d218d366e4adfae588490614d77b806cbc696bb3bc8c94a74613b6027b68"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-SCREEN/PC-SCREEN--COMPONENTS--screen-aux.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo",
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 12239,
+          "contentSha256": "62dd74561e0f685f5cefcabc8655239a1dfab40b497cd6d1998dcc2551192f50",
+          "canonicalLfSha256": "793d8842a5cd246374c26b4f2d32eba5ded96ce16edaa6ff50d828f586ccf1f4"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-SCREEN/PC-SCREEN--COMPONENTS--screen-flop.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo",
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 11578,
+          "contentSha256": "67670aeb86ad68f9e4e7534b5f624560cd8acf02d4d78b763776afc58ea3b85f",
+          "canonicalLfSha256": "1f26f3d3db39dba0dfa80fea661b6a409c2a18ad1054409562c37ed5e6633ab6"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-SCREEN/PC-SCREEN--COMPONENTS--screen-panel.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo",
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 10477,
+          "contentSha256": "be2bb6e6eef33d8f9d87df679586fe1c9fb11b0d1e3f4842213a29de42333907",
+          "canonicalLfSha256": "48b0421fd0d55c49fb4f4fd75d25e47cffc1884a3b727572cecd8b55c94aebd2"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-SCREEN/PC-SCREEN--DEVELOPMENT--data-mock.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 4994,
+          "contentSha256": "ec56640d5fb6abb98edaee1ea751b56587c8d3c58c802dc578ff95e83a770553",
+          "canonicalLfSha256": "ec56640d5fb6abb98edaee1ea751b56587c8d3c58c802dc578ff95e83a770553"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 5273,
+          "contentSha256": "307339c0536bc8c5968bd850ac1f9d8a07bf048816a818a9bfaadb666d2b1d89",
+          "canonicalLfSha256": "ec56640d5fb6abb98edaee1ea751b56587c8d3c58c802dc578ff95e83a770553"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-SCREEN/PC-SCREEN--DEVELOPMENT--screen-util.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo",
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 15569,
+          "contentSha256": "c9bf703553f981f275f580dbc66cd5ebad61f5bc6e14ab8693678b825b52af79",
+          "canonicalLfSha256": "5e9e9699e703767137c908984c307b3002afa163766f213ce9021788108a147c"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-SCREEN/PC-SCREEN--DEVELOPMENT--theme.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 3389,
+          "contentSha256": "f6897992af52c257707322eb759cf9ccd56d33ac791f1bbb1c0dbc52a31e6e3c",
+          "canonicalLfSha256": "f6897992af52c257707322eb759cf9ccd56d33ac791f1bbb1c0dbc52a31e6e3c"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 3582,
+          "contentSha256": "14bc6bafdc0adb22d68389567c4961174eb15b57a504fb1b1c45d85f276cbeb1",
+          "canonicalLfSha256": "f6897992af52c257707322eb759cf9ccd56d33ac791f1bbb1c0dbc52a31e6e3c"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-SCREEN/PC-SCREEN--DEVELOPMENT--views.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 3520,
+          "contentSha256": "8f7b8c22a62c75d0d4b05e980d785dc12be481927339cd1fcec3ed6560d686de",
+          "canonicalLfSha256": "8f7b8c22a62c75d0d4b05e980d785dc12be481927339cd1fcec3ed6560d686de"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 3711,
+          "contentSha256": "9eea2de8d662b589d041ac996d21517bbcc6f758a053385300f2415de4ea60d2",
+          "canonicalLfSha256": "8f7b8c22a62c75d0d4b05e980d785dc12be481927339cd1fcec3ed6560d686de"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-SCREEN/PC-SCREEN--GUIDE--index.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 3454,
+          "contentSha256": "da75597b602fcdfb7cffc1be498aa397bc57fb2ea352ae3d9f7106363784d9bf",
+          "canonicalLfSha256": "da75597b602fcdfb7cffc1be498aa397bc57fb2ea352ae3d9f7106363784d9bf"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 3566,
+          "contentSha256": "a5cbebbfa3f553737f5713fc477e56a385dc9fcbf3d6e2577d238c3a9db2a9da",
+          "canonicalLfSha256": "da75597b602fcdfb7cffc1be498aa397bc57fb2ea352ae3d9f7106363784d9bf"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-SCREEN/PC-SCREEN--QUALITY--common-errors.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 6791,
+          "contentSha256": "4fd30d8a1838b867f956f82525787c3a3d98c63d0eba4011e4ae13217cd2472e",
+          "canonicalLfSha256": "4fd30d8a1838b867f956f82525787c3a3d98c63d0eba4011e4ae13217cd2472e"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 7195,
+          "contentSha256": "3e81b7836fb8f5f8c387628e187f1b5f9222bdc0f3e001d9da3aaa9b638fac84",
+          "canonicalLfSha256": "4fd30d8a1838b867f956f82525787c3a3d98c63d0eba4011e4ae13217cd2472e"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-SCREEN/PC-SCREEN--STANDARDS--comments.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 6800,
+          "contentSha256": "725b07898b26185067a81ef43387d6832e3f80c956e453348574b3dd9bba2397",
+          "canonicalLfSha256": "725b07898b26185067a81ef43387d6832e3f80c956e453348574b3dd9bba2397"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 7121,
+          "contentSha256": "4894eb584eed2bfc612b83aacc0c24305ba25f5d8748de50578e0a4ab3216eab",
+          "canonicalLfSha256": "725b07898b26185067a81ef43387d6832e3f80c956e453348574b3dd9bba2397"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PC-SCREEN/PC-SCREEN--STANDARDS--developer-info.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 6388,
+          "contentSha256": "04797b85759e5d74c024da3d68b5657727f831d02f2c36934e9625b53f51393b",
+          "canonicalLfSha256": "04797b85759e5d74c024da3d68b5657727f831d02f2c36934e9625b53f51393b"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 6721,
+          "contentSha256": "e39f4e726c1b24550594c27a083a691b31aebcad697512d306393462c63b23db",
+          "canonicalLfSha256": "04797b85759e5d74c024da3d68b5657727f831d02f2c36934e9625b53f51393b"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PROJECT/PROJECT--GUIDE--index.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 1039,
+          "contentSha256": "c143c6c8fde3ead9e608c46fe2a29f10e08e79a0ea88513aa9a56560721f37ba",
+          "canonicalLfSha256": "c143c6c8fde3ead9e608c46fe2a29f10e08e79a0ea88513aa9a56560721f37ba"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 1068,
+          "contentSha256": "f30b3693b12b2a673bcdb0056a1dae7d920ceecc1c926e1088c87bdb935b97f1",
+          "canonicalLfSha256": "c143c6c8fde3ead9e608c46fe2a29f10e08e79a0ea88513aa9a56560721f37ba"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PROJECT/T20220169.md",
+      "kind": "exclusive",
+      "empty": true,
+      "requiresAnchor": true,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo",
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 0,
+          "contentSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "canonicalLfSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/PROJECT/T20241513.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo",
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 354,
+          "contentSha256": "87e04bedf48646e670acc19d5fc1ae7ab5aca961f837083b8b4561de0c0cf958",
+          "canonicalLfSha256": "bc4d6916c7ced3ded8ad23d1dce381e90ae1c398426b26eec99088ce4649743f"
+        }
+      ]
+    },
+    {
+      "path": ".fb/rules/agent_guide.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo",
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 2924,
+          "contentSha256": "ede5ce98d95890ce10f85a4559a51434159a7490b55282be37bdbab4399de519",
+          "canonicalLfSha256": "16e915bb1564cb0004790901622e3a0252d1a1981524133dd0583a3750c26fac"
+        }
+      ]
+    },
+    {
+      "path": ".gemini/antigravity/rules/agent_guide.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo",
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 2930,
+          "contentSha256": "55f44b5aa8e67ba741be4f1fbdca00336badb2a39a4a3855cdab028e8050556b",
+          "canonicalLfSha256": "0fd5e72b17251712fc423afa889d58d312c5583bf26a8cf5954a49b982d9773e"
+        }
+      ]
+    },
+    {
+      "path": ".iflow/rules/agent_guide.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo",
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 2897,
+          "contentSha256": "a12b861d7fbe5b32710f64b151cba7a1537ed7ae09d734ad3aba298994c1eee7",
+          "canonicalLfSha256": "18737dc07265975c967b792337e5f485422ef3a6f52beb4de0dd13f654a29803"
+        }
+      ]
+    },
+    {
+      "path": ".lingma/index.json",
+      "kind": "anchor",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo"
+          ],
+          "bytes": 53,
+          "contentSha256": "77407eb35b61a3c1978b5f96f8ad4356724718614a079dbe37110891cde92cce",
+          "canonicalLfSha256": "77407eb35b61a3c1978b5f96f8ad4356724718614a079dbe37110891cde92cce"
+        },
+        {
+          "sources": [
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 57,
+          "contentSha256": "2df6c856ea2671e30f13f4f809c4d9606032c89af4dddfc37df694da0c71dcd9",
+          "canonicalLfSha256": "77407eb35b61a3c1978b5f96f8ad4356724718614a079dbe37110891cde92cce"
+        }
+      ]
+    },
+    {
+      "path": ".lingma/rules/agent_guide.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo",
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 3154,
+          "contentSha256": "87a240f01973c14b1ccc1646422678daacedafeb59b6042186a5148f17a48a88",
+          "canonicalLfSha256": "ceb4b2803fefef9c6c987b6a30f7ab32972f557b542536a547025e98d75822a1"
+        }
+      ]
+    },
+    {
+      "path": ".qoder/rules/agent_guide.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo",
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 3154,
+          "contentSha256": "87a240f01973c14b1ccc1646422678daacedafeb59b6042186a5148f17a48a88",
+          "canonicalLfSha256": "ceb4b2803fefef9c6c987b6a30f7ab32972f557b542536a547025e98d75822a1"
+        }
+      ]
+    },
+    {
+      "path": ".trae/rules/agent_guide.md",
+      "kind": "exclusive",
+      "empty": false,
+      "requiresAnchor": false,
+      "variants": [
+        {
+          "sources": [
+            "fb-rules-repo",
+            "topinfo-fb-rules-copy"
+          ],
+          "bytes": 3154,
+          "contentSha256": "87a240f01973c14b1ccc1646422678daacedafeb59b6042186a5148f17a48a88",
+          "canonicalLfSha256": "ceb4b2803fefef9c6c987b6a30f7ab32972f557b542536a547025e98d75822a1"
+        }
+      ]
+    }
+  ]
+}

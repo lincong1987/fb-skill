@@ -1,0 +1,6 @@
+interface:
+  display_name: "FB Skill 安装与旧规则清理"
+  short_description: "预览后安装或清理 FB 管理文件，保留用户自定义内容"
+  default_prompt: "Use $manage-fb-skill to preview installation or removal of legacy FB-managed files in this project. Obtain explicit approval of the exact plan before applying it."
+policy:
+  allow_implicit_invocation: true

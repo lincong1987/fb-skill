@@ -73,7 +73,7 @@ Use `tp-upload` or `tp-upload-path` when the target project adopts those busines
 <tp-upload v-model="formData.attachments" />
 ```
 
-Check the exact component props for readonly, limits, accept types, business URLs, and preview behavior. Do not introduce raw `fb-upload` for new business forms.
+Check the exact component props for readonly, limits, accept types, business URLs, and preview behavior. Use the wrapper adopted by the target application; a deliberately implemented raw `fb-upload` integration is not automatically invalid.
 
 ## Feedback services
 
@@ -82,7 +82,9 @@ this.$message.warn('请先选择记录')
 
 this.$confirm(
   '确定删除吗？',
-  () => this.table.service.delete({ id: row.id }).then(() => this.table.doReload()),
+  () => this.service.delete({ id: row.id }).then(result => {
+    if (result && result.code === 1) this.$refs.table.doReload()
+  }),
   () => {},
   { title: '提示' }
 )

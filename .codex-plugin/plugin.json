@@ -1,23 +1,23 @@
 {
   "name": "fb-skill",
-  "version": "0.1.0",
-  "description": "Source-grounded Vue 2 FBJS and FbUI development guidance",
+  "version": "0.2.1",
+  "description": "Source-first full-stack development, component verification, approval records and bounded installation for the Topinfo FB ecosystem",
   "author": {
     "name": "lincong1987",
     "url": "https://github.com/lincong1987"
   },
   "homepage": "https://github.com/lincong1987/fb-skill",
   "repository": "https://github.com/lincong1987/fb-skill",
-  "keywords": ["fbjs", "fbui", "vue2", "codex", "agent-skill"],
+  "keywords": ["fbjs", "fbui", "taui", "uni-app", "vue2", "java", "sql", "agent-skill"],
   "skills": "./skills/",
   "interface": {
-    "displayName": "FBJS Vue2 Development",
-    "shortDescription": "Source-grounded FBJS and FbUI guidance for Vue 2 projects.",
-    "longDescription": "Inspect installed FBJS/FbUI sources, distinguish them from Element UI, and validate Vue 2 component usage.",
+    "displayName": "FB Full-stack Skills",
+    "shortDescription": "按需取证、经批准实施、如实验证并留痕。",
+    "longDescription": "Detect the target PC, mobile, screen or Java/SQL project, verify source contracts, record explicit human approval and implementation evidence, and preview installation or legacy FB rule cleanup.",
     "developerName": "lincong1987",
     "category": "Developer Tools",
     "capabilities": ["Read", "Write"],
     "websiteURL": "https://github.com/lincong1987/fb-skill",
-    "defaultPrompt": "Inspect this Vue 2 project and use the FBJS runtime APIs without introducing Element UI conventions."
+    "defaultPrompt": "Use create-fb-feature to inspect this requirement and the target project. Propose a source-grounded implementation, obtain explicit approval of the current plan, then implement and record fresh verification evidence."
   }
 }

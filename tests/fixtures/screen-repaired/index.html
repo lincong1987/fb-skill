@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FB Skill Screen Repaired (MOCK)</title>
+  <style>
+    html,body{margin:0;height:100%;overflow:hidden;background:#0b1c33}
+    /* wrapper 控制条（卸载验证 / 重新挂载）布局 */
+    .repaired-wrapper{position:relative;width:100%;height:100%}
+    .repaired-controls{position:fixed;left:8px;bottom:8px;z-index:100;display:flex;gap:8px;align-items:center;
+      padding:6px 10px;background:rgba(4,18,38,0.85);border:1px solid #1d3f66;border-radius:4px;font-size:13px;color:#9fc3e8}
+    .repaired-controls__state{font-weight:600;color:#35d0ca}
+    .repaired-controls__report{color:#ffd591}
+  </style>
+</head>
+<body class="screen-body">
+<div id="fb-screen-root"></div>
+<script src="/app.js"></script>
+</body>
+</html>

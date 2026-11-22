@@ -1,0 +1,769 @@
+{
+  "schemaVersion": 1,
+  "caseId": "smsnotice-pilot",
+  "version": 1,
+  "status": "host-approved-mock-evaluation",
+  "nature": "mock-evaluation-contract-not-production-api-certification",
+  "runtime": {
+    "projectRoot": "D:/projects/T20240246-GMRHCP/T20240246-GMRHCP-Code/branches/V3.51-20261116/mew-manage-ui",
+    "packages": {
+      "vue": "2.6.12",
+      "vue-template-compiler": "2.6.12",
+      "fb-ui": "1.1.840",
+      "fb-core": "1.1.824",
+      "@topinfo/tp-components": "2.2.16"
+    },
+    "buildTooling": {
+      "@vue/cli-service": "4.5.19",
+      "webpack": "4.47.0",
+      "vue-loader": "15.11.1"
+    },
+    "policy": "Use this target runtime and its installed tooling; do not substitute the SOL07 runtime or install packages automatically."
+  },
+  "rules": [
+    {
+      "id": "C01",
+      "requirementIds": [
+        "R01",
+        "R11"
+      ],
+      "description": "All users, dictionary choices, notices, time and failure switches below are synthetic. Transport uses a local mock only, never the production API. Every request is handled or refused locally; unknown paths never fall through to a real HTTP client.",
+      "classification": "explicit-test-convention"
+    },
+    {
+      "id": "C02",
+      "requirementIds": [
+        "R02",
+        "R03",
+        "R11"
+      ],
+      "description": "List query uses noticeTitle, noticeType, pubTimeStart, pubTimeEnd, noticeStatus; pager uses current/size. Dates sent as YYYYMMDD. Mock title matching is substring, other populated filters are exact and date bounds are inclusive. Ignore additional table UI pager/sorter keys; records follow mockNotices and each row includes noticeId/passKey/noticeStatus.",
+      "classification": "frontend-parameters-observed-plus-explicit-mock-filtering",
+      "request": {
+        "method": "GET",
+        "path": "/psncenter/smsnotice/list"
+      },
+      "successResponse": {
+        "code": 1,
+        "message": "mock success",
+        "data": {
+          "records": [],
+          "total": 0,
+          "current": 1,
+          "size": 10,
+          "pages": 0
+        }
+      },
+      "responseEvidence": "fb-ui 1.1.840 FbSimpleTable.vue:362-377 default dataParse, not an executed backend response"
+    },
+    {
+      "id": "C03",
+      "requirementIds": [
+        "R04",
+        "R07",
+        "R11"
+      ],
+      "description": "View requests noticeId/passKey and returns one notice object under data when code=1. A missing or failing view does not unlock saving an incomplete record.",
+      "classification": "frontend-service-observed-plus-explicit-mock-response",
+      "request": {
+        "method": "GET",
+        "path": "/psncenter/smsnotice/view",
+        "params": [
+          "noticeId",
+          "passKey"
+        ]
+      }
+    },
+    {
+      "id": "C04",
+      "requirementIds": [
+        "R04",
+        "R05",
+        "R06",
+        "R09",
+        "R10"
+      ],
+      "description": "Add/update are JSON POST. This pilot explicitly sends noticeTitle, noticeType, pubTime, pubDeptId, pubDeptName, noticeRange, noticeStatus, noticeContent and file; update also sends noticeId/passKey from the mock detail or retained row identity. This is a bounded mock payload, not certification of all backend-required fields. Old code replaces formData with the view response, so its update passKey depends on that response containing it. Create a separate payload; file is {referType:'SYS1047',fileList:[{attachId}]}, not rich display records. Mock success returns data.noticeId and the saved state.",
+      "classification": "frontend-service-observed-plus-explicit-bounded-mock-payload",
+      "add": {
+        "method": "POST",
+        "path": "/psncenter/smsnotice/add"
+      },
+      "update": {
+        "method": "POST",
+        "path": "/psncenter/smsnotice/update"
+      },
+      "timeoutMs": 5000
+    },
+    {
+      "id": "C05",
+      "requirementIds": [
+        "R08"
+      ],
+      "description": "Single deletion uses the observed GET interface, noticeIds contains one ID and passKey is supplied. This reproduces the consumer contract in a mock, not a recommendation to design new deletion APIs with GET.",
+      "classification": "observed-legacy-interface-mock-only",
+      "request": {
+        "method": "GET",
+        "path": "/psncenter/smsnotice/delete",
+        "params": [
+          "noticeIds",
+          "passKey"
+        ]
+      }
+    },
+    {
+      "id": "C06",
+      "requirementIds": [
+        "R02",
+        "R04",
+        "R05",
+        "R07",
+        "R11"
+      ],
+      "description": "Dictionary families observed: X54 type, X55 range, X56 status. X5601/X5602 are the two statuses consumed by the page. Choice labels below are synthetic, not copied from real dictionary data.",
+      "classification": "observed-codes-synthetic-labels",
+      "dictionaries": {
+        "X54": [
+          {
+            "value": "X5401",
+            "label": "演练通知"
+          },
+          {
+            "value": "X5402",
+            "label": "演练提醒"
+          }
+        ],
+        "X55": [
+          {
+            "value": "X5501",
+            "label": "演练范围甲"
+          },
+          {
+            "value": "X5502",
+            "label": "演练范围乙"
+          }
+        ],
+        "X56": [
+          {
+            "value": "X5601",
+            "label": "草稿"
+          },
+          {
+            "value": "X5602",
+            "label": "已发布"
+          }
+        ]
+      }
+    },
+    {
+      "id": "C07",
+      "requirementIds": [
+        "R03",
+        "R08"
+      ],
+      "description": "Observed action codes: create OP_MANAGE_SMSNOTICE_ADD, edit OP_MANAGE_SMSNOTICE_UPDATE, view OP_MANAGE_SMSNOTICE_VIEW, delete OP_MANAGE_SMSNOTICE_DELETE. Mock can supply an empty set or individual permissions. Frontend tests do not prove server authorization.",
+      "classification": "observed-permission-codes-mock-roles"
+    },
+    {
+      "id": "C08",
+      "requirementIds": [
+        "R04",
+        "R05",
+        "R07",
+        "R09"
+      ],
+      "description": "UI noticeRange is always an array; request payload is an English-comma string. View response null, empty string or missing range normalizes to []. Repeated failure/success attempts retain UI selection. Proposed business rules D02/D03/D05/D07 remain pending.",
+      "classification": "explicit-test-normalization-with-observed-wire-format"
+    },
+    {
+      "id": "C09",
+      "requirementIds": [
+        "R04",
+        "R11"
+      ],
+      "description": "Mock clock is 2026-11-21T09:00:00+08:00, used only for business date defaults; audit times are collected from the real clock. Mock user unit is UNIT-MOCK / 演练发布单位, never a real identity.",
+      "classification": "synthetic-clock-and-unit",
+      "clock": "2026-11-21T09:00:00+08:00",
+      "userInfo": {
+        "ascnId": "UNIT-MOCK",
+        "ascnName": "演练发布单位"
+      }
+    },
+    {
+      "id": "C10",
+      "requirementIds": [
+        "R06",
+        "R07",
+        "R09",
+        "R11"
+      ],
+      "description": "Observe list/view/add/update/delete/fileByReferId counters via mock transport. Controls support success, business failure {code:-1,message:'演练请求失败'} and rejected request Error('演练网络异常'). Failed saves do not mutate notices. Delayed responses allow double-click testing. A separate stale-row control returns published X5602 detail for a draft X5601 list row; this lets the public read-only transition requirement be tested. List failures display an error and retain previous data, or an empty list when no data was loaded. Counters and switches are test observations, not business APIs.",
+      "classification": "explicit-test-transport-observability",
+      "controlApi": {
+        "global": "window.__smsnoticeMock",
+        "methods": {
+          "reset": "reset(): restore mockNotices/permissions/counters/modes/stale=false; does not itself query or remount UI",
+          "setMode": "setMode(operation, mode, delayMs=0): operation list/view/add/update/delete/fileByReferId; mode success/business-failure/reject",
+          "setPermissions": "setPermissions(codes): exact permission-code string array; updates reactive permission state",
+          "setStaleDetail": "setStaleDetail(enabled): true makes MOCK-N001 draft list row return published detail",
+          "snapshot": "snapshot(): deep JSON copy {counters,requests,notices,permissions,modes,staleDetail}; requests record operation/method/path/params or data/outcome"
+        },
+        "boundary": "These local diagnostic methods are not business APIs. No real backend, native file picker or external preview. Direct UI handler calls are only for checking permission protection."
+      }
+    },
+    {
+      "id": "C11",
+      "requirementIds": [
+        "R10"
+      ],
+      "description": "TP upload loads existing files by referId, separate from notice view. Mock GET /platform/file/refer-id receives referId/referType and returns {code:1,data:[{attachId,attachName,attachSize,mock:true}]}. Rich records use attachName, not name. Save uses {referType:'SYS1047',fileList:[{attachId}]}; the mock file registry resolves names again after saving/reopening. Allow doc/docx/xls/xlsx/pdf synthetic records to be selected/removed through a local-only control in edit mode; existing rows are read-only in both view modes. Do not invoke native real-file picking, upload, download or preview. If TP native callbacks would call a file service, intercept them in the mock harness; any unrecognized file URL is refused locally.",
+      "classification": "installed-upload-consumer-observed-with-synthetic-file-service",
+      "byReferId": {
+        "method": "GET",
+        "path": "/platform/file/refer-id",
+        "params": [
+          "referId",
+          "referType"
+        ]
+      },
+      "blockedRealOperations": [
+        "/platform/file/upload",
+        "file download",
+        "external preview"
+      ]
+    },
+    {
+      "id": "C12",
+      "requirementIds": [
+        "R03",
+        "R07",
+        "R11"
+      ],
+      "description": "Read detail: title, unit, publication date, file records from the separate mock refer-id query, filtered body, Close. Published row view: form fields read-only with no save controls and the same separate file query. Layout uses the target standard list convention; do not equate code similarity with quality.",
+      "classification": "observed-distinct-view-paths-and-framework-layout"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "D01",
+      "status": "confirmed",
+      "requirementIds": [
+        "R02",
+        "R12"
+      ],
+      "proposal": "查询回第一页；重置清空全部条件并回第一页查询一次",
+      "confirmation": {
+        "decisionId": "D01",
+        "decisionHash": "79f88495540ef7623e8ec05d6dd9e736be3a02373959c61ad7b65dab49a55c61",
+        "kind": "host-plan",
+        "reference": "zcode:ExitPlanMode:plan-sess_bb4bb986-9bb0-4645-90f0-c1c30aecf7ca:release-validation-20261122",
+        "text": "User has approved your plan. You can now start coding. Start with updating your todo list if applicable.",
+        "confirmedAt": "2026-11-22T05:46:56.943+08:00",
+        "operator": {
+          "schema": "fb-feature-identity/v1",
+          "name": "当前请求人",
+          "email": "",
+          "status": "confirmed",
+          "fixture": false,
+          "revision": 1,
+          "confirmation": {
+            "method": "host-plan",
+            "sourceRef": "zcode:ExitPlanMode:plan-sess_bb4bb986-9bb0-4645-90f0-c1c30aecf7ca:release-validation-20261122",
+            "text": "User has approved your plan. You can now start coding. Start with updating your todo list if applicable.",
+            "hostApproval": {
+              "schema": "fb-host-plan-approval/v1",
+              "host": "zcode",
+              "sourceTool": "ExitPlanMode",
+              "reference": "zcode:ExitPlanMode:plan-sess_bb4bb986-9bb0-4645-90f0-c1c30aecf7ca:release-validation-20261122",
+              "resultText": "User has approved your plan. You can now start coding. Start with updating your todo list if applicable.",
+              "projectRoot": "D:\\projects\\fb-skill",
+              "displayName": "当前请求人",
+              "planText": "## Context｜把剩余工作收成可交付结果\n\nFB Skill 的工具已有 Node18/24 各191项通过，但完整公告需求试点、真实宿主使用、移动/Java/SQL运行和最新分发包还没有闭环。本轮不再只做准备：**完成能实际执行的验证、修复发现的问题、交付最新本地安装包及发布结论。**\n\n移动 App 的 node_modules 确实缺失；Java 的 parent/platform 2.2.3及若干业务依赖也缺失。计划包含在隔离目录恢复准确依赖并实际尝试。仓库不可达、商业许可或设备缺失时保留具体阻塞，不把跳过改成通过。\n\n**本次批准同时确认下列公告试点规则、实施范围和隔离测试动作，不授权线上公告发布。** 公开 npm/GitHub 发布、推送、生产数据库和真实文件上传不属于本轮默认动作。\n\n## 1. 一次批准、真实留痕，不再反复填名\n\n- 先读取有效项目/全局显示名档案，有记录直接复用。\n- 若没有有效档案，本轮采用显示标签 **“当前请求人”**，随本次批准在项目内保存一次；这是日志标签，不宣称真实姓名或企业认证。旧失效/损坏档案不静默覆盖，全局档案不擅自改写。\n- 现有工具只支持 user-message/terminal，补充最小的 **host-plan** 来源支持：记录本次界面确实返回的用户批准结果、原计划内容/哈希、来源引用、录入时间和实际工程；不伪装成用户聊天原话，不发明姓名、消息ID、凭据或点击时间。\n- 复用 `identity.cjs`、`workflow.cjs`、`files.cjs` 的校验、不可变计划、锁和审计；同步评估决策确认。不存在明确批准结果时仍停止生成，普通工具/代理通知绝不能批准。\n- 先在现有公开接口补红绿回归：有效批准、缺来源/合成通知拒绝、计划/输入/根漂移拒绝、显示名复用。保持这是本地防误操作，不冒充IAM或签名。\n\n主要修改：`skills/create-fb-feature/scripts/lib/identity.cjs`、`scripts/workflow.cjs`、`scripts/resolve-identity.cjs`、`scripts/eval-reverse-requirements.cjs`及对应测试/批准指南。\n\n## 2. 确认本次公告规则并完成27项对照\n\n采用当前 requirements.md/ contracts.json 的 R01–R12、C01–C12。七项选择如下，**只用于本地mock试点**：\n\n| 编号 | 本轮采用规则 |\n|---|---|\n| D01 | 查询回第一页；重置清空五项条件、回第一页并只查询一次。 |\n| D02 | 新增日期为mock当天；编辑保留原日期，两者只读。 |\n| D03 | 草稿只要求标题；发布要求标题、类型、单位、范围；正文/附件本轮非必填。 |\n| D04 | 保存/删除成功只刷新一次，保留筛选、回第一页；取消或关闭只读页不保存、不刷新。 |\n| D05 | 保留标题阅读和已发布行只读表单两种入口；最新详情状态优先；没有相应权限时入口隐藏，直接调用写处理函数也不发写请求。 |\n| D06 | 有删除权限时，两种状态均允许确认后单条删除；取消不请求、不刷新；不新增撤回/批量操作。 |\n| D07 | 保存防重；失败保留输入并可重试，不提前变已发布；详情失败禁保存；列表失败提示并保留旧数据或空列表。 |\n\n执行顺序：\n1. 原候选v1/v2/v3计划和四份证据保留。新增本轮评估ID，写入这次真实确认，并绑定每项提案哈希、公开输入和两轮文件范围；**不沿用旧未批准hash**。\n2. 在公开C10补确定性mock控制接口 `window.__smsnoticeMock`：重置、设置权限/成功/业务失败/异常/延迟/陈旧详情、读取请求计数及数据快照。只为测试观察，不增加业务规则。\n3. 生成任务使用**新的上下文**，仅给公开requirements/contracts、相关Skill和允许的准确安装源码；不给旧公告模块、隐藏acceptance/evidence或研究结论。\n4. `prepare → check → startGeneration → 独立生成 → freezeGeneration → runBuild → startServer → 浏览器27项检查 → recordResult`。复用现有工具，不另建AI编排平台。\n5. 按scope生成六份文件：`src/main.js`、`src/mock.js`、`src/service/smsnotice.js`、`src/views/NoticeList.vue`、`NoticeForm.vue`、`NoticeReader.vue`。精确两轮证据/产物沿用generation-scope.json；服务固定 **127.0.0.1:18733**。\n6. 验证列表布局（业务按钮左、查询/重置右、按钮间距）、新增/编辑/两种只读/删除、日期/范围/分页/请求、权限直调、防重/失败重试、附件refer-id回显和正文过滤。保存实际截图、请求、构建log、检查结果和访问范围核对。\n7. 首轮结果先冻结。有问题才在repaired目录做一轮修复复验；首轮失败不倒写。基础设施崩溃保留现场，另立同需求的新评估记录，不删claim/半写证据凑绿。\n\n准确runtime仍为GMRHCP Vue/compiler2.6.12、fb-ui1.1.840、fb-core1.1.824、TP2.2.16及webpack4.47.0，不借SOL07替代。\n\n**明确不把27项mock通过说成真实后端/文件服务、旧页面像素1:1或总体准确率通过。** 当前18731演练不改、不占用。\n\n## 3. 补各端真实验证，不拿别的端代替\n\n### 移动端\n- 在 `.validation-output/release-validation/mobile/` 的新隔离环境恢复目标App锁定依赖：Vue2.7.16、TA-UI0.1.170、ta-js0.0.18、ta-theme0.1.18及准确uni H5工具链。\n- 只从已配置且获授权的包仓库/本地缓存获取；不上传业务源码、不改参考node_modules/锁或全局配置。先禁安装脚本，检查所需构建动作后执行。\n- 用独立合成TA页面真实H5构建、loopback浏览器检验组件、导航/表单/mock请求。缺准确包时不回退到FbUI。\n- 有本机App打包工具才做离线App产物检查；真机、云打包/签名/商业许可未具备时单独阻塞，不由H5结果替代。\n\n### Java\n- 核对本机Maven/JDK和准确依赖；必要时从已配置且获授权的Maven仓库恢复到隔离仓库，不改全局 `.m2` 或用2.2.0冒充2.2.3。\n- 审查构建插件后，在参考工程的隔离副本进行准确module compile/可隔离单测；不启动业务应用、不加载生产连接配置。\n- 再验证独立合成Controller/Service/Mapper/XML链的字段、分页、校验、越权/缺失记录及事务失败；需DB的部分连接下述临时库。若平台依赖仍缺，真实记录解析/编译失败，不编一个同名stub骗过编译。\n\n### SQL\n- 本次仅明确授权**全新、只含合成数据**的一次性测试实例：MySQL固定loopback **18735**、达梦固定loopback **18736**。启动前核对可执行文件/版本、端口和许可；不注册/修改Windows服务、不接现有实例。\n- 优先已有可用工具/镜像；需要公开便携软件时下载官方发行物并校验，达梦许可缺失不绕过。\n- 新增最小双方言测试表，逐项执行DDL、插入/查询、唯一/空值/日期/主键/分页与回滚；只操作本次创建的测试目录/表。绝不把整份旧业务DDL导入未知库。\n- 结束关闭本次进程，保留日志。没有可用数据库环境时保留运行阻塞，不称方言已验收。\n\n### 大屏\n- 用准确screen-base源码及独立样本补布局、真实主题/图表和刷新/销毁检查；现有mock测试继续保留。地图/播放器仅在准确依赖与无真实服务的条件下验证生命周期，缺项单列。\n\n研发新增代表文件：`tests/fixtures/mobile-h5/`、`java-contract/`、`sql-dialect/`及对应runtime测试。均不进入分发Skill；样本和报告写入 `release-validation/`。\n\n## 4. 用最新包做真实消费者与宿主验证\n\n- 从本轮源码实际制作新的tgz，在**全新隔离消费者目录**解包。校验文件清单、链接、包身份、hash及隐藏研发材料排除；不覆盖旧zip/tgz。\n- 用包内CLI完成 scan → 当前清单/真实批准绑定 → apply → rescan；验证三Skill齐全、兄弟引用可用、安装后命令可运行，重复安装/更新与保留自定义内容正确。只安装到该隔离消费者，不动其他真实项目配置。\n- 本机确有Codex CLI：先依据该版本实际帮助/协议验证Skill发现与显式调用，再开干净任务验证自然语言是否选中Skill和按需工作。不手动读文件后冒充宿主自动发现。\n- 可调用已有配置的模型服务做这项测试，仅发送合成需求、Skill及允许的共享框架资料，不读取/改写凭据、账号或模型配置。若账号/服务不可用，记录具体宿主阻塞，不偷偷换付费供应商。\n- Codex的结果只证明该宿主/该版本；ZCode或其他宿主没实测就不泛化通过。\n\n## 5. 兼容性、审查和最终分发\n\n1. Node18/24完整回归；另在隔离目录下载并校验官方便携Node20，跑同一套回归，不修/切换用户nvm。带准确依赖与不提供额外依赖根分别记录，跳过项独立列出。\n2. 按既有公开接口做TDD；实施后独立代码审查，修复确认的问题再完整回归。检查留痕真实性、首轮不可变、包泄漏和任何意外真实网络/数据库访问。\n3. 更新README、CHANGELOG、`docs/validation.md`、`docs/release-readiness.md`及试点档案：每项分成通过、失败、阻塞/未执行，有证据才通过。\n4. 当前 `UNLICENSED` 不擅自改成开源授权。默认交付**内部私有验证包**，说明授权与已验证能力范围；不因许可证字段就声称内部授权分发不合法，也不自动公开npm发布。\n5. 最终重建一致的本地tgz/zip、SHA256清单和安装指南；版本与plugin/bundle一致。最终包必须来自审查和测试后的源码，不把旧0.2.0包当最新。\n\n## 6. 完成标准与边界\n\n交付一张收口表、最新本地安装包、可打开的公告演练及逐层原始证据。**不以“新增测试脚本但都跳过”算全部完成；依赖/许可/设备/服务硬阻塞必须列明已尝试动作、错误和缺的条件。**\n\n本轮默认不commit/push、创建PR/远端CI或公开发布。这些会把源码发送到外部，后续若决定公开渠道再针对实际文件和目标授权；不能把“全部完成”解释成任意对外发布或授予开源许可。\n\n参考业务工程、真实数据库/文件服务、用户全局配置和18731页面保持不变。",
+              "planTextHash": "e3112e515ba2d79878e6ba6837cc60e3d100bff183a76c95dd32bd192d4dcd9c",
+              "recordedAt": "2026-11-22T05:46:56.822+08:00",
+              "hash": "264c1f5b4db2a17478d629e1431497d6e712e1e5fde5d094a1aebe0f957b2074"
+            },
+            "confirmedAt": "2026-11-22T05:46:56.935+08:00"
+          },
+          "updatedAt": "2026-11-21T21:46:56.935Z",
+          "hash": "d822e56a6a041ddd58b647bca613f3d93e6d9db155f9e122a4da78c91804dfd9",
+          "scope": "project",
+          "source": "profile(project)",
+          "profilePath": "D:\\projects\\fb-skill\\.agents\\fb-feature\\profile.json",
+          "profileHash": "d822e56a6a041ddd58b647bca613f3d93e6d9db155f9e122a4da78c91804dfd9"
+        },
+        "hostApproval": {
+          "schema": "fb-host-plan-approval/v1",
+          "host": "zcode",
+          "sourceTool": "ExitPlanMode",
+          "reference": "zcode:ExitPlanMode:plan-sess_bb4bb986-9bb0-4645-90f0-c1c30aecf7ca:release-validation-20261122",
+          "resultText": "User has approved your plan. You can now start coding. Start with updating your todo list if applicable.",
+          "projectRoot": "D:\\projects\\fb-skill",
+          "displayName": "当前请求人",
+          "planText": "## Context｜把剩余工作收成可交付结果\n\nFB Skill 的工具已有 Node18/24 各191项通过，但完整公告需求试点、真实宿主使用、移动/Java/SQL运行和最新分发包还没有闭环。本轮不再只做准备：**完成能实际执行的验证、修复发现的问题、交付最新本地安装包及发布结论。**\n\n移动 App 的 node_modules 确实缺失；Java 的 parent/platform 2.2.3及若干业务依赖也缺失。计划包含在隔离目录恢复准确依赖并实际尝试。仓库不可达、商业许可或设备缺失时保留具体阻塞，不把跳过改成通过。\n\n**本次批准同时确认下列公告试点规则、实施范围和隔离测试动作，不授权线上公告发布。** 公开 npm/GitHub 发布、推送、生产数据库和真实文件上传不属于本轮默认动作。\n\n## 1. 一次批准、真实留痕，不再反复填名\n\n- 先读取有效项目/全局显示名档案，有记录直接复用。\n- 若没有有效档案，本轮采用显示标签 **“当前请求人”**，随本次批准在项目内保存一次；这是日志标签，不宣称真实姓名或企业认证。旧失效/损坏档案不静默覆盖，全局档案不擅自改写。\n- 现有工具只支持 user-message/terminal，补充最小的 **host-plan** 来源支持：记录本次界面确实返回的用户批准结果、原计划内容/哈希、来源引用、录入时间和实际工程；不伪装成用户聊天原话，不发明姓名、消息ID、凭据或点击时间。\n- 复用 `identity.cjs`、`workflow.cjs`、`files.cjs` 的校验、不可变计划、锁和审计；同步评估决策确认。不存在明确批准结果时仍停止生成，普通工具/代理通知绝不能批准。\n- 先在现有公开接口补红绿回归：有效批准、缺来源/合成通知拒绝、计划/输入/根漂移拒绝、显示名复用。保持这是本地防误操作，不冒充IAM或签名。\n\n主要修改：`skills/create-fb-feature/scripts/lib/identity.cjs`、`scripts/workflow.cjs`、`scripts/resolve-identity.cjs`、`scripts/eval-reverse-requirements.cjs`及对应测试/批准指南。\n\n## 2. 确认本次公告规则并完成27项对照\n\n采用当前 requirements.md/ contracts.json 的 R01–R12、C01–C12。七项选择如下，**只用于本地mock试点**：\n\n| 编号 | 本轮采用规则 |\n|---|---|\n| D01 | 查询回第一页；重置清空五项条件、回第一页并只查询一次。 |\n| D02 | 新增日期为mock当天；编辑保留原日期，两者只读。 |\n| D03 | 草稿只要求标题；发布要求标题、类型、单位、范围；正文/附件本轮非必填。 |\n| D04 | 保存/删除成功只刷新一次，保留筛选、回第一页；取消或关闭只读页不保存、不刷新。 |\n| D05 | 保留标题阅读和已发布行只读表单两种入口；最新详情状态优先；没有相应权限时入口隐藏，直接调用写处理函数也不发写请求。 |\n| D06 | 有删除权限时，两种状态均允许确认后单条删除；取消不请求、不刷新；不新增撤回/批量操作。 |\n| D07 | 保存防重；失败保留输入并可重试，不提前变已发布；详情失败禁保存；列表失败提示并保留旧数据或空列表。 |\n\n执行顺序：\n1. 原候选v1/v2/v3计划和四份证据保留。新增本轮评估ID，写入这次真实确认，并绑定每项提案哈希、公开输入和两轮文件范围；**不沿用旧未批准hash**。\n2. 在公开C10补确定性mock控制接口 `window.__smsnoticeMock`：重置、设置权限/成功/业务失败/异常/延迟/陈旧详情、读取请求计数及数据快照。只为测试观察，不增加业务规则。\n3. 生成任务使用**新的上下文**，仅给公开requirements/contracts、相关Skill和允许的准确安装源码；不给旧公告模块、隐藏acceptance/evidence或研究结论。\n4. `prepare → check → startGeneration → 独立生成 → freezeGeneration → runBuild → startServer → 浏览器27项检查 → recordResult`。复用现有工具，不另建AI编排平台。\n5. 按scope生成六份文件：`src/main.js`、`src/mock.js`、`src/service/smsnotice.js`、`src/views/NoticeList.vue`、`NoticeForm.vue`、`NoticeReader.vue`。精确两轮证据/产物沿用generation-scope.json；服务固定 **127.0.0.1:18733**。\n6. 验证列表布局（业务按钮左、查询/重置右、按钮间距）、新增/编辑/两种只读/删除、日期/范围/分页/请求、权限直调、防重/失败重试、附件refer-id回显和正文过滤。保存实际截图、请求、构建log、检查结果和访问范围核对。\n7. 首轮结果先冻结。有问题才在repaired目录做一轮修复复验；首轮失败不倒写。基础设施崩溃保留现场，另立同需求的新评估记录，不删claim/半写证据凑绿。\n\n准确runtime仍为GMRHCP Vue/compiler2.6.12、fb-ui1.1.840、fb-core1.1.824、TP2.2.16及webpack4.47.0，不借SOL07替代。\n\n**明确不把27项mock通过说成真实后端/文件服务、旧页面像素1:1或总体准确率通过。** 当前18731演练不改、不占用。\n\n## 3. 补各端真实验证，不拿别的端代替\n\n### 移动端\n- 在 `.validation-output/release-validation/mobile/` 的新隔离环境恢复目标App锁定依赖：Vue2.7.16、TA-UI0.1.170、ta-js0.0.18、ta-theme0.1.18及准确uni H5工具链。\n- 只从已配置且获授权的包仓库/本地缓存获取；不上传业务源码、不改参考node_modules/锁或全局配置。先禁安装脚本，检查所需构建动作后执行。\n- 用独立合成TA页面真实H5构建、loopback浏览器检验组件、导航/表单/mock请求。缺准确包时不回退到FbUI。\n- 有本机App打包工具才做离线App产物检查；真机、云打包/签名/商业许可未具备时单独阻塞，不由H5结果替代。\n\n### Java\n- 核对本机Maven/JDK和准确依赖；必要时从已配置且获授权的Maven仓库恢复到隔离仓库，不改全局 `.m2` 或用2.2.0冒充2.2.3。\n- 审查构建插件后，在参考工程的隔离副本进行准确module compile/可隔离单测；不启动业务应用、不加载生产连接配置。\n- 再验证独立合成Controller/Service/Mapper/XML链的字段、分页、校验、越权/缺失记录及事务失败；需DB的部分连接下述临时库。若平台依赖仍缺，真实记录解析/编译失败，不编一个同名stub骗过编译。\n\n### SQL\n- 本次仅明确授权**全新、只含合成数据**的一次性测试实例：MySQL固定loopback **18735**、达梦固定loopback **18736**。启动前核对可执行文件/版本、端口和许可；不注册/修改Windows服务、不接现有实例。\n- 优先已有可用工具/镜像；需要公开便携软件时下载官方发行物并校验，达梦许可缺失不绕过。\n- 新增最小双方言测试表，逐项执行DDL、插入/查询、唯一/空值/日期/主键/分页与回滚；只操作本次创建的测试目录/表。绝不把整份旧业务DDL导入未知库。\n- 结束关闭本次进程，保留日志。没有可用数据库环境时保留运行阻塞，不称方言已验收。\n\n### 大屏\n- 用准确screen-base源码及独立样本补布局、真实主题/图表和刷新/销毁检查；现有mock测试继续保留。地图/播放器仅在准确依赖与无真实服务的条件下验证生命周期，缺项单列。\n\n研发新增代表文件：`tests/fixtures/mobile-h5/`、`java-contract/`、`sql-dialect/`及对应runtime测试。均不进入分发Skill；样本和报告写入 `release-validation/`。\n\n## 4. 用最新包做真实消费者与宿主验证\n\n- 从本轮源码实际制作新的tgz，在**全新隔离消费者目录**解包。校验文件清单、链接、包身份、hash及隐藏研发材料排除；不覆盖旧zip/tgz。\n- 用包内CLI完成 scan → 当前清单/真实批准绑定 → apply → rescan；验证三Skill齐全、兄弟引用可用、安装后命令可运行，重复安装/更新与保留自定义内容正确。只安装到该隔离消费者，不动其他真实项目配置。\n- 本机确有Codex CLI：先依据该版本实际帮助/协议验证Skill发现与显式调用，再开干净任务验证自然语言是否选中Skill和按需工作。不手动读文件后冒充宿主自动发现。\n- 可调用已有配置的模型服务做这项测试，仅发送合成需求、Skill及允许的共享框架资料，不读取/改写凭据、账号或模型配置。若账号/服务不可用，记录具体宿主阻塞，不偷偷换付费供应商。\n- Codex的结果只证明该宿主/该版本；ZCode或其他宿主没实测就不泛化通过。\n\n## 5. 兼容性、审查和最终分发\n\n1. Node18/24完整回归；另在隔离目录下载并校验官方便携Node20，跑同一套回归，不修/切换用户nvm。带准确依赖与不提供额外依赖根分别记录，跳过项独立列出。\n2. 按既有公开接口做TDD；实施后独立代码审查，修复确认的问题再完整回归。检查留痕真实性、首轮不可变、包泄漏和任何意外真实网络/数据库访问。\n3. 更新README、CHANGELOG、`docs/validation.md`、`docs/release-readiness.md`及试点档案：每项分成通过、失败、阻塞/未执行，有证据才通过。\n4. 当前 `UNLICENSED` 不擅自改成开源授权。默认交付**内部私有验证包**，说明授权与已验证能力范围；不因许可证字段就声称内部授权分发不合法，也不自动公开npm发布。\n5. 最终重建一致的本地tgz/zip、SHA256清单和安装指南；版本与plugin/bundle一致。最终包必须来自审查和测试后的源码，不把旧0.2.0包当最新。\n\n## 6. 完成标准与边界\n\n交付一张收口表、最新本地安装包、可打开的公告演练及逐层原始证据。**不以“新增测试脚本但都跳过”算全部完成；依赖/许可/设备/服务硬阻塞必须列明已尝试动作、错误和缺的条件。**\n\n本轮默认不commit/push、创建PR/远端CI或公开发布。这些会把源码发送到外部，后续若决定公开渠道再针对实际文件和目标授权；不能把“全部完成”解释成任意对外发布或授予开源许可。\n\n参考业务工程、真实数据库/文件服务、用户全局配置和18731页面保持不变。",
+          "planTextHash": "e3112e515ba2d79878e6ba6837cc60e3d100bff183a76c95dd32bd192d4dcd9c",
+          "recordedAt": "2026-11-22T05:46:56.822+08:00",
+          "hash": "264c1f5b4db2a17478d629e1431497d6e712e1e5fde5d094a1aebe0f957b2074"
+        }
+      }
+    },
+    {
+      "id": "D02",
+      "status": "confirmed",
+      "requirementIds": [
+        "R04",
+        "R12"
+      ],
+      "proposal": "新增日期默认今天，编辑保留原值，日期只读",
+      "confirmation": {
+        "decisionId": "D02",
+        "decisionHash": "a0f0545d4f9190fe6fc8b9591671c5fd355b9b14ada8c57c163ea3a42949b295",
+        "kind": "host-plan",
+        "reference": "zcode:ExitPlanMode:plan-sess_bb4bb986-9bb0-4645-90f0-c1c30aecf7ca:release-validation-20261122",
+        "text": "User has approved your plan. You can now start coding. Start with updating your todo list if applicable.",
+        "confirmedAt": "2026-11-22T05:46:56.943+08:00",
+        "operator": {
+          "schema": "fb-feature-identity/v1",
+          "name": "当前请求人",
+          "email": "",
+          "status": "confirmed",
+          "fixture": false,
+          "revision": 1,
+          "confirmation": {
+            "method": "host-plan",
+            "sourceRef": "zcode:ExitPlanMode:plan-sess_bb4bb986-9bb0-4645-90f0-c1c30aecf7ca:release-validation-20261122",
+            "text": "User has approved your plan. You can now start coding. Start with updating your todo list if applicable.",
+            "hostApproval": {
+              "schema": "fb-host-plan-approval/v1",
+              "host": "zcode",
+              "sourceTool": "ExitPlanMode",
+              "reference": "zcode:ExitPlanMode:plan-sess_bb4bb986-9bb0-4645-90f0-c1c30aecf7ca:release-validation-20261122",
+              "resultText": "User has approved your plan. You can now start coding. Start with updating your todo list if applicable.",
+              "projectRoot": "D:\\projects\\fb-skill",
+              "displayName": "当前请求人",
+              "planText": "## Context｜把剩余工作收成可交付结果\n\nFB Skill 的工具已有 Node18/24 各191项通过，但完整公告需求试点、真实宿主使用、移动/Java/SQL运行和最新分发包还没有闭环。本轮不再只做准备：**完成能实际执行的验证、修复发现的问题、交付最新本地安装包及发布结论。**\n\n移动 App 的 node_modules 确实缺失；Java 的 parent/platform 2.2.3及若干业务依赖也缺失。计划包含在隔离目录恢复准确依赖并实际尝试。仓库不可达、商业许可或设备缺失时保留具体阻塞，不把跳过改成通过。\n\n**本次批准同时确认下列公告试点规则、实施范围和隔离测试动作，不授权线上公告发布。** 公开 npm/GitHub 发布、推送、生产数据库和真实文件上传不属于本轮默认动作。\n\n## 1. 一次批准、真实留痕，不再反复填名\n\n- 先读取有效项目/全局显示名档案，有记录直接复用。\n- 若没有有效档案，本轮采用显示标签 **“当前请求人”**，随本次批准在项目内保存一次；这是日志标签，不宣称真实姓名或企业认证。旧失效/损坏档案不静默覆盖，全局档案不擅自改写。\n- 现有工具只支持 user-message/terminal，补充最小的 **host-plan** 来源支持：记录本次界面确实返回的用户批准结果、原计划内容/哈希、来源引用、录入时间和实际工程；不伪装成用户聊天原话，不发明姓名、消息ID、凭据或点击时间。\n- 复用 `identity.cjs`、`workflow.cjs`、`files.cjs` 的校验、不可变计划、锁和审计；同步评估决策确认。不存在明确批准结果时仍停止生成，普通工具/代理通知绝不能批准。\n- 先在现有公开接口补红绿回归：有效批准、缺来源/合成通知拒绝、计划/输入/根漂移拒绝、显示名复用。保持这是本地防误操作，不冒充IAM或签名。\n\n主要修改：`skills/create-fb-feature/scripts/lib/identity.cjs`、`scripts/workflow.cjs`、`scripts/resolve-identity.cjs`、`scripts/eval-reverse-requirements.cjs`及对应测试/批准指南。\n\n## 2. 确认本次公告规则并完成27项对照\n\n采用当前 requirements.md/ contracts.json 的 R01–R12、C01–C12。七项选择如下，**只用于本地mock试点**：\n\n| 编号 | 本轮采用规则 |\n|---|---|\n| D01 | 查询回第一页；重置清空五项条件、回第一页并只查询一次。 |\n| D02 | 新增日期为mock当天；编辑保留原日期，两者只读。 |\n| D03 | 草稿只要求标题；发布要求标题、类型、单位、范围；正文/附件本轮非必填。 |\n| D04 | 保存/删除成功只刷新一次，保留筛选、回第一页；取消或关闭只读页不保存、不刷新。 |\n| D05 | 保留标题阅读和已发布行只读表单两种入口；最新详情状态优先；没有相应权限时入口隐藏，直接调用写处理函数也不发写请求。 |\n| D06 | 有删除权限时，两种状态均允许确认后单条删除；取消不请求、不刷新；不新增撤回/批量操作。 |\n| D07 | 保存防重；失败保留输入并可重试，不提前变已发布；详情失败禁保存；列表失败提示并保留旧数据或空列表。 |\n\n执行顺序：\n1. 原候选v1/v2/v3计划和四份证据保留。新增本轮评估ID，写入这次真实确认，并绑定每项提案哈希、公开输入和两轮文件范围；**不沿用旧未批准hash**。\n2. 在公开C10补确定性mock控制接口 `window.__smsnoticeMock`：重置、设置权限/成功/业务失败/异常/延迟/陈旧详情、读取请求计数及数据快照。只为测试观察，不增加业务规则。\n3. 生成任务使用**新的上下文**，仅给公开requirements/contracts、相关Skill和允许的准确安装源码；不给旧公告模块、隐藏acceptance/evidence或研究结论。\n4. `prepare → check → startGeneration → 独立生成 → freezeGeneration → runBuild → startServer → 浏览器27项检查 → recordResult`。复用现有工具，不另建AI编排平台。\n5. 按scope生成六份文件：`src/main.js`、`src/mock.js`、`src/service/smsnotice.js`、`src/views/NoticeList.vue`、`NoticeForm.vue`、`NoticeReader.vue`。精确两轮证据/产物沿用generation-scope.json；服务固定 **127.0.0.1:18733**。\n6. 验证列表布局（业务按钮左、查询/重置右、按钮间距）、新增/编辑/两种只读/删除、日期/范围/分页/请求、权限直调、防重/失败重试、附件refer-id回显和正文过滤。保存实际截图、请求、构建log、检查结果和访问范围核对。\n7. 首轮结果先冻结。有问题才在repaired目录做一轮修复复验；首轮失败不倒写。基础设施崩溃保留现场，另立同需求的新评估记录，不删claim/半写证据凑绿。\n\n准确runtime仍为GMRHCP Vue/compiler2.6.12、fb-ui1.1.840、fb-core1.1.824、TP2.2.16及webpack4.47.0，不借SOL07替代。\n\n**明确不把27项mock通过说成真实后端/文件服务、旧页面像素1:1或总体准确率通过。** 当前18731演练不改、不占用。\n\n## 3. 补各端真实验证，不拿别的端代替\n\n### 移动端\n- 在 `.validation-output/release-validation/mobile/` 的新隔离环境恢复目标App锁定依赖：Vue2.7.16、TA-UI0.1.170、ta-js0.0.18、ta-theme0.1.18及准确uni H5工具链。\n- 只从已配置且获授权的包仓库/本地缓存获取；不上传业务源码、不改参考node_modules/锁或全局配置。先禁安装脚本，检查所需构建动作后执行。\n- 用独立合成TA页面真实H5构建、loopback浏览器检验组件、导航/表单/mock请求。缺准确包时不回退到FbUI。\n- 有本机App打包工具才做离线App产物检查；真机、云打包/签名/商业许可未具备时单独阻塞，不由H5结果替代。\n\n### Java\n- 核对本机Maven/JDK和准确依赖；必要时从已配置且获授权的Maven仓库恢复到隔离仓库，不改全局 `.m2` 或用2.2.0冒充2.2.3。\n- 审查构建插件后，在参考工程的隔离副本进行准确module compile/可隔离单测；不启动业务应用、不加载生产连接配置。\n- 再验证独立合成Controller/Service/Mapper/XML链的字段、分页、校验、越权/缺失记录及事务失败；需DB的部分连接下述临时库。若平台依赖仍缺，真实记录解析/编译失败，不编一个同名stub骗过编译。\n\n### SQL\n- 本次仅明确授权**全新、只含合成数据**的一次性测试实例：MySQL固定loopback **18735**、达梦固定loopback **18736**。启动前核对可执行文件/版本、端口和许可；不注册/修改Windows服务、不接现有实例。\n- 优先已有可用工具/镜像；需要公开便携软件时下载官方发行物并校验，达梦许可缺失不绕过。\n- 新增最小双方言测试表，逐项执行DDL、插入/查询、唯一/空值/日期/主键/分页与回滚；只操作本次创建的测试目录/表。绝不把整份旧业务DDL导入未知库。\n- 结束关闭本次进程，保留日志。没有可用数据库环境时保留运行阻塞，不称方言已验收。\n\n### 大屏\n- 用准确screen-base源码及独立样本补布局、真实主题/图表和刷新/销毁检查；现有mock测试继续保留。地图/播放器仅在准确依赖与无真实服务的条件下验证生命周期，缺项单列。\n\n研发新增代表文件：`tests/fixtures/mobile-h5/`、`java-contract/`、`sql-dialect/`及对应runtime测试。均不进入分发Skill；样本和报告写入 `release-validation/`。\n\n## 4. 用最新包做真实消费者与宿主验证\n\n- 从本轮源码实际制作新的tgz，在**全新隔离消费者目录**解包。校验文件清单、链接、包身份、hash及隐藏研发材料排除；不覆盖旧zip/tgz。\n- 用包内CLI完成 scan → 当前清单/真实批准绑定 → apply → rescan；验证三Skill齐全、兄弟引用可用、安装后命令可运行，重复安装/更新与保留自定义内容正确。只安装到该隔离消费者，不动其他真实项目配置。\n- 本机确有Codex CLI：先依据该版本实际帮助/协议验证Skill发现与显式调用，再开干净任务验证自然语言是否选中Skill和按需工作。不手动读文件后冒充宿主自动发现。\n- 可调用已有配置的模型服务做这项测试，仅发送合成需求、Skill及允许的共享框架资料，不读取/改写凭据、账号或模型配置。若账号/服务不可用，记录具体宿主阻塞，不偷偷换付费供应商。\n- Codex的结果只证明该宿主/该版本；ZCode或其他宿主没实测就不泛化通过。\n\n## 5. 兼容性、审查和最终分发\n\n1. Node18/24完整回归；另在隔离目录下载并校验官方便携Node20，跑同一套回归，不修/切换用户nvm。带准确依赖与不提供额外依赖根分别记录，跳过项独立列出。\n2. 按既有公开接口做TDD；实施后独立代码审查，修复确认的问题再完整回归。检查留痕真实性、首轮不可变、包泄漏和任何意外真实网络/数据库访问。\n3. 更新README、CHANGELOG、`docs/validation.md`、`docs/release-readiness.md`及试点档案：每项分成通过、失败、阻塞/未执行，有证据才通过。\n4. 当前 `UNLICENSED` 不擅自改成开源授权。默认交付**内部私有验证包**，说明授权与已验证能力范围；不因许可证字段就声称内部授权分发不合法，也不自动公开npm发布。\n5. 最终重建一致的本地tgz/zip、SHA256清单和安装指南；版本与plugin/bundle一致。最终包必须来自审查和测试后的源码，不把旧0.2.0包当最新。\n\n## 6. 完成标准与边界\n\n交付一张收口表、最新本地安装包、可打开的公告演练及逐层原始证据。**不以“新增测试脚本但都跳过”算全部完成；依赖/许可/设备/服务硬阻塞必须列明已尝试动作、错误和缺的条件。**\n\n本轮默认不commit/push、创建PR/远端CI或公开发布。这些会把源码发送到外部，后续若决定公开渠道再针对实际文件和目标授权；不能把“全部完成”解释成任意对外发布或授予开源许可。\n\n参考业务工程、真实数据库/文件服务、用户全局配置和18731页面保持不变。",
+              "planTextHash": "e3112e515ba2d79878e6ba6837cc60e3d100bff183a76c95dd32bd192d4dcd9c",
+              "recordedAt": "2026-11-22T05:46:56.822+08:00",
+              "hash": "264c1f5b4db2a17478d629e1431497d6e712e1e5fde5d094a1aebe0f957b2074"
+            },
+            "confirmedAt": "2026-11-22T05:46:56.935+08:00"
+          },
+          "updatedAt": "2026-11-21T21:46:56.935Z",
+          "hash": "d822e56a6a041ddd58b647bca613f3d93e6d9db155f9e122a4da78c91804dfd9",
+          "scope": "project",
+          "source": "profile(project)",
+          "profilePath": "D:\\projects\\fb-skill\\.agents\\fb-feature\\profile.json",
+          "profileHash": "d822e56a6a041ddd58b647bca613f3d93e6d9db155f9e122a4da78c91804dfd9"
+        },
+        "hostApproval": {
+          "schema": "fb-host-plan-approval/v1",
+          "host": "zcode",
+          "sourceTool": "ExitPlanMode",
+          "reference": "zcode:ExitPlanMode:plan-sess_bb4bb986-9bb0-4645-90f0-c1c30aecf7ca:release-validation-20261122",
+          "resultText": "User has approved your plan. You can now start coding. Start with updating your todo list if applicable.",
+          "projectRoot": "D:\\projects\\fb-skill",
+          "displayName": "当前请求人",
+          "planText": "## Context｜把剩余工作收成可交付结果\n\nFB Skill 的工具已有 Node18/24 各191项通过，但完整公告需求试点、真实宿主使用、移动/Java/SQL运行和最新分发包还没有闭环。本轮不再只做准备：**完成能实际执行的验证、修复发现的问题、交付最新本地安装包及发布结论。**\n\n移动 App 的 node_modules 确实缺失；Java 的 parent/platform 2.2.3及若干业务依赖也缺失。计划包含在隔离目录恢复准确依赖并实际尝试。仓库不可达、商业许可或设备缺失时保留具体阻塞，不把跳过改成通过。\n\n**本次批准同时确认下列公告试点规则、实施范围和隔离测试动作，不授权线上公告发布。** 公开 npm/GitHub 发布、推送、生产数据库和真实文件上传不属于本轮默认动作。\n\n## 1. 一次批准、真实留痕，不再反复填名\n\n- 先读取有效项目/全局显示名档案，有记录直接复用。\n- 若没有有效档案，本轮采用显示标签 **“当前请求人”**，随本次批准在项目内保存一次；这是日志标签，不宣称真实姓名或企业认证。旧失效/损坏档案不静默覆盖，全局档案不擅自改写。\n- 现有工具只支持 user-message/terminal，补充最小的 **host-plan** 来源支持：记录本次界面确实返回的用户批准结果、原计划内容/哈希、来源引用、录入时间和实际工程；不伪装成用户聊天原话，不发明姓名、消息ID、凭据或点击时间。\n- 复用 `identity.cjs`、`workflow.cjs`、`files.cjs` 的校验、不可变计划、锁和审计；同步评估决策确认。不存在明确批准结果时仍停止生成，普通工具/代理通知绝不能批准。\n- 先在现有公开接口补红绿回归：有效批准、缺来源/合成通知拒绝、计划/输入/根漂移拒绝、显示名复用。保持这是本地防误操作，不冒充IAM或签名。\n\n主要修改：`skills/create-fb-feature/scripts/lib/identity.cjs`、`scripts/workflow.cjs`、`scripts/resolve-identity.cjs`、`scripts/eval-reverse-requirements.cjs`及对应测试/批准指南。\n\n## 2. 确认本次公告规则并完成27项对照\n\n采用当前 requirements.md/ contracts.json 的 R01–R12、C01–C12。七项选择如下，**只用于本地mock试点**：\n\n| 编号 | 本轮采用规则 |\n|---|---|\n| D01 | 查询回第一页；重置清空五项条件、回第一页并只查询一次。 |\n| D02 | 新增日期为mock当天；编辑保留原日期，两者只读。 |\n| D03 | 草稿只要求标题；发布要求标题、类型、单位、范围；正文/附件本轮非必填。 |\n| D04 | 保存/删除成功只刷新一次，保留筛选、回第一页；取消或关闭只读页不保存、不刷新。 |\n| D05 | 保留标题阅读和已发布行只读表单两种入口；最新详情状态优先；没有相应权限时入口隐藏，直接调用写处理函数也不发写请求。 |\n| D06 | 有删除权限时，两种状态均允许确认后单条删除；取消不请求、不刷新；不新增撤回/批量操作。 |\n| D07 | 保存防重；失败保留输入并可重试，不提前变已发布；详情失败禁保存；列表失败提示并保留旧数据或空列表。 |\n\n执行顺序：\n1. 原候选v1/v2/v3计划和四份证据保留。新增本轮评估ID，写入这次真实确认，并绑定每项提案哈希、公开输入和两轮文件范围；**不沿用旧未批准hash**。\n2. 在公开C10补确定性mock控制接口 `window.__smsnoticeMock`：重置、设置权限/成功/业务失败/异常/延迟/陈旧详情、读取请求计数及数据快照。只为测试观察，不增加业务规则。\n3. 生成任务使用**新的上下文**，仅给公开requirements/contracts、相关Skill和允许的准确安装源码；不给旧公告模块、隐藏acceptance/evidence或研究结论。\n4. `prepare → check → startGeneration → 独立生成 → freezeGeneration → runBuild → startServer → 浏览器27项检查 → recordResult`。复用现有工具，不另建AI编排平台。\n5. 按scope生成六份文件：`src/main.js`、`src/mock.js`、`src/service/smsnotice.js`、`src/views/NoticeList.vue`、`NoticeForm.vue`、`NoticeReader.vue`。精确两轮证据/产物沿用generation-scope.json；服务固定 **127.0.0.1:18733**。\n6. 验证列表布局（业务按钮左、查询/重置右、按钮间距）、新增/编辑/两种只读/删除、日期/范围/分页/请求、权限直调、防重/失败重试、附件refer-id回显和正文过滤。保存实际截图、请求、构建log、检查结果和访问范围核对。\n7. 首轮结果先冻结。有问题才在repaired目录做一轮修复复验；首轮失败不倒写。基础设施崩溃保留现场，另立同需求的新评估记录，不删claim/半写证据凑绿。\n\n准确runtime仍为GMRHCP Vue/compiler2.6.12、fb-ui1.1.840、fb-core1.1.824、TP2.2.16及webpack4.47.0，不借SOL07替代。\n\n**明确不把27项mock通过说成真实后端/文件服务、旧页面像素1:1或总体准确率通过。** 当前18731演练不改、不占用。\n\n## 3. 补各端真实验证，不拿别的端代替\n\n### 移动端\n- 在 `.validation-output/release-validation/mobile/` 的新隔离环境恢复目标App锁定依赖：Vue2.7.16、TA-UI0.1.170、ta-js0.0.18、ta-theme0.1.18及准确uni H5工具链。\n- 只从已配置且获授权的包仓库/本地缓存获取；不上传业务源码、不改参考node_modules/锁或全局配置。先禁安装脚本，检查所需构建动作后执行。\n- 用独立合成TA页面真实H5构建、loopback浏览器检验组件、导航/表单/mock请求。缺准确包时不回退到FbUI。\n- 有本机App打包工具才做离线App产物检查；真机、云打包/签名/商业许可未具备时单独阻塞，不由H5结果替代。\n\n### Java\n- 核对本机Maven/JDK和准确依赖；必要时从已配置且获授权的Maven仓库恢复到隔离仓库，不改全局 `.m2` 或用2.2.0冒充2.2.3。\n- 审查构建插件后，在参考工程的隔离副本进行准确module compile/可隔离单测；不启动业务应用、不加载生产连接配置。\n- 再验证独立合成Controller/Service/Mapper/XML链的字段、分页、校验、越权/缺失记录及事务失败；需DB的部分连接下述临时库。若平台依赖仍缺，真实记录解析/编译失败，不编一个同名stub骗过编译。\n\n### SQL\n- 本次仅明确授权**全新、只含合成数据**的一次性测试实例：MySQL固定loopback **18735**、达梦固定loopback **18736**。启动前核对可执行文件/版本、端口和许可；不注册/修改Windows服务、不接现有实例。\n- 优先已有可用工具/镜像；需要公开便携软件时下载官方发行物并校验，达梦许可缺失不绕过。\n- 新增最小双方言测试表，逐项执行DDL、插入/查询、唯一/空值/日期/主键/分页与回滚；只操作本次创建的测试目录/表。绝不把整份旧业务DDL导入未知库。\n- 结束关闭本次进程，保留日志。没有可用数据库环境时保留运行阻塞，不称方言已验收。\n\n### 大屏\n- 用准确screen-base源码及独立样本补布局、真实主题/图表和刷新/销毁检查；现有mock测试继续保留。地图/播放器仅在准确依赖与无真实服务的条件下验证生命周期，缺项单列。\n\n研发新增代表文件：`tests/fixtures/mobile-h5/`、`java-contract/`、`sql-dialect/`及对应runtime测试。均不进入分发Skill；样本和报告写入 `release-validation/`。\n\n## 4. 用最新包做真实消费者与宿主验证\n\n- 从本轮源码实际制作新的tgz，在**全新隔离消费者目录**解包。校验文件清单、链接、包身份、hash及隐藏研发材料排除；不覆盖旧zip/tgz。\n- 用包内CLI完成 scan → 当前清单/真实批准绑定 → apply → rescan；验证三Skill齐全、兄弟引用可用、安装后命令可运行，重复安装/更新与保留自定义内容正确。只安装到该隔离消费者，不动其他真实项目配置。\n- 本机确有Codex CLI：先依据该版本实际帮助/协议验证Skill发现与显式调用，再开干净任务验证自然语言是否选中Skill和按需工作。不手动读文件后冒充宿主自动发现。\n- 可调用已有配置的模型服务做这项测试，仅发送合成需求、Skill及允许的共享框架资料，不读取/改写凭据、账号或模型配置。若账号/服务不可用，记录具体宿主阻塞，不偷偷换付费供应商。\n- Codex的结果只证明该宿主/该版本；ZCode或其他宿主没实测就不泛化通过。\n\n## 5. 兼容性、审查和最终分发\n\n1. Node18/24完整回归；另在隔离目录下载并校验官方便携Node20，跑同一套回归，不修/切换用户nvm。带准确依赖与不提供额外依赖根分别记录，跳过项独立列出。\n2. 按既有公开接口做TDD；实施后独立代码审查，修复确认的问题再完整回归。检查留痕真实性、首轮不可变、包泄漏和任何意外真实网络/数据库访问。\n3. 更新README、CHANGELOG、`docs/validation.md`、`docs/release-readiness.md`及试点档案：每项分成通过、失败、阻塞/未执行，有证据才通过。\n4. 当前 `UNLICENSED` 不擅自改成开源授权。默认交付**内部私有验证包**，说明授权与已验证能力范围；不因许可证字段就声称内部授权分发不合法，也不自动公开npm发布。\n5. 最终重建一致的本地tgz/zip、SHA256清单和安装指南；版本与plugin/bundle一致。最终包必须来自审查和测试后的源码，不把旧0.2.0包当最新。\n\n## 6. 完成标准与边界\n\n交付一张收口表、最新本地安装包、可打开的公告演练及逐层原始证据。**不以“新增测试脚本但都跳过”算全部完成；依赖/许可/设备/服务硬阻塞必须列明已尝试动作、错误和缺的条件。**\n\n本轮默认不commit/push、创建PR/远端CI或公开发布。这些会把源码发送到外部，后续若决定公开渠道再针对实际文件和目标授权；不能把“全部完成”解释成任意对外发布或授予开源许可。\n\n参考业务工程、真实数据库/文件服务、用户全局配置和18731页面保持不变。",
+          "planTextHash": "e3112e515ba2d79878e6ba6837cc60e3d100bff183a76c95dd32bd192d4dcd9c",
+          "recordedAt": "2026-11-22T05:46:56.822+08:00",
+          "hash": "264c1f5b4db2a17478d629e1431497d6e712e1e5fde5d094a1aebe0f957b2074"
+        }
+      }
+    },
+    {
+      "id": "D03",
+      "status": "confirmed",
+      "requirementIds": [
+        "R05",
+        "R12"
+      ],
+      "proposal": "草稿只要求标题；发布要求标题、类型、单位、范围",
+      "confirmation": {
+        "decisionId": "D03",
+        "decisionHash": "20700c0d0fbe2a43e712b9b9f29894118d85d947b57423c0be74ae61634e7e4c",
+        "kind": "host-plan",
+        "reference": "zcode:ExitPlanMode:plan-sess_bb4bb986-9bb0-4645-90f0-c1c30aecf7ca:release-validation-20261122",
+        "text": "User has approved your plan. You can now start coding. Start with updating your todo list if applicable.",
+        "confirmedAt": "2026-11-22T05:46:56.943+08:00",
+        "operator": {
+          "schema": "fb-feature-identity/v1",
+          "name": "当前请求人",
+          "email": "",
+          "status": "confirmed",
+          "fixture": false,
+          "revision": 1,
+          "confirmation": {
+            "method": "host-plan",
+            "sourceRef": "zcode:ExitPlanMode:plan-sess_bb4bb986-9bb0-4645-90f0-c1c30aecf7ca:release-validation-20261122",
+            "text": "User has approved your plan. You can now start coding. Start with updating your todo list if applicable.",
+            "hostApproval": {
+              "schema": "fb-host-plan-approval/v1",
+              "host": "zcode",
+              "sourceTool": "ExitPlanMode",
+              "reference": "zcode:ExitPlanMode:plan-sess_bb4bb986-9bb0-4645-90f0-c1c30aecf7ca:release-validation-20261122",
+              "resultText": "User has approved your plan. You can now start coding. Start with updating your todo list if applicable.",
+              "projectRoot": "D:\\projects\\fb-skill",
+              "displayName": "当前请求人",
+              "planText": "## Context｜把剩余工作收成可交付结果\n\nFB Skill 的工具已有 Node18/24 各191项通过，但完整公告需求试点、真实宿主使用、移动/Java/SQL运行和最新分发包还没有闭环。本轮不再只做准备：**完成能实际执行的验证、修复发现的问题、交付最新本地安装包及发布结论。**\n\n移动 App 的 node_modules 确实缺失；Java 的 parent/platform 2.2.3及若干业务依赖也缺失。计划包含在隔离目录恢复准确依赖并实际尝试。仓库不可达、商业许可或设备缺失时保留具体阻塞，不把跳过改成通过。\n\n**本次批准同时确认下列公告试点规则、实施范围和隔离测试动作，不授权线上公告发布。** 公开 npm/GitHub 发布、推送、生产数据库和真实文件上传不属于本轮默认动作。\n\n## 1. 一次批准、真实留痕，不再反复填名\n\n- 先读取有效项目/全局显示名档案，有记录直接复用。\n- 若没有有效档案，本轮采用显示标签 **“当前请求人”**，随本次批准在项目内保存一次；这是日志标签，不宣称真实姓名或企业认证。旧失效/损坏档案不静默覆盖，全局档案不擅自改写。\n- 现有工具只支持 user-message/terminal，补充最小的 **host-plan** 来源支持：记录本次界面确实返回的用户批准结果、原计划内容/哈希、来源引用、录入时间和实际工程；不伪装成用户聊天原话，不发明姓名、消息ID、凭据或点击时间。\n- 复用 `identity.cjs`、`workflow.cjs`、`files.cjs` 的校验、不可变计划、锁和审计；同步评估决策确认。不存在明确批准结果时仍停止生成，普通工具/代理通知绝不能批准。\n- 先在现有公开接口补红绿回归：有效批准、缺来源/合成通知拒绝、计划/输入/根漂移拒绝、显示名复用。保持这是本地防误操作，不冒充IAM或签名。\n\n主要修改：`skills/create-fb-feature/scripts/lib/identity.cjs`、`scripts/workflow.cjs`、`scripts/resolve-identity.cjs`、`scripts/eval-reverse-requirements.cjs`及对应测试/批准指南。\n\n## 2. 确认本次公告规则并完成27项对照\n\n采用当前 requirements.md/ contracts.json 的 R01–R12、C01–C12。七项选择如下，**只用于本地mock试点**：\n\n| 编号 | 本轮采用规则 |\n|---|---|\n| D01 | 查询回第一页；重置清空五项条件、回第一页并只查询一次。 |\n| D02 | 新增日期为mock当天；编辑保留原日期，两者只读。 |\n| D03 | 草稿只要求标题；发布要求标题、类型、单位、范围；正文/附件本轮非必填。 |\n| D04 | 保存/删除成功只刷新一次，保留筛选、回第一页；取消或关闭只读页不保存、不刷新。 |\n| D05 | 保留标题阅读和已发布行只读表单两种入口；最新详情状态优先；没有相应权限时入口隐藏，直接调用写处理函数也不发写请求。 |\n| D06 | 有删除权限时，两种状态均允许确认后单条删除；取消不请求、不刷新；不新增撤回/批量操作。 |\n| D07 | 保存防重；失败保留输入并可重试，不提前变已发布；详情失败禁保存；列表失败提示并保留旧数据或空列表。 |\n\n执行顺序：\n1. 原候选v1/v2/v3计划和四份证据保留。新增本轮评估ID，写入这次真实确认，并绑定每项提案哈希、公开输入和两轮文件范围；**不沿用旧未批准hash**。\n2. 在公开C10补确定性mock控制接口 `window.__smsnoticeMock`：重置、设置权限/成功/业务失败/异常/延迟/陈旧详情、读取请求计数及数据快照。只为测试观察，不增加业务规则。\n3. 生成任务使用**新的上下文**，仅给公开requirements/contracts、相关Skill和允许的准确安装源码；不给旧公告模块、隐藏acceptance/evidence或研究结论。\n4. `prepare → check → startGeneration → 独立生成 → freezeGeneration → runBuild → startServer → 浏览器27项检查 → recordResult`。复用现有工具，不另建AI编排平台。\n5. 按scope生成六份文件：`src/main.js`、`src/mock.js`、`src/service/smsnotice.js`、`src/views/NoticeList.vue`、`NoticeForm.vue`、`NoticeReader.vue`。精确两轮证据/产物沿用generation-scope.json；服务固定 **127.0.0.1:18733**。\n6. 验证列表布局（业务按钮左、查询/重置右、按钮间距）、新增/编辑/两种只读/删除、日期/范围/分页/请求、权限直调、防重/失败重试、附件refer-id回显和正文过滤。保存实际截图、请求、构建log、检查结果和访问范围核对。\n7. 首轮结果先冻结。有问题才在repaired目录做一轮修复复验；首轮失败不倒写。基础设施崩溃保留现场，另立同需求的新评估记录，不删claim/半写证据凑绿。\n\n准确runtime仍为GMRHCP Vue/compiler2.6.12、fb-ui1.1.840、fb-core1.1.824、TP2.2.16及webpack4.47.0，不借SOL07替代。\n\n**明确不把27项mock通过说成真实后端/文件服务、旧页面像素1:1或总体准确率通过。** 当前18731演练不改、不占用。\n\n## 3. 补各端真实验证，不拿别的端代替\n\n### 移动端\n- 在 `.validation-output/release-validation/mobile/` 的新隔离环境恢复目标App锁定依赖：Vue2.7.16、TA-UI0.1.170、ta-js0.0.18、ta-theme0.1.18及准确uni H5工具链。\n- 只从已配置且获授权的包仓库/本地缓存获取；不上传业务源码、不改参考node_modules/锁或全局配置。先禁安装脚本，检查所需构建动作后执行。\n- 用独立合成TA页面真实H5构建、loopback浏览器检验组件、导航/表单/mock请求。缺准确包时不回退到FbUI。\n- 有本机App打包工具才做离线App产物检查；真机、云打包/签名/商业许可未具备时单独阻塞，不由H5结果替代。\n\n### Java\n- 核对本机Maven/JDK和准确依赖；必要时从已配置且获授权的Maven仓库恢复到隔离仓库，不改全局 `.m2` 或用2.2.0冒充2.2.3。\n- 审查构建插件后，在参考工程的隔离副本进行准确module compile/可隔离单测；不启动业务应用、不加载生产连接配置。\n- 再验证独立合成Controller/Service/Mapper/XML链的字段、分页、校验、越权/缺失记录及事务失败；需DB的部分连接下述临时库。若平台依赖仍缺，真实记录解析/编译失败，不编一个同名stub骗过编译。\n\n### SQL\n- 本次仅明确授权**全新、只含合成数据**的一次性测试实例：MySQL固定loopback **18735**、达梦固定loopback **18736**。启动前核对可执行文件/版本、端口和许可；不注册/修改Windows服务、不接现有实例。\n- 优先已有可用工具/镜像；需要公开便携软件时下载官方发行物并校验，达梦许可缺失不绕过。\n- 新增最小双方言测试表，逐项执行DDL、插入/查询、唯一/空值/日期/主键/分页与回滚；只操作本次创建的测试目录/表。绝不把整份旧业务DDL导入未知库。\n- 结束关闭本次进程，保留日志。没有可用数据库环境时保留运行阻塞，不称方言已验收。\n\n### 大屏\n- 用准确screen-base源码及独立样本补布局、真实主题/图表和刷新/销毁检查；现有mock测试继续保留。地图/播放器仅在准确依赖与无真实服务的条件下验证生命周期，缺项单列。\n\n研发新增代表文件：`tests/fixtures/mobile-h5/`、`java-contract/`、`sql-dialect/`及对应runtime测试。均不进入分发Skill；样本和报告写入 `release-validation/`。\n\n## 4. 用最新包做真实消费者与宿主验证\n\n- 从本轮源码实际制作新的tgz，在**全新隔离消费者目录**解包。校验文件清单、链接、包身份、hash及隐藏研发材料排除；不覆盖旧zip/tgz。\n- 用包内CLI完成 scan → 当前清单/真实批准绑定 → apply → rescan；验证三Skill齐全、兄弟引用可用、安装后命令可运行，重复安装/更新与保留自定义内容正确。只安装到该隔离消费者，不动其他真实项目配置。\n- 本机确有Codex CLI：先依据该版本实际帮助/协议验证Skill发现与显式调用，再开干净任务验证自然语言是否选中Skill和按需工作。不手动读文件后冒充宿主自动发现。\n- 可调用已有配置的模型服务做这项测试，仅发送合成需求、Skill及允许的共享框架资料，不读取/改写凭据、账号或模型配置。若账号/服务不可用，记录具体宿主阻塞，不偷偷换付费供应商。\n- Codex的结果只证明该宿主/该版本；ZCode或其他宿主没实测就不泛化通过。\n\n## 5. 兼容性、审查和最终分发\n\n1. Node18/24完整回归；另在隔离目录下载并校验官方便携Node20，跑同一套回归，不修/切换用户nvm。带准确依赖与不提供额外依赖根分别记录，跳过项独立列出。\n2. 按既有公开接口做TDD；实施后独立代码审查，修复确认的问题再完整回归。检查留痕真实性、首轮不可变、包泄漏和任何意外真实网络/数据库访问。\n3. 更新README、CHANGELOG、`docs/validation.md`、`docs/release-readiness.md`及试点档案：每项分成通过、失败、阻塞/未执行，有证据才通过。\n4. 当前 `UNLICENSED` 不擅自改成开源授权。默认交付**内部私有验证包**，说明授权与已验证能力范围；不因许可证字段就声称内部授权分发不合法，也不自动公开npm发布。\n5. 最终重建一致的本地tgz/zip、SHA256清单和安装指南；版本与plugin/bundle一致。最终包必须来自审查和测试后的源码，不把旧0.2.0包当最新。\n\n## 6. 完成标准与边界\n\n交付一张收口表、最新本地安装包、可打开的公告演练及逐层原始证据。**不以“新增测试脚本但都跳过”算全部完成；依赖/许可/设备/服务硬阻塞必须列明已尝试动作、错误和缺的条件。**\n\n本轮默认不commit/push、创建PR/远端CI或公开发布。这些会把源码发送到外部，后续若决定公开渠道再针对实际文件和目标授权；不能把“全部完成”解释成任意对外发布或授予开源许可。\n\n参考业务工程、真实数据库/文件服务、用户全局配置和18731页面保持不变。",
+              "planTextHash": "e3112e515ba2d79878e6ba6837cc60e3d100bff183a76c95dd32bd192d4dcd9c",
+              "recordedAt": "2026-11-22T05:46:56.822+08:00",
+              "hash": "264c1f5b4db2a17478d629e1431497d6e712e1e5fde5d094a1aebe0f957b2074"
+            },
+            "confirmedAt": "2026-11-22T05:46:56.935+08:00"
+          },
+          "updatedAt": "2026-11-21T21:46:56.935Z",
+          "hash": "d822e56a6a041ddd58b647bca613f3d93e6d9db155f9e122a4da78c91804dfd9",
+          "scope": "project",
+          "source": "profile(project)",
+          "profilePath": "D:\\projects\\fb-skill\\.agents\\fb-feature\\profile.json",
+          "profileHash": "d822e56a6a041ddd58b647bca613f3d93e6d9db155f9e122a4da78c91804dfd9"
+        },
+        "hostApproval": {
+          "schema": "fb-host-plan-approval/v1",
+          "host": "zcode",
+          "sourceTool": "ExitPlanMode",
+          "reference": "zcode:ExitPlanMode:plan-sess_bb4bb986-9bb0-4645-90f0-c1c30aecf7ca:release-validation-20261122",
+          "resultText": "User has approved your plan. You can now start coding. Start with updating your todo list if applicable.",
+          "projectRoot": "D:\\projects\\fb-skill",
+          "displayName": "当前请求人",
+          "planText": "## Context｜把剩余工作收成可交付结果\n\nFB Skill 的工具已有 Node18/24 各191项通过，但完整公告需求试点、真实宿主使用、移动/Java/SQL运行和最新分发包还没有闭环。本轮不再只做准备：**完成能实际执行的验证、修复发现的问题、交付最新本地安装包及发布结论。**\n\n移动 App 的 node_modules 确实缺失；Java 的 parent/platform 2.2.3及若干业务依赖也缺失。计划包含在隔离目录恢复准确依赖并实际尝试。仓库不可达、商业许可或设备缺失时保留具体阻塞，不把跳过改成通过。\n\n**本次批准同时确认下列公告试点规则、实施范围和隔离测试动作，不授权线上公告发布。** 公开 npm/GitHub 发布、推送、生产数据库和真实文件上传不属于本轮默认动作。\n\n## 1. 一次批准、真实留痕，不再反复填名\n\n- 先读取有效项目/全局显示名档案，有记录直接复用。\n- 若没有有效档案，本轮采用显示标签 **“当前请求人”**，随本次批准在项目内保存一次；这是日志标签，不宣称真实姓名或企业认证。旧失效/损坏档案不静默覆盖，全局档案不擅自改写。\n- 现有工具只支持 user-message/terminal，补充最小的 **host-plan** 来源支持：记录本次界面确实返回的用户批准结果、原计划内容/哈希、来源引用、录入时间和实际工程；不伪装成用户聊天原话，不发明姓名、消息ID、凭据或点击时间。\n- 复用 `identity.cjs`、`workflow.cjs`、`files.cjs` 的校验、不可变计划、锁和审计；同步评估决策确认。不存在明确批准结果时仍停止生成，普通工具/代理通知绝不能批准。\n- 先在现有公开接口补红绿回归：有效批准、缺来源/合成通知拒绝、计划/输入/根漂移拒绝、显示名复用。保持这是本地防误操作，不冒充IAM或签名。\n\n主要修改：`skills/create-fb-feature/scripts/lib/identity.cjs`、`scripts/workflow.cjs`、`scripts/resolve-identity.cjs`、`scripts/eval-reverse-requirements.cjs`及对应测试/批准指南。\n\n## 2. 确认本次公告规则并完成27项对照\n\n采用当前 requirements.md/ contracts.json 的 R01–R12、C01–C12。七项选择如下，**只用于本地mock试点**：\n\n| 编号 | 本轮采用规则 |\n|---|---|\n| D01 | 查询回第一页；重置清空五项条件、回第一页并只查询一次。 |\n| D02 | 新增日期为mock当天；编辑保留原日期，两者只读。 |\n| D03 | 草稿只要求标题；发布要求标题、类型、单位、范围；正文/附件本轮非必填。 |\n| D04 | 保存/删除成功只刷新一次，保留筛选、回第一页；取消或关闭只读页不保存、不刷新。 |\n| D05 | 保留标题阅读和已发布行只读表单两种入口；最新详情状态优先；没有相应权限时入口隐藏，直接调用写处理函数也不发写请求。 |\n| D06 | 有删除权限时，两种状态均允许确认后单条删除；取消不请求、不刷新；不新增撤回/批量操作。 |\n| D07 | 保存防重；失败保留输入并可重试，不提前变已发布；详情失败禁保存；列表失败提示并保留旧数据或空列表。 |\n\n执行顺序：\n1. 原候选v1/v2/v3计划和四份证据保留。新增本轮评估ID，写入这次真实确认，并绑定每项提案哈希、公开输入和两轮文件范围；**不沿用旧未批准hash**。\n2. 在公开C10补确定性mock控制接口 `window.__smsnoticeMock`：重置、设置权限/成功/业务失败/异常/延迟/陈旧详情、读取请求计数及数据快照。只为测试观察，不增加业务规则。\n3. 生成任务使用**新的上下文**，仅给公开requirements/contracts、相关Skill和允许的准确安装源码；不给旧公告模块、隐藏acceptance/evidence或研究结论。\n4. `prepare → check → startGeneration → 独立生成 → freezeGeneration → runBuild → startServer → 浏览器27项检查 → recordResult`。复用现有工具，不另建AI编排平台。\n5. 按scope生成六份文件：`src/main.js`、`src/mock.js`、`src/service/smsnotice.js`、`src/views/NoticeList.vue`、`NoticeForm.vue`、`NoticeReader.vue`。精确两轮证据/产物沿用generation-scope.json；服务固定 **127.0.0.1:18733**。\n6. 验证列表布局（业务按钮左、查询/重置右、按钮间距）、新增/编辑/两种只读/删除、日期/范围/分页/请求、权限直调、防重/失败重试、附件refer-id回显和正文过滤。保存实际截图、请求、构建log、检查结果和访问范围核对。\n7. 首轮结果先冻结。有问题才在repaired目录做一轮修复复验；首轮失败不倒写。基础设施崩溃保留现场，另立同需求的新评估记录，不删claim/半写证据凑绿。\n\n准确runtime仍为GMRHCP Vue/compiler2.6.12、fb-ui1.1.840、fb-core1.1.824、TP2.2.16及webpack4.47.0，不借SOL07替代。\n\n**明确不把27项mock通过说成真实后端/文件服务、旧页面像素1:1或总体准确率通过。** 当前18731演练不改、不占用。\n\n## 3. 补各端真实验证，不拿别的端代替\n\n### 移动端\n- 在 `.validation-output/release-validation/mobile/` 的新隔离环境恢复目标App锁定依赖：Vue2.7.16、TA-UI0.1.170、ta-js0.0.18、ta-theme0.1.18及准确uni H5工具链。\n- 只从已配置且获授权的包仓库/本地缓存获取；不上传业务源码、不改参考node_modules/锁或全局配置。先禁安装脚本，检查所需构建动作后执行。\n- 用独立合成TA页面真实H5构建、loopback浏览器检验组件、导航/表单/mock请求。缺准确包时不回退到FbUI。\n- 有本机App打包工具才做离线App产物检查；真机、云打包/签名/商业许可未具备时单独阻塞，不由H5结果替代。\n\n### Java\n- 核对本机Maven/JDK和准确依赖；必要时从已配置且获授权的Maven仓库恢复到隔离仓库，不改全局 `.m2` 或用2.2.0冒充2.2.3。\n- 审查构建插件后，在参考工程的隔离副本进行准确module compile/可隔离单测；不启动业务应用、不加载生产连接配置。\n- 再验证独立合成Controller/Service/Mapper/XML链的字段、分页、校验、越权/缺失记录及事务失败；需DB的部分连接下述临时库。若平台依赖仍缺，真实记录解析/编译失败，不编一个同名stub骗过编译。\n\n### SQL\n- 本次仅明确授权**全新、只含合成数据**的一次性测试实例：MySQL固定loopback **18735**、达梦固定loopback **18736**。启动前核对可执行文件/版本、端口和许可；不注册/修改Windows服务、不接现有实例。\n- 优先已有可用工具/镜像；需要公开便携软件时下载官方发行物并校验，达梦许可缺失不绕过。\n- 新增最小双方言测试表，逐项执行DDL、插入/查询、唯一/空值/日期/主键/分页与回滚；只操作本次创建的测试目录/表。绝不把整份旧业务DDL导入未知库。\n- 结束关闭本次进程，保留日志。没有可用数据库环境时保留运行阻塞，不称方言已验收。\n\n### 大屏\n- 用准确screen-base源码及独立样本补布局、真实主题/图表和刷新/销毁检查；现有mock测试继续保留。地图/播放器仅在准确依赖与无真实服务的条件下验证生命周期，缺项单列。\n\n研发新增代表文件：`tests/fixtures/mobile-h5/`、`java-contract/`、`sql-dialect/`及对应runtime测试。均不进入分发Skill；样本和报告写入 `release-validation/`。\n\n## 4. 用最新包做真实消费者与宿主验证\n\n- 从本轮源码实际制作新的tgz，在**全新隔离消费者目录**解包。校验文件清单、链接、包身份、hash及隐藏研发材料排除；不覆盖旧zip/tgz。\n- 用包内CLI完成 scan → 当前清单/真实批准绑定 → apply → rescan；验证三Skill齐全、兄弟引用可用、安装后命令可运行，重复安装/更新与保留自定义内容正确。只安装到该隔离消费者，不动其他真实项目配置。\n- 本机确有Codex CLI：先依据该版本实际帮助/协议验证Skill发现与显式调用，再开干净任务验证自然语言是否选中Skill和按需工作。不手动读文件后冒充宿主自动发现。\n- 可调用已有配置的模型服务做这项测试，仅发送合成需求、Skill及允许的共享框架资料，不读取/改写凭据、账号或模型配置。若账号/服务不可用，记录具体宿主阻塞，不偷偷换付费供应商。\n- Codex的结果只证明该宿主/该版本；ZCode或其他宿主没实测就不泛化通过。\n\n## 5. 兼容性、审查和最终分发\n\n1. Node18/24完整回归；另在隔离目录下载并校验官方便携Node20，跑同一套回归，不修/切换用户nvm。带准确依赖与不提供额外依赖根分别记录，跳过项独立列出。\n2. 按既有公开接口做TDD；实施后独立代码审查，修复确认的问题再完整回归。检查留痕真实性、首轮不可变、包泄漏和任何意外真实网络/数据库访问。\n3. 更新README、CHANGELOG、`docs/validation.md`、`docs/release-readiness.md`及试点档案：每项分成通过、失败、阻塞/未执行，有证据才通过。\n4. 当前 `UNLICENSED` 不擅自改成开源授权。默认交付**内部私有验证包**，说明授权与已验证能力范围；不因许可证字段就声称内部授权分发不合法，也不自动公开npm发布。\n5. 最终重建一致的本地tgz/zip、SHA256清单和安装指南；版本与plugin/bundle一致。最终包必须来自审查和测试后的源码，不把旧0.2.0包当最新。\n\n## 6. 完成标准与边界\n\n交付一张收口表、最新本地安装包、可打开的公告演练及逐层原始证据。**不以“新增测试脚本但都跳过”算全部完成；依赖/许可/设备/服务硬阻塞必须列明已尝试动作、错误和缺的条件。**\n\n本轮默认不commit/push、创建PR/远端CI或公开发布。这些会把源码发送到外部，后续若决定公开渠道再针对实际文件和目标授权；不能把“全部完成”解释成任意对外发布或授予开源许可。\n\n参考业务工程、真实数据库/文件服务、用户全局配置和18731页面保持不变。",
+          "planTextHash": "e3112e515ba2d79878e6ba6837cc60e3d100bff183a76c95dd32bd192d4dcd9c",
+          "recordedAt": "2026-11-22T05:46:56.822+08:00",
+          "hash": "264c1f5b4db2a17478d629e1431497d6e712e1e5fde5d094a1aebe0f957b2074"
+        }
+      }
+    },
+    {
+      "id": "D04",
+      "status": "confirmed",
+      "requirementIds": [
+        "R06",
+        "R12"
+      ],
+      "proposal": "保存或删除成功只刷新一次，保留筛选并回第一页；取消、只读关闭不刷新",
+      "confirmation": {
+        "decisionId": "D04",
+        "decisionHash": "9231d6779e3ebe8ea39b8f0127abd35e1fb4c2902a41d59afc674ed1108c35bb",
+        "kind": "host-plan",
+        "reference": "zcode:ExitPlanMode:plan-sess_bb4bb986-9bb0-4645-90f0-c1c30aecf7ca:release-validation-20261122",
+        "text": "User has approved your plan. You can now start coding. Start with updating your todo list if applicable.",
+        "confirmedAt": "2026-11-22T05:46:56.943+08:00",
+        "operator": {
+          "schema": "fb-feature-identity/v1",
+          "name": "当前请求人",
+          "email": "",
+          "status": "confirmed",
+          "fixture": false,
+          "revision": 1,
+          "confirmation": {
+            "method": "host-plan",
+            "sourceRef": "zcode:ExitPlanMode:plan-sess_bb4bb986-9bb0-4645-90f0-c1c30aecf7ca:release-validation-20261122",
+            "text": "User has approved your plan. You can now start coding. Start with updating your todo list if applicable.",
+            "hostApproval": {
+              "schema": "fb-host-plan-approval/v1",
+              "host": "zcode",
+              "sourceTool": "ExitPlanMode",
+              "reference": "zcode:ExitPlanMode:plan-sess_bb4bb986-9bb0-4645-90f0-c1c30aecf7ca:release-validation-20261122",
+              "resultText": "User has approved your plan. You can now start coding. Start with updating your todo list if applicable.",
+              "projectRoot": "D:\\projects\\fb-skill",
+              "displayName": "当前请求人",
+              "planText": "## Context｜把剩余工作收成可交付结果\n\nFB Skill 的工具已有 Node18/24 各191项通过，但完整公告需求试点、真实宿主使用、移动/Java/SQL运行和最新分发包还没有闭环。本轮不再只做准备：**完成能实际执行的验证、修复发现的问题、交付最新本地安装包及发布结论。**\n\n移动 App 的 node_modules 确实缺失；Java 的 parent/platform 2.2.3及若干业务依赖也缺失。计划包含在隔离目录恢复准确依赖并实际尝试。仓库不可达、商业许可或设备缺失时保留具体阻塞，不把跳过改成通过。\n\n**本次批准同时确认下列公告试点规则、实施范围和隔离测试动作，不授权线上公告发布。** 公开 npm/GitHub 发布、推送、生产数据库和真实文件上传不属于本轮默认动作。\n\n## 1. 一次批准、真实留痕，不再反复填名\n\n- 先读取有效项目/全局显示名档案，有记录直接复用。\n- 若没有有效档案，本轮采用显示标签 **“当前请求人”**，随本次批准在项目内保存一次；这是日志标签，不宣称真实姓名或企业认证。旧失效/损坏档案不静默覆盖，全局档案不擅自改写。\n- 现有工具只支持 user-message/terminal，补充最小的 **host-plan** 来源支持：记录本次界面确实返回的用户批准结果、原计划内容/哈希、来源引用、录入时间和实际工程；不伪装成用户聊天原话，不发明姓名、消息ID、凭据或点击时间。\n- 复用 `identity.cjs`、`workflow.cjs`、`files.cjs` 的校验、不可变计划、锁和审计；同步评估决策确认。不存在明确批准结果时仍停止生成，普通工具/代理通知绝不能批准。\n- 先在现有公开接口补红绿回归：有效批准、缺来源/合成通知拒绝、计划/输入/根漂移拒绝、显示名复用。保持这是本地防误操作，不冒充IAM或签名。\n\n主要修改：`skills/create-fb-feature/scripts/lib/identity.cjs`、`scripts/workflow.cjs`、`scripts/resolve-identity.cjs`、`scripts/eval-reverse-requirements.cjs`及对应测试/批准指南。\n\n## 2. 确认本次公告规则并完成27项对照\n\n采用当前 requirements.md/ contracts.json 的 R01–R12、C01–C12。七项选择如下，**只用于本地mock试点**：\n\n| 编号 | 本轮采用规则 |\n|---|---|\n| D01 | 查询回第一页；重置清空五项条件、回第一页并只查询一次。 |\n| D02 | 新增日期为mock当天；编辑保留原日期，两者只读。 |\n| D03 | 草稿只要求标题；发布要求标题、类型、单位、范围；正文/附件本轮非必填。 |\n| D04 | 保存/删除成功只刷新一次，保留筛选、回第一页；取消或关闭只读页不保存、不刷新。 |\n| D05 | 保留标题阅读和已发布行只读表单两种入口；最新详情状态优先；没有相应权限时入口隐藏，直接调用写处理函数也不发写请求。 |\n| D06 | 有删除权限时，两种状态均允许确认后单条删除；取消不请求、不刷新；不新增撤回/批量操作。 |\n| D07 | 保存防重；失败保留输入并可重试，不提前变已发布；详情失败禁保存；列表失败提示并保留旧数据或空列表。 |\n\n执行顺序：\n1. 原候选v1/v2/v3计划和四份证据保留。新增本轮评估ID，写入这次真实确认，并绑定每项提案哈希、公开输入和两轮文件范围；**不沿用旧未批准hash**。\n2. 在公开C10补确定性mock控制接口 `window.__smsnoticeMock`：重置、设置权限/成功/业务失败/异常/延迟/陈旧详情、读取请求计数及数据快照。只为测试观察，不增加业务规则。\n3. 生成任务使用**新的上下文**，仅给公开requirements/contracts、相关Skill和允许的准确安装源码；不给旧公告模块、隐藏acceptance/evidence或研究结论。\n4. `prepare → check → startGeneration → 独立生成 → freezeGeneration → runBuild → startServer → 浏览器27项检查 → recordResult`。复用现有工具，不另建AI编排平台。\n5. 按scope生成六份文件：`src/main.js`、`src/mock.js`、`src/service/smsnotice.js`、`src/views/NoticeList.vue`、`NoticeForm.vue`、`NoticeReader.vue`。精确两轮证据/产物沿用generation-scope.json；服务固定 **127.0.0.1:18733**。\n6. 验证列表布局（业务按钮左、查询/重置右、按钮间距）、新增/编辑/两种只读/删除、日期/范围/分页/请求、权限直调、防重/失败重试、附件refer-id回显和正文过滤。保存实际截图、请求、构建log、检查结果和访问范围核对。\n7. 首轮结果先冻结。有问题才在repaired目录做一轮修复复验；首轮失败不倒写。基础设施崩溃保留现场，另立同需求的新评估记录，不删claim/半写证据凑绿。\n\n准确runtime仍为GMRHCP Vue/compiler2.6.12、fb-ui1.1.840、fb-core1.1.824、TP2.2.16及webpack4.47.0，不借SOL07替代。\n\n**明确不把27项mock通过说成真实后端/文件服务、旧页面像素1:1或总体准确率通过。** 当前18731演练不改、不占用。\n\n## 3. 补各端真实验证，不拿别的端代替\n\n### 移动端\n- 在 `.validation-output/release-validation/mobile/` 的新隔离环境恢复目标App锁定依赖：Vue2.7.16、TA-UI0.1.170、ta-js0.0.18、ta-theme0.1.18及准确uni H5工具链。\n- 只从已配置且获授权的包仓库/本地缓存获取；不上传业务源码、不改参考node_modules/锁或全局配置。先禁安装脚本，检查所需构建动作后执行。\n- 用独立合成TA页面真实H5构建、loopback浏览器检验组件、导航/表单/mock请求。缺准确包时不回退到FbUI。\n- 有本机App打包工具才做离线App产物检查；真机、云打包/签名/商业许可未具备时单独阻塞，不由H5结果替代。\n\n### Java\n- 核对本机Maven/JDK和准确依赖；必要时从已配置且获授权的Maven仓库恢复到隔离仓库，不改全局 `.m2` 或用2.2.0冒充2.2.3。\n- 审查构建插件后，在参考工程的隔离副本进行准确module compile/可隔离单测；不启动业务应用、不加载生产连接配置。\n- 再验证独立合成Controller/Service/Mapper/XML链的字段、分页、校验、越权/缺失记录及事务失败；需DB的部分连接下述临时库。若平台依赖仍缺，真实记录解析/编译失败，不编一个同名stub骗过编译。\n\n### SQL\n- 本次仅明确授权**全新、只含合成数据**的一次性测试实例：MySQL固定loopback **18735**、达梦固定loopback **18736**。启动前核对可执行文件/版本、端口和许可；不注册/修改Windows服务、不接现有实例。\n- 优先已有可用工具/镜像；需要公开便携软件时下载官方发行物并校验，达梦许可缺失不绕过。\n- 新增最小双方言测试表，逐项执行DDL、插入/查询、唯一/空值/日期/主键/分页与回滚；只操作本次创建的测试目录/表。绝不把整份旧业务DDL导入未知库。\n- 结束关闭本次进程，保留日志。没有可用数据库环境时保留运行阻塞，不称方言已验收。\n\n### 大屏\n- 用准确screen-base源码及独立样本补布局、真实主题/图表和刷新/销毁检查；现有mock测试继续保留。地图/播放器仅在准确依赖与无真实服务的条件下验证生命周期，缺项单列。\n\n研发新增代表文件：`tests/fixtures/mobile-h5/`、`java-contract/`、`sql-dialect/`及对应runtime测试。均不进入分发Skill；样本和报告写入 `release-validation/`。\n\n## 4. 用最新包做真实消费者与宿主验证\n\n- 从本轮源码实际制作新的tgz，在**全新隔离消费者目录**解包。校验文件清单、链接、包身份、hash及隐藏研发材料排除；不覆盖旧zip/tgz。\n- 用包内CLI完成 scan → 当前清单/真实批准绑定 → apply → rescan；验证三Skill齐全、兄弟引用可用、安装后命令可运行，重复安装/更新与保留自定义内容正确。只安装到该隔离消费者，不动其他真实项目配置。\n- 本机确有Codex CLI：先依据该版本实际帮助/协议验证Skill发现与显式调用，再开干净任务验证自然语言是否选中Skill和按需工作。不手动读文件后冒充宿主自动发现。\n- 可调用已有配置的模型服务做这项测试，仅发送合成需求、Skill及允许的共享框架资料，不读取/改写凭据、账号或模型配置。若账号/服务不可用，记录具体宿主阻塞，不偷偷换付费供应商。\n- Codex的结果只证明该宿主/该版本；ZCode或其他宿主没实测就不泛化通过。\n\n## 5. 兼容性、审查和最终分发\n\n1. Node18/24完整回归；另在隔离目录下载并校验官方便携Node20，跑同一套回归，不修/切换用户nvm。带准确依赖与不提供额外依赖根分别记录，跳过项独立列出。\n2. 按既有公开接口做TDD；实施后独立代码审查，修复确认的问题再完整回归。检查留痕真实性、首轮不可变、包泄漏和任何意外真实网络/数据库访问。\n3. 更新README、CHANGELOG、`docs/validation.md`、`docs/release-readiness.md`及试点档案：每项分成通过、失败、阻塞/未执行，有证据才通过。\n4. 当前 `UNLICENSED` 不擅自改成开源授权。默认交付**内部私有验证包**，说明授权与已验证能力范围；不因许可证字段就声称内部授权分发不合法，也不自动公开npm发布。\n5. 最终重建一致的本地tgz/zip、SHA256清单和安装指南；版本与plugin/bundle一致。最终包必须来自审查和测试后的源码，不把旧0.2.0包当最新。\n\n## 6. 完成标准与边界\n\n交付一张收口表、最新本地安装包、可打开的公告演练及逐层原始证据。**不以“新增测试脚本但都跳过”算全部完成；依赖/许可/设备/服务硬阻塞必须列明已尝试动作、错误和缺的条件。**\n\n本轮默认不commit/push、创建PR/远端CI或公开发布。这些会把源码发送到外部，后续若决定公开渠道再针对实际文件和目标授权；不能把“全部完成”解释成任意对外发布或授予开源许可。\n\n参考业务工程、真实数据库/文件服务、用户全局配置和18731页面保持不变。",
+              "planTextHash": "e3112e515ba2d79878e6ba6837cc60e3d100bff183a76c95dd32bd192d4dcd9c",
+              "recordedAt": "2026-11-22T05:46:56.822+08:00",
+              "hash": "264c1f5b4db2a17478d629e1431497d6e712e1e5fde5d094a1aebe0f957b2074"
+            },
+            "confirmedAt": "2026-11-22T05:46:56.935+08:00"
+          },
+          "updatedAt": "2026-11-21T21:46:56.935Z",
+          "hash": "d822e56a6a041ddd58b647bca613f3d93e6d9db155f9e122a4da78c91804dfd9",
+          "scope": "project",
+          "source": "profile(project)",
+          "profilePath": "D:\\projects\\fb-skill\\.agents\\fb-feature\\profile.json",
+          "profileHash": "d822e56a6a041ddd58b647bca613f3d93e6d9db155f9e122a4da78c91804dfd9"
+        },
+        "hostApproval": {
+          "schema": "fb-host-plan-approval/v1",
+          "host": "zcode",
+          "sourceTool": "ExitPlanMode",
+          "reference": "zcode:ExitPlanMode:plan-sess_bb4bb986-9bb0-4645-90f0-c1c30aecf7ca:release-validation-20261122",
+          "resultText": "User has approved your plan. You can now start coding. Start with updating your todo list if applicable.",
+          "projectRoot": "D:\\projects\\fb-skill",
+          "displayName": "当前请求人",
+          "planText": "## Context｜把剩余工作收成可交付结果\n\nFB Skill 的工具已有 Node18/24 各191项通过，但完整公告需求试点、真实宿主使用、移动/Java/SQL运行和最新分发包还没有闭环。本轮不再只做准备：**完成能实际执行的验证、修复发现的问题、交付最新本地安装包及发布结论。**\n\n移动 App 的 node_modules 确实缺失；Java 的 parent/platform 2.2.3及若干业务依赖也缺失。计划包含在隔离目录恢复准确依赖并实际尝试。仓库不可达、商业许可或设备缺失时保留具体阻塞，不把跳过改成通过。\n\n**本次批准同时确认下列公告试点规则、实施范围和隔离测试动作，不授权线上公告发布。** 公开 npm/GitHub 发布、推送、生产数据库和真实文件上传不属于本轮默认动作。\n\n## 1. 一次批准、真实留痕，不再反复填名\n\n- 先读取有效项目/全局显示名档案，有记录直接复用。\n- 若没有有效档案，本轮采用显示标签 **“当前请求人”**，随本次批准在项目内保存一次；这是日志标签，不宣称真实姓名或企业认证。旧失效/损坏档案不静默覆盖，全局档案不擅自改写。\n- 现有工具只支持 user-message/terminal，补充最小的 **host-plan** 来源支持：记录本次界面确实返回的用户批准结果、原计划内容/哈希、来源引用、录入时间和实际工程；不伪装成用户聊天原话，不发明姓名、消息ID、凭据或点击时间。\n- 复用 `identity.cjs`、`workflow.cjs`、`files.cjs` 的校验、不可变计划、锁和审计；同步评估决策确认。不存在明确批准结果时仍停止生成，普通工具/代理通知绝不能批准。\n- 先在现有公开接口补红绿回归：有效批准、缺来源/合成通知拒绝、计划/输入/根漂移拒绝、显示名复用。保持这是本地防误操作，不冒充IAM或签名。\n\n主要修改：`skills/create-fb-feature/scripts/lib/identity.cjs`、`scripts/workflow.cjs`、`scripts/resolve-identity.cjs`、`scripts/eval-reverse-requirements.cjs`及对应测试/批准指南。\n\n## 2. 确认本次公告规则并完成27项对照\n\n采用当前 requirements.md/ contracts.json 的 R01–R12、C01–C12。七项选择如下，**只用于本地mock试点**：\n\n| 编号 | 本轮采用规则 |\n|---|---|\n| D01 | 查询回第一页；重置清空五项条件、回第一页并只查询一次。 |\n| D02 | 新增日期为mock当天；编辑保留原日期，两者只读。 |\n| D03 | 草稿只要求标题；发布要求标题、类型、单位、范围；正文/附件本轮非必填。 |\n| D04 | 保存/删除成功只刷新一次，保留筛选、回第一页；取消或关闭只读页不保存、不刷新。 |\n| D05 | 保留标题阅读和已发布行只读表单两种入口；最新详情状态优先；没有相应权限时入口隐藏，直接调用写处理函数也不发写请求。 |\n| D06 | 有删除权限时，两种状态均允许确认后单条删除；取消不请求、不刷新；不新增撤回/批量操作。 |\n| D07 | 保存防重；失败保留输入并可重试，不提前变已发布；详情失败禁保存；列表失败提示并保留旧数据或空列表。 |\n\n执行顺序：\n1. 原候选v1/v2/v3计划和四份证据保留。新增本轮评估ID，写入这次真实确认，并绑定每项提案哈希、公开输入和两轮文件范围；**不沿用旧未批准hash**。\n2. 在公开C10补确定性mock控制接口 `window.__smsnoticeMock`：重置、设置权限/成功/业务失败/异常/延迟/陈旧详情、读取请求计数及数据快照。只为测试观察，不增加业务规则。\n3. 生成任务使用**新的上下文**，仅给公开requirements/contracts、相关Skill和允许的准确安装源码；不给旧公告模块、隐藏acceptance/evidence或研究结论。\n4. `prepare → check → startGeneration → 独立生成 → freezeGeneration → runBuild → startServer → 浏览器27项检查 → recordResult`。复用现有工具，不另建AI编排平台。\n5. 按scope生成六份文件：`src/main.js`、`src/mock.js`、`src/service/smsnotice.js`、`src/views/NoticeList.vue`、`NoticeForm.vue`、`NoticeReader.vue`。精确两轮证据/产物沿用generation-scope.json；服务固定 **127.0.0.1:18733**。\n6. 验证列表布局（业务按钮左、查询/重置右、按钮间距）、新增/编辑/两种只读/删除、日期/范围/分页/请求、权限直调、防重/失败重试、附件refer-id回显和正文过滤。保存实际截图、请求、构建log、检查结果和访问范围核对。\n7. 首轮结果先冻结。有问题才在repaired目录做一轮修复复验；首轮失败不倒写。基础设施崩溃保留现场，另立同需求的新评估记录，不删claim/半写证据凑绿。\n\n准确runtime仍为GMRHCP Vue/compiler2.6.12、fb-ui1.1.840、fb-core1.1.824、TP2.2.16及webpack4.47.0，不借SOL07替代。\n\n**明确不把27项mock通过说成真实后端/文件服务、旧页面像素1:1或总体准确率通过。** 当前18731演练不改、不占用。\n\n## 3. 补各端真实验证，不拿别的端代替\n\n### 移动端\n- 在 `.validation-output/release-validation/mobile/` 的新隔离环境恢复目标App锁定依赖：Vue2.7.16、TA-UI0.1.170、ta-js0.0.18、ta-theme0.1.18及准确uni H5工具链。\n- 只从已配置且获授权的包仓库/本地缓存获取；不上传业务源码、不改参考node_modules/锁或全局配置。先禁安装脚本，检查所需构建动作后执行。\n- 用独立合成TA页面真实H5构建、loopback浏览器检验组件、导航/表单/mock请求。缺准确包时不回退到FbUI。\n- 有本机App打包工具才做离线App产物检查；真机、云打包/签名/商业许可未具备时单独阻塞，不由H5结果替代。\n\n### Java\n- 核对本机Maven/JDK和准确依赖；必要时从已配置且获授权的Maven仓库恢复到隔离仓库，不改全局 `.m2` 或用2.2.0冒充2.2.3。\n- 审查构建插件后，在参考工程的隔离副本进行准确module compile/可隔离单测；不启动业务应用、不加载生产连接配置。\n- 再验证独立合成Controller/Service/Mapper/XML链的字段、分页、校验、越权/缺失记录及事务失败；需DB的部分连接下述临时库。若平台依赖仍缺，真实记录解析/编译失败，不编一个同名stub骗过编译。\n\n### SQL\n- 本次仅明确授权**全新、只含合成数据**的一次性测试实例：MySQL固定loopback **18735**、达梦固定loopback **18736**。启动前核对可执行文件/版本、端口和许可；不注册/修改Windows服务、不接现有实例。\n- 优先已有可用工具/镜像；需要公开便携软件时下载官方发行物并校验，达梦许可缺失不绕过。\n- 新增最小双方言测试表，逐项执行DDL、插入/查询、唯一/空值/日期/主键/分页与回滚；只操作本次创建的测试目录/表。绝不把整份旧业务DDL导入未知库。\n- 结束关闭本次进程，保留日志。没有可用数据库环境时保留运行阻塞，不称方言已验收。\n\n### 大屏\n- 用准确screen-base源码及独立样本补布局、真实主题/图表和刷新/销毁检查；现有mock测试继续保留。地图/播放器仅在准确依赖与无真实服务的条件下验证生命周期，缺项单列。\n\n研发新增代表文件：`tests/fixtures/mobile-h5/`、`java-contract/`、`sql-dialect/`及对应runtime测试。均不进入分发Skill；样本和报告写入 `release-validation/`。\n\n## 4. 用最新包做真实消费者与宿主验证\n\n- 从本轮源码实际制作新的tgz，在**全新隔离消费者目录**解包。校验文件清单、链接、包身份、hash及隐藏研发材料排除；不覆盖旧zip/tgz。\n- 用包内CLI完成 scan → 当前清单/真实批准绑定 → apply → rescan；验证三Skill齐全、兄弟引用可用、安装后命令可运行，重复安装/更新与保留自定义内容正确。只安装到该隔离消费者，不动其他真实项目配置。\n- 本机确有Codex CLI：先依据该版本实际帮助/协议验证Skill发现与显式调用，再开干净任务验证自然语言是否选中Skill和按需工作。不手动读文件后冒充宿主自动发现。\n- 可调用已有配置的模型服务做这项测试，仅发送合成需求、Skill及允许的共享框架资料，不读取/改写凭据、账号或模型配置。若账号/服务不可用，记录具体宿主阻塞，不偷偷换付费供应商。\n- Codex的结果只证明该宿主/该版本；ZCode或其他宿主没实测就不泛化通过。\n\n## 5. 兼容性、审查和最终分发\n\n1. Node18/24完整回归；另在隔离目录下载并校验官方便携Node20，跑同一套回归，不修/切换用户nvm。带准确依赖与不提供额外依赖根分别记录，跳过项独立列出。\n2. 按既有公开接口做TDD；实施后独立代码审查，修复确认的问题再完整回归。检查留痕真实性、首轮不可变、包泄漏和任何意外真实网络/数据库访问。\n3. 更新README、CHANGELOG、`docs/validation.md`、`docs/release-readiness.md`及试点档案：每项分成通过、失败、阻塞/未执行，有证据才通过。\n4. 当前 `UNLICENSED` 不擅自改成开源授权。默认交付**内部私有验证包**，说明授权与已验证能力范围；不因许可证字段就声称内部授权分发不合法，也不自动公开npm发布。\n5. 最终重建一致的本地tgz/zip、SHA256清单和安装指南；版本与plugin/bundle一致。最终包必须来自审查和测试后的源码，不把旧0.2.0包当最新。\n\n## 6. 完成标准与边界\n\n交付一张收口表、最新本地安装包、可打开的公告演练及逐层原始证据。**不以“新增测试脚本但都跳过”算全部完成；依赖/许可/设备/服务硬阻塞必须列明已尝试动作、错误和缺的条件。**\n\n本轮默认不commit/push、创建PR/远端CI或公开发布。这些会把源码发送到外部，后续若决定公开渠道再针对实际文件和目标授权；不能把“全部完成”解释成任意对外发布或授予开源许可。\n\n参考业务工程、真实数据库/文件服务、用户全局配置和18731页面保持不变。",
+          "planTextHash": "e3112e515ba2d79878e6ba6837cc60e3d100bff183a76c95dd32bd192d4dcd9c",
+          "recordedAt": "2026-11-22T05:46:56.822+08:00",
+          "hash": "264c1f5b4db2a17478d629e1431497d6e712e1e5fde5d094a1aebe0f957b2074"
+        }
+      }
+    },
+    {
+      "id": "D05",
+      "status": "confirmed",
+      "requirementIds": [
+        "R07",
+        "R08",
+        "R12"
+      ],
+      "proposal": "保留两个只读入口差异；详情已发布时保守转只读；缺相应权限时直接调用页面写处理函数也不发写请求（仅前端防误操作）",
+      "confirmation": {
+        "decisionId": "D05",
+        "decisionHash": "e3fe597071e90ad61fd6bb1e3d61393f306a73c22767cea019017a44e7d71c2a",
+        "kind": "host-plan",
+        "reference": "zcode:ExitPlanMode:plan-sess_bb4bb986-9bb0-4645-90f0-c1c30aecf7ca:release-validation-20261122",
+        "text": "User has approved your plan. You can now start coding. Start with updating your todo list if applicable.",
+        "confirmedAt": "2026-11-22T05:46:56.943+08:00",
+        "operator": {
+          "schema": "fb-feature-identity/v1",
+          "name": "当前请求人",
+          "email": "",
+          "status": "confirmed",
+          "fixture": false,
+          "revision": 1,
+          "confirmation": {
+            "method": "host-plan",
+            "sourceRef": "zcode:ExitPlanMode:plan-sess_bb4bb986-9bb0-4645-90f0-c1c30aecf7ca:release-validation-20261122",
+            "text": "User has approved your plan. You can now start coding. Start with updating your todo list if applicable.",
+            "hostApproval": {
+              "schema": "fb-host-plan-approval/v1",
+              "host": "zcode",
+              "sourceTool": "ExitPlanMode",
+              "reference": "zcode:ExitPlanMode:plan-sess_bb4bb986-9bb0-4645-90f0-c1c30aecf7ca:release-validation-20261122",
+              "resultText": "User has approved your plan. You can now start coding. Start with updating your todo list if applicable.",
+              "projectRoot": "D:\\projects\\fb-skill",
+              "displayName": "当前请求人",
+              "planText": "## Context｜把剩余工作收成可交付结果\n\nFB Skill 的工具已有 Node18/24 各191项通过，但完整公告需求试点、真实宿主使用、移动/Java/SQL运行和最新分发包还没有闭环。本轮不再只做准备：**完成能实际执行的验证、修复发现的问题、交付最新本地安装包及发布结论。**\n\n移动 App 的 node_modules 确实缺失；Java 的 parent/platform 2.2.3及若干业务依赖也缺失。计划包含在隔离目录恢复准确依赖并实际尝试。仓库不可达、商业许可或设备缺失时保留具体阻塞，不把跳过改成通过。\n\n**本次批准同时确认下列公告试点规则、实施范围和隔离测试动作，不授权线上公告发布。** 公开 npm/GitHub 发布、推送、生产数据库和真实文件上传不属于本轮默认动作。\n\n## 1. 一次批准、真实留痕，不再反复填名\n\n- 先读取有效项目/全局显示名档案，有记录直接复用。\n- 若没有有效档案，本轮采用显示标签 **“当前请求人”**，随本次批准在项目内保存一次；这是日志标签，不宣称真实姓名或企业认证。旧失效/损坏档案不静默覆盖，全局档案不擅自改写。\n- 现有工具只支持 user-message/terminal，补充最小的 **host-plan** 来源支持：记录本次界面确实返回的用户批准结果、原计划内容/哈希、来源引用、录入时间和实际工程；不伪装成用户聊天原话，不发明姓名、消息ID、凭据或点击时间。\n- 复用 `identity.cjs`、`workflow.cjs`、`files.cjs` 的校验、不可变计划、锁和审计；同步评估决策确认。不存在明确批准结果时仍停止生成，普通工具/代理通知绝不能批准。\n- 先在现有公开接口补红绿回归：有效批准、缺来源/合成通知拒绝、计划/输入/根漂移拒绝、显示名复用。保持这是本地防误操作，不冒充IAM或签名。\n\n主要修改：`skills/create-fb-feature/scripts/lib/identity.cjs`、`scripts/workflow.cjs`、`scripts/resolve-identity.cjs`、`scripts/eval-reverse-requirements.cjs`及对应测试/批准指南。\n\n## 2. 确认本次公告规则并完成27项对照\n\n采用当前 requirements.md/ contracts.json 的 R01–R12、C01–C12。七项选择如下，**只用于本地mock试点**：\n\n| 编号 | 本轮采用规则 |\n|---|---|\n| D01 | 查询回第一页；重置清空五项条件、回第一页并只查询一次。 |\n| D02 | 新增日期为mock当天；编辑保留原日期，两者只读。 |\n| D03 | 草稿只要求标题；发布要求标题、类型、单位、范围；正文/附件本轮非必填。 |\n| D04 | 保存/删除成功只刷新一次，保留筛选、回第一页；取消或关闭只读页不保存、不刷新。 |\n| D05 | 保留标题阅读和已发布行只读表单两种入口；最新详情状态优先；没有相应权限时入口隐藏，直接调用写处理函数也不发写请求。 |\n| D06 | 有删除权限时，两种状态均允许确认后单条删除；取消不请求、不刷新；不新增撤回/批量操作。 |\n| D07 | 保存防重；失败保留输入并可重试，不提前变已发布；详情失败禁保存；列表失败提示并保留旧数据或空列表。 |\n\n执行顺序：\n1. 原候选v1/v2/v3计划和四份证据保留。新增本轮评估ID，写入这次真实确认，并绑定每项提案哈希、公开输入和两轮文件范围；**不沿用旧未批准hash**。\n2. 在公开C10补确定性mock控制接口 `window.__smsnoticeMock`：重置、设置权限/成功/业务失败/异常/延迟/陈旧详情、读取请求计数及数据快照。只为测试观察，不增加业务规则。\n3. 生成任务使用**新的上下文**，仅给公开requirements/contracts、相关Skill和允许的准确安装源码；不给旧公告模块、隐藏acceptance/evidence或研究结论。\n4. `prepare → check → startGeneration → 独立生成 → freezeGeneration → runBuild → startServer → 浏览器27项检查 → recordResult`。复用现有工具，不另建AI编排平台。\n5. 按scope生成六份文件：`src/main.js`、`src/mock.js`、`src/service/smsnotice.js`、`src/views/NoticeList.vue`、`NoticeForm.vue`、`NoticeReader.vue`。精确两轮证据/产物沿用generation-scope.json；服务固定 **127.0.0.1:18733**。\n6. 验证列表布局（业务按钮左、查询/重置右、按钮间距）、新增/编辑/两种只读/删除、日期/范围/分页/请求、权限直调、防重/失败重试、附件refer-id回显和正文过滤。保存实际截图、请求、构建log、检查结果和访问范围核对。\n7. 首轮结果先冻结。有问题才在repaired目录做一轮修复复验；首轮失败不倒写。基础设施崩溃保留现场，另立同需求的新评估记录，不删claim/半写证据凑绿。\n\n准确runtime仍为GMRHCP Vue/compiler2.6.12、fb-ui1.1.840、fb-core1.1.824、TP2.2.16及webpack4.47.0，不借SOL07替代。\n\n**明确不把27项mock通过说成真实后端/文件服务、旧页面像素1:1或总体准确率通过。** 当前18731演练不改、不占用。\n\n## 3. 补各端真实验证，不拿别的端代替\n\n### 移动端\n- 在 `.validation-output/release-validation/mobile/` 的新隔离环境恢复目标App锁定依赖：Vue2.7.16、TA-UI0.1.170、ta-js0.0.18、ta-theme0.1.18及准确uni H5工具链。\n- 只从已配置且获授权的包仓库/本地缓存获取；不上传业务源码、不改参考node_modules/锁或全局配置。先禁安装脚本，检查所需构建动作后执行。\n- 用独立合成TA页面真实H5构建、loopback浏览器检验组件、导航/表单/mock请求。缺准确包时不回退到FbUI。\n- 有本机App打包工具才做离线App产物检查；真机、云打包/签名/商业许可未具备时单独阻塞，不由H5结果替代。\n\n### Java\n- 核对本机Maven/JDK和准确依赖；必要时从已配置且获授权的Maven仓库恢复到隔离仓库，不改全局 `.m2` 或用2.2.0冒充2.2.3。\n- 审查构建插件后，在参考工程的隔离副本进行准确module compile/可隔离单测；不启动业务应用、不加载生产连接配置。\n- 再验证独立合成Controller/Service/Mapper/XML链的字段、分页、校验、越权/缺失记录及事务失败；需DB的部分连接下述临时库。若平台依赖仍缺，真实记录解析/编译失败，不编一个同名stub骗过编译。\n\n### SQL\n- 本次仅明确授权**全新、只含合成数据**的一次性测试实例：MySQL固定loopback **18735**、达梦固定loopback **18736**。启动前核对可执行文件/版本、端口和许可；不注册/修改Windows服务、不接现有实例。\n- 优先已有可用工具/镜像；需要公开便携软件时下载官方发行物并校验，达梦许可缺失不绕过。\n- 新增最小双方言测试表，逐项执行DDL、插入/查询、唯一/空值/日期/主键/分页与回滚；只操作本次创建的测试目录/表。绝不把整份旧业务DDL导入未知库。\n- 结束关闭本次进程，保留日志。没有可用数据库环境时保留运行阻塞，不称方言已验收。\n\n### 大屏\n- 用准确screen-base源码及独立样本补布局、真实主题/图表和刷新/销毁检查；现有mock测试继续保留。地图/播放器仅在准确依赖与无真实服务的条件下验证生命周期，缺项单列。\n\n研发新增代表文件：`tests/fixtures/mobile-h5/`、`java-contract/`、`sql-dialect/`及对应runtime测试。均不进入分发Skill；样本和报告写入 `release-validation/`。\n\n## 4. 用最新包做真实消费者与宿主验证\n\n- 从本轮源码实际制作新的tgz，在**全新隔离消费者目录**解包。校验文件清单、链接、包身份、hash及隐藏研发材料排除；不覆盖旧zip/tgz。\n- 用包内CLI完成 scan → 当前清单/真实批准绑定 → apply → rescan；验证三Skill齐全、兄弟引用可用、安装后命令可运行，重复安装/更新与保留自定义内容正确。只安装到该隔离消费者，不动其他真实项目配置。\n- 本机确有Codex CLI：先依据该版本实际帮助/协议验证Skill发现与显式调用，再开干净任务验证自然语言是否选中Skill和按需工作。不手动读文件后冒充宿主自动发现。\n- 可调用已有配置的模型服务做这项测试，仅发送合成需求、Skill及允许的共享框架资料，不读取/改写凭据、账号或模型配置。若账号/服务不可用，记录具体宿主阻塞，不偷偷换付费供应商。\n- Codex的结果只证明该宿主/该版本；ZCode或其他宿主没实测就不泛化通过。\n\n## 5. 兼容性、审查和最终分发\n\n1. Node18/24完整回归；另在隔离目录下载并校验官方便携Node20，跑同一套回归，不修/切换用户nvm。带准确依赖与不提供额外依赖根分别记录，跳过项独立列出。\n2. 按既有公开接口做TDD；实施后独立代码审查，修复确认的问题再完整回归。检查留痕真实性、首轮不可变、包泄漏和任何意外真实网络/数据库访问。\n3. 更新README、CHANGELOG、`docs/validation.md`、`docs/release-readiness.md`及试点档案：每项分成通过、失败、阻塞/未执行，有证据才通过。\n4. 当前 `UNLICENSED` 不擅自改成开源授权。默认交付**内部私有验证包**，说明授权与已验证能力范围；不因许可证字段就声称内部授权分发不合法，也不自动公开npm发布。\n5. 最终重建一致的本地tgz/zip、SHA256清单和安装指南；版本与plugin/bundle一致。最终包必须来自审查和测试后的源码，不把旧0.2.0包当最新。\n\n## 6. 完成标准与边界\n\n交付一张收口表、最新本地安装包、可打开的公告演练及逐层原始证据。**不以“新增测试脚本但都跳过”算全部完成；依赖/许可/设备/服务硬阻塞必须列明已尝试动作、错误和缺的条件。**\n\n本轮默认不commit/push、创建PR/远端CI或公开发布。这些会把源码发送到外部，后续若决定公开渠道再针对实际文件和目标授权；不能把“全部完成”解释成任意对外发布或授予开源许可。\n\n参考业务工程、真实数据库/文件服务、用户全局配置和18731页面保持不变。",
+              "planTextHash": "e3112e515ba2d79878e6ba6837cc60e3d100bff183a76c95dd32bd192d4dcd9c",
+              "recordedAt": "2026-11-22T05:46:56.822+08:00",
+              "hash": "264c1f5b4db2a17478d629e1431497d6e712e1e5fde5d094a1aebe0f957b2074"
+            },
+            "confirmedAt": "2026-11-22T05:46:56.935+08:00"
+          },
+          "updatedAt": "2026-11-21T21:46:56.935Z",
+          "hash": "d822e56a6a041ddd58b647bca613f3d93e6d9db155f9e122a4da78c91804dfd9",
+          "scope": "project",
+          "source": "profile(project)",
+          "profilePath": "D:\\projects\\fb-skill\\.agents\\fb-feature\\profile.json",
+          "profileHash": "d822e56a6a041ddd58b647bca613f3d93e6d9db155f9e122a4da78c91804dfd9"
+        },
+        "hostApproval": {
+          "schema": "fb-host-plan-approval/v1",
+          "host": "zcode",
+          "sourceTool": "ExitPlanMode",
+          "reference": "zcode:ExitPlanMode:plan-sess_bb4bb986-9bb0-4645-90f0-c1c30aecf7ca:release-validation-20261122",
+          "resultText": "User has approved your plan. You can now start coding. Start with updating your todo list if applicable.",
+          "projectRoot": "D:\\projects\\fb-skill",
+          "displayName": "当前请求人",
+          "planText": "## Context｜把剩余工作收成可交付结果\n\nFB Skill 的工具已有 Node18/24 各191项通过，但完整公告需求试点、真实宿主使用、移动/Java/SQL运行和最新分发包还没有闭环。本轮不再只做准备：**完成能实际执行的验证、修复发现的问题、交付最新本地安装包及发布结论。**\n\n移动 App 的 node_modules 确实缺失；Java 的 parent/platform 2.2.3及若干业务依赖也缺失。计划包含在隔离目录恢复准确依赖并实际尝试。仓库不可达、商业许可或设备缺失时保留具体阻塞，不把跳过改成通过。\n\n**本次批准同时确认下列公告试点规则、实施范围和隔离测试动作，不授权线上公告发布。** 公开 npm/GitHub 发布、推送、生产数据库和真实文件上传不属于本轮默认动作。\n\n## 1. 一次批准、真实留痕，不再反复填名\n\n- 先读取有效项目/全局显示名档案，有记录直接复用。\n- 若没有有效档案，本轮采用显示标签 **“当前请求人”**，随本次批准在项目内保存一次；这是日志标签，不宣称真实姓名或企业认证。旧失效/损坏档案不静默覆盖，全局档案不擅自改写。\n- 现有工具只支持 user-message/terminal，补充最小的 **host-plan** 来源支持：记录本次界面确实返回的用户批准结果、原计划内容/哈希、来源引用、录入时间和实际工程；不伪装成用户聊天原话，不发明姓名、消息ID、凭据或点击时间。\n- 复用 `identity.cjs`、`workflow.cjs`、`files.cjs` 的校验、不可变计划、锁和审计；同步评估决策确认。不存在明确批准结果时仍停止生成，普通工具/代理通知绝不能批准。\n- 先在现有公开接口补红绿回归：有效批准、缺来源/合成通知拒绝、计划/输入/根漂移拒绝、显示名复用。保持这是本地防误操作，不冒充IAM或签名。\n\n主要修改：`skills/create-fb-feature/scripts/lib/identity.cjs`、`scripts/workflow.cjs`、`scripts/resolve-identity.cjs`、`scripts/eval-reverse-requirements.cjs`及对应测试/批准指南。\n\n## 2. 确认本次公告规则并完成27项对照\n\n采用当前 requirements.md/ contracts.json 的 R01–R12、C01–C12。七项选择如下，**只用于本地mock试点**：\n\n| 编号 | 本轮采用规则 |\n|---|---|\n| D01 | 查询回第一页；重置清空五项条件、回第一页并只查询一次。 |\n| D02 | 新增日期为mock当天；编辑保留原日期，两者只读。 |\n| D03 | 草稿只要求标题；发布要求标题、类型、单位、范围；正文/附件本轮非必填。 |\n| D04 | 保存/删除成功只刷新一次，保留筛选、回第一页；取消或关闭只读页不保存、不刷新。 |\n| D05 | 保留标题阅读和已发布行只读表单两种入口；最新详情状态优先；没有相应权限时入口隐藏，直接调用写处理函数也不发写请求。 |\n| D06 | 有删除权限时，两种状态均允许确认后单条删除；取消不请求、不刷新；不新增撤回/批量操作。 |\n| D07 | 保存防重；失败保留输入并可重试，不提前变已发布；详情失败禁保存；列表失败提示并保留旧数据或空列表。 |\n\n执行顺序：\n1. 原候选v1/v2/v3计划和四份证据保留。新增本轮评估ID，写入这次真实确认，并绑定每项提案哈希、公开输入和两轮文件范围；**不沿用旧未批准hash**。\n2. 在公开C10补确定性mock控制接口 `window.__smsnoticeMock`：重置、设置权限/成功/业务失败/异常/延迟/陈旧详情、读取请求计数及数据快照。只为测试观察，不增加业务规则。\n3. 生成任务使用**新的上下文**，仅给公开requirements/contracts、相关Skill和允许的准确安装源码；不给旧公告模块、隐藏acceptance/evidence或研究结论。\n4. `prepare → check → startGeneration → 独立生成 → freezeGeneration → runBuild → startServer → 浏览器27项检查 → recordResult`。复用现有工具，不另建AI编排平台。\n5. 按scope生成六份文件：`src/main.js`、`src/mock.js`、`src/service/smsnotice.js`、`src/views/NoticeList.vue`、`NoticeForm.vue`、`NoticeReader.vue`。精确两轮证据/产物沿用generation-scope.json；服务固定 **127.0.0.1:18733**。\n6. 验证列表布局（业务按钮左、查询/重置右、按钮间距）、新增/编辑/两种只读/删除、日期/范围/分页/请求、权限直调、防重/失败重试、附件refer-id回显和正文过滤。保存实际截图、请求、构建log、检查结果和访问范围核对。\n7. 首轮结果先冻结。有问题才在repaired目录做一轮修复复验；首轮失败不倒写。基础设施崩溃保留现场，另立同需求的新评估记录，不删claim/半写证据凑绿。\n\n准确runtime仍为GMRHCP Vue/compiler2.6.12、fb-ui1.1.840、fb-core1.1.824、TP2.2.16及webpack4.47.0，不借SOL07替代。\n\n**明确不把27项mock通过说成真实后端/文件服务、旧页面像素1:1或总体准确率通过。** 当前18731演练不改、不占用。\n\n## 3. 补各端真实验证，不拿别的端代替\n\n### 移动端\n- 在 `.validation-output/release-validation/mobile/` 的新隔离环境恢复目标App锁定依赖：Vue2.7.16、TA-UI0.1.170、ta-js0.0.18、ta-theme0.1.18及准确uni H5工具链。\n- 只从已配置且获授权的包仓库/本地缓存获取；不上传业务源码、不改参考node_modules/锁或全局配置。先禁安装脚本，检查所需构建动作后执行。\n- 用独立合成TA页面真实H5构建、loopback浏览器检验组件、导航/表单/mock请求。缺准确包时不回退到FbUI。\n- 有本机App打包工具才做离线App产物检查；真机、云打包/签名/商业许可未具备时单独阻塞，不由H5结果替代。\n\n### Java\n- 核对本机Maven/JDK和准确依赖；必要时从已配置且获授权的Maven仓库恢复到隔离仓库，不改全局 `.m2` 或用2.2.0冒充2.2.3。\n- 审查构建插件后，在参考工程的隔离副本进行准确module compile/可隔离单测；不启动业务应用、不加载生产连接配置。\n- 再验证独立合成Controller/Service/Mapper/XML链的字段、分页、校验、越权/缺失记录及事务失败；需DB的部分连接下述临时库。若平台依赖仍缺，真实记录解析/编译失败，不编一个同名stub骗过编译。\n\n### SQL\n- 本次仅明确授权**全新、只含合成数据**的一次性测试实例：MySQL固定loopback **18735**、达梦固定loopback **18736**。启动前核对可执行文件/版本、端口和许可；不注册/修改Windows服务、不接现有实例。\n- 优先已有可用工具/镜像；需要公开便携软件时下载官方发行物并校验，达梦许可缺失不绕过。\n- 新增最小双方言测试表，逐项执行DDL、插入/查询、唯一/空值/日期/主键/分页与回滚；只操作本次创建的测试目录/表。绝不把整份旧业务DDL导入未知库。\n- 结束关闭本次进程，保留日志。没有可用数据库环境时保留运行阻塞，不称方言已验收。\n\n### 大屏\n- 用准确screen-base源码及独立样本补布局、真实主题/图表和刷新/销毁检查；现有mock测试继续保留。地图/播放器仅在准确依赖与无真实服务的条件下验证生命周期，缺项单列。\n\n研发新增代表文件：`tests/fixtures/mobile-h5/`、`java-contract/`、`sql-dialect/`及对应runtime测试。均不进入分发Skill；样本和报告写入 `release-validation/`。\n\n## 4. 用最新包做真实消费者与宿主验证\n\n- 从本轮源码实际制作新的tgz，在**全新隔离消费者目录**解包。校验文件清单、链接、包身份、hash及隐藏研发材料排除；不覆盖旧zip/tgz。\n- 用包内CLI完成 scan → 当前清单/真实批准绑定 → apply → rescan；验证三Skill齐全、兄弟引用可用、安装后命令可运行，重复安装/更新与保留自定义内容正确。只安装到该隔离消费者，不动其他真实项目配置。\n- 本机确有Codex CLI：先依据该版本实际帮助/协议验证Skill发现与显式调用，再开干净任务验证自然语言是否选中Skill和按需工作。不手动读文件后冒充宿主自动发现。\n- 可调用已有配置的模型服务做这项测试，仅发送合成需求、Skill及允许的共享框架资料，不读取/改写凭据、账号或模型配置。若账号/服务不可用，记录具体宿主阻塞，不偷偷换付费供应商。\n- Codex的结果只证明该宿主/该版本；ZCode或其他宿主没实测就不泛化通过。\n\n## 5. 兼容性、审查和最终分发\n\n1. Node18/24完整回归；另在隔离目录下载并校验官方便携Node20，跑同一套回归，不修/切换用户nvm。带准确依赖与不提供额外依赖根分别记录，跳过项独立列出。\n2. 按既有公开接口做TDD；实施后独立代码审查，修复确认的问题再完整回归。检查留痕真实性、首轮不可变、包泄漏和任何意外真实网络/数据库访问。\n3. 更新README、CHANGELOG、`docs/validation.md`、`docs/release-readiness.md`及试点档案：每项分成通过、失败、阻塞/未执行，有证据才通过。\n4. 当前 `UNLICENSED` 不擅自改成开源授权。默认交付**内部私有验证包**，说明授权与已验证能力范围；不因许可证字段就声称内部授权分发不合法，也不自动公开npm发布。\n5. 最终重建一致的本地tgz/zip、SHA256清单和安装指南；版本与plugin/bundle一致。最终包必须来自审查和测试后的源码，不把旧0.2.0包当最新。\n\n## 6. 完成标准与边界\n\n交付一张收口表、最新本地安装包、可打开的公告演练及逐层原始证据。**不以“新增测试脚本但都跳过”算全部完成；依赖/许可/设备/服务硬阻塞必须列明已尝试动作、错误和缺的条件。**\n\n本轮默认不commit/push、创建PR/远端CI或公开发布。这些会把源码发送到外部，后续若决定公开渠道再针对实际文件和目标授权；不能把“全部完成”解释成任意对外发布或授予开源许可。\n\n参考业务工程、真实数据库/文件服务、用户全局配置和18731页面保持不变。",
+          "planTextHash": "e3112e515ba2d79878e6ba6837cc60e3d100bff183a76c95dd32bd192d4dcd9c",
+          "recordedAt": "2026-11-22T05:46:56.822+08:00",
+          "hash": "264c1f5b4db2a17478d629e1431497d6e712e1e5fde5d094a1aebe0f957b2074"
+        }
+      }
+    },
+    {
+      "id": "D06",
+      "status": "confirmed",
+      "requirementIds": [
+        "R08",
+        "R12"
+      ],
+      "proposal": "有权限时两种状态均可单条删除；不扩撤回或批量",
+      "confirmation": {
+        "decisionId": "D06",
+        "decisionHash": "9ae053ccbf1978d9a8a7499d21db9f8f4b37ac26212aeb3666abcd6d8bce9239",
+        "kind": "host-plan",
+        "reference": "zcode:ExitPlanMode:plan-sess_bb4bb986-9bb0-4645-90f0-c1c30aecf7ca:release-validation-20261122",
+        "text": "User has approved your plan. You can now start coding. Start with updating your todo list if applicable.",
+        "confirmedAt": "2026-11-22T05:46:56.943+08:00",
+        "operator": {
+          "schema": "fb-feature-identity/v1",
+          "name": "当前请求人",
+          "email": "",
+          "status": "confirmed",
+          "fixture": false,
+          "revision": 1,
+          "confirmation": {
+            "method": "host-plan",
+            "sourceRef": "zcode:ExitPlanMode:plan-sess_bb4bb986-9bb0-4645-90f0-c1c30aecf7ca:release-validation-20261122",
+            "text": "User has approved your plan. You can now start coding. Start with updating your todo list if applicable.",
+            "hostApproval": {
+              "schema": "fb-host-plan-approval/v1",
+              "host": "zcode",
+              "sourceTool": "ExitPlanMode",
+              "reference": "zcode:ExitPlanMode:plan-sess_bb4bb986-9bb0-4645-90f0-c1c30aecf7ca:release-validation-20261122",
+              "resultText": "User has approved your plan. You can now start coding. Start with updating your todo list if applicable.",
+              "projectRoot": "D:\\projects\\fb-skill",
+              "displayName": "当前请求人",
+              "planText": "## Context｜把剩余工作收成可交付结果\n\nFB Skill 的工具已有 Node18/24 各191项通过，但完整公告需求试点、真实宿主使用、移动/Java/SQL运行和最新分发包还没有闭环。本轮不再只做准备：**完成能实际执行的验证、修复发现的问题、交付最新本地安装包及发布结论。**\n\n移动 App 的 node_modules 确实缺失；Java 的 parent/platform 2.2.3及若干业务依赖也缺失。计划包含在隔离目录恢复准确依赖并实际尝试。仓库不可达、商业许可或设备缺失时保留具体阻塞，不把跳过改成通过。\n\n**本次批准同时确认下列公告试点规则、实施范围和隔离测试动作，不授权线上公告发布。** 公开 npm/GitHub 发布、推送、生产数据库和真实文件上传不属于本轮默认动作。\n\n## 1. 一次批准、真实留痕，不再反复填名\n\n- 先读取有效项目/全局显示名档案，有记录直接复用。\n- 若没有有效档案，本轮采用显示标签 **“当前请求人”**，随本次批准在项目内保存一次；这是日志标签，不宣称真实姓名或企业认证。旧失效/损坏档案不静默覆盖，全局档案不擅自改写。\n- 现有工具只支持 user-message/terminal，补充最小的 **host-plan** 来源支持：记录本次界面确实返回的用户批准结果、原计划内容/哈希、来源引用、录入时间和实际工程；不伪装成用户聊天原话，不发明姓名、消息ID、凭据或点击时间。\n- 复用 `identity.cjs`、`workflow.cjs`、`files.cjs` 的校验、不可变计划、锁和审计；同步评估决策确认。不存在明确批准结果时仍停止生成，普通工具/代理通知绝不能批准。\n- 先在现有公开接口补红绿回归：有效批准、缺来源/合成通知拒绝、计划/输入/根漂移拒绝、显示名复用。保持这是本地防误操作，不冒充IAM或签名。\n\n主要修改：`skills/create-fb-feature/scripts/lib/identity.cjs`、`scripts/workflow.cjs`、`scripts/resolve-identity.cjs`、`scripts/eval-reverse-requirements.cjs`及对应测试/批准指南。\n\n## 2. 确认本次公告规则并完成27项对照\n\n采用当前 requirements.md/ contracts.json 的 R01–R12、C01–C12。七项选择如下，**只用于本地mock试点**：\n\n| 编号 | 本轮采用规则 |\n|---|---|\n| D01 | 查询回第一页；重置清空五项条件、回第一页并只查询一次。 |\n| D02 | 新增日期为mock当天；编辑保留原日期，两者只读。 |\n| D03 | 草稿只要求标题；发布要求标题、类型、单位、范围；正文/附件本轮非必填。 |\n| D04 | 保存/删除成功只刷新一次，保留筛选、回第一页；取消或关闭只读页不保存、不刷新。 |\n| D05 | 保留标题阅读和已发布行只读表单两种入口；最新详情状态优先；没有相应权限时入口隐藏，直接调用写处理函数也不发写请求。 |\n| D06 | 有删除权限时，两种状态均允许确认后单条删除；取消不请求、不刷新；不新增撤回/批量操作。 |\n| D07 | 保存防重；失败保留输入并可重试，不提前变已发布；详情失败禁保存；列表失败提示并保留旧数据或空列表。 |\n\n执行顺序：\n1. 原候选v1/v2/v3计划和四份证据保留。新增本轮评估ID，写入这次真实确认，并绑定每项提案哈希、公开输入和两轮文件范围；**不沿用旧未批准hash**。\n2. 在公开C10补确定性mock控制接口 `window.__smsnoticeMock`：重置、设置权限/成功/业务失败/异常/延迟/陈旧详情、读取请求计数及数据快照。只为测试观察，不增加业务规则。\n3. 生成任务使用**新的上下文**，仅给公开requirements/contracts、相关Skill和允许的准确安装源码；不给旧公告模块、隐藏acceptance/evidence或研究结论。\n4. `prepare → check → startGeneration → 独立生成 → freezeGeneration → runBuild → startServer → 浏览器27项检查 → recordResult`。复用现有工具，不另建AI编排平台。\n5. 按scope生成六份文件：`src/main.js`、`src/mock.js`、`src/service/smsnotice.js`、`src/views/NoticeList.vue`、`NoticeForm.vue`、`NoticeReader.vue`。精确两轮证据/产物沿用generation-scope.json；服务固定 **127.0.0.1:18733**。\n6. 验证列表布局（业务按钮左、查询/重置右、按钮间距）、新增/编辑/两种只读/删除、日期/范围/分页/请求、权限直调、防重/失败重试、附件refer-id回显和正文过滤。保存实际截图、请求、构建log、检查结果和访问范围核对。\n7. 首轮结果先冻结。有问题才在repaired目录做一轮修复复验；首轮失败不倒写。基础设施崩溃保留现场，另立同需求的新评估记录，不删claim/半写证据凑绿。\n\n准确runtime仍为GMRHCP Vue/compiler2.6.12、fb-ui1.1.840、fb-core1.1.824、TP2.2.16及webpack4.47.0，不借SOL07替代。\n\n**明确不把27项mock通过说成真实后端/文件服务、旧页面像素1:1或总体准确率通过。** 当前18731演练不改、不占用。\n\n## 3. 补各端真实验证，不拿别的端代替\n\n### 移动端\n- 在 `.validation-output/release-validation/mobile/` 的新隔离环境恢复目标App锁定依赖：Vue2.7.16、TA-UI0.1.170、ta-js0.0.18、ta-theme0.1.18及准确uni H5工具链。\n- 只从已配置且获授权的包仓库/本地缓存获取；不上传业务源码、不改参考node_modules/锁或全局配置。先禁安装脚本，检查所需构建动作后执行。\n- 用独立合成TA页面真实H5构建、loopback浏览器检验组件、导航/表单/mock请求。缺准确包时不回退到FbUI。\n- 有本机App打包工具才做离线App产物检查；真机、云打包/签名/商业许可未具备时单独阻塞，不由H5结果替代。\n\n### Java\n- 核对本机Maven/JDK和准确依赖；必要时从已配置且获授权的Maven仓库恢复到隔离仓库，不改全局 `.m2` 或用2.2.0冒充2.2.3。\n- 审查构建插件后，在参考工程的隔离副本进行准确module compile/可隔离单测；不启动业务应用、不加载生产连接配置。\n- 再验证独立合成Controller/Service/Mapper/XML链的字段、分页、校验、越权/缺失记录及事务失败；需DB的部分连接下述临时库。若平台依赖仍缺，真实记录解析/编译失败，不编一个同名stub骗过编译。\n\n### SQL\n- 本次仅明确授权**全新、只含合成数据**的一次性测试实例：MySQL固定loopback **18735**、达梦固定loopback **18736**。启动前核对可执行文件/版本、端口和许可；不注册/修改Windows服务、不接现有实例。\n- 优先已有可用工具/镜像；需要公开便携软件时下载官方发行物并校验，达梦许可缺失不绕过。\n- 新增最小双方言测试表，逐项执行DDL、插入/查询、唯一/空值/日期/主键/分页与回滚；只操作本次创建的测试目录/表。绝不把整份旧业务DDL导入未知库。\n- 结束关闭本次进程，保留日志。没有可用数据库环境时保留运行阻塞，不称方言已验收。\n\n### 大屏\n- 用准确screen-base源码及独立样本补布局、真实主题/图表和刷新/销毁检查；现有mock测试继续保留。地图/播放器仅在准确依赖与无真实服务的条件下验证生命周期，缺项单列。\n\n研发新增代表文件：`tests/fixtures/mobile-h5/`、`java-contract/`、`sql-dialect/`及对应runtime测试。均不进入分发Skill；样本和报告写入 `release-validation/`。\n\n## 4. 用最新包做真实消费者与宿主验证\n\n- 从本轮源码实际制作新的tgz，在**全新隔离消费者目录**解包。校验文件清单、链接、包身份、hash及隐藏研发材料排除；不覆盖旧zip/tgz。\n- 用包内CLI完成 scan → 当前清单/真实批准绑定 → apply → rescan；验证三Skill齐全、兄弟引用可用、安装后命令可运行，重复安装/更新与保留自定义内容正确。只安装到该隔离消费者，不动其他真实项目配置。\n- 本机确有Codex CLI：先依据该版本实际帮助/协议验证Skill发现与显式调用，再开干净任务验证自然语言是否选中Skill和按需工作。不手动读文件后冒充宿主自动发现。\n- 可调用已有配置的模型服务做这项测试，仅发送合成需求、Skill及允许的共享框架资料，不读取/改写凭据、账号或模型配置。若账号/服务不可用，记录具体宿主阻塞，不偷偷换付费供应商。\n- Codex的结果只证明该宿主/该版本；ZCode或其他宿主没实测就不泛化通过。\n\n## 5. 兼容性、审查和最终分发\n\n1. Node18/24完整回归；另在隔离目录下载并校验官方便携Node20，跑同一套回归，不修/切换用户nvm。带准确依赖与不提供额外依赖根分别记录，跳过项独立列出。\n2. 按既有公开接口做TDD；实施后独立代码审查，修复确认的问题再完整回归。检查留痕真实性、首轮不可变、包泄漏和任何意外真实网络/数据库访问。\n3. 更新README、CHANGELOG、`docs/validation.md`、`docs/release-readiness.md`及试点档案：每项分成通过、失败、阻塞/未执行，有证据才通过。\n4. 当前 `UNLICENSED` 不擅自改成开源授权。默认交付**内部私有验证包**，说明授权与已验证能力范围；不因许可证字段就声称内部授权分发不合法，也不自动公开npm发布。\n5. 最终重建一致的本地tgz/zip、SHA256清单和安装指南；版本与plugin/bundle一致。最终包必须来自审查和测试后的源码，不把旧0.2.0包当最新。\n\n## 6. 完成标准与边界\n\n交付一张收口表、最新本地安装包、可打开的公告演练及逐层原始证据。**不以“新增测试脚本但都跳过”算全部完成；依赖/许可/设备/服务硬阻塞必须列明已尝试动作、错误和缺的条件。**\n\n本轮默认不commit/push、创建PR/远端CI或公开发布。这些会把源码发送到外部，后续若决定公开渠道再针对实际文件和目标授权；不能把“全部完成”解释成任意对外发布或授予开源许可。\n\n参考业务工程、真实数据库/文件服务、用户全局配置和18731页面保持不变。",
+              "planTextHash": "e3112e515ba2d79878e6ba6837cc60e3d100bff183a76c95dd32bd192d4dcd9c",
+              "recordedAt": "2026-11-22T05:46:56.822+08:00",
+              "hash": "264c1f5b4db2a17478d629e1431497d6e712e1e5fde5d094a1aebe0f957b2074"
+            },
+            "confirmedAt": "2026-11-22T05:46:56.935+08:00"
+          },
+          "updatedAt": "2026-11-21T21:46:56.935Z",
+          "hash": "d822e56a6a041ddd58b647bca613f3d93e6d9db155f9e122a4da78c91804dfd9",
+          "scope": "project",
+          "source": "profile(project)",
+          "profilePath": "D:\\projects\\fb-skill\\.agents\\fb-feature\\profile.json",
+          "profileHash": "d822e56a6a041ddd58b647bca613f3d93e6d9db155f9e122a4da78c91804dfd9"
+        },
+        "hostApproval": {
+          "schema": "fb-host-plan-approval/v1",
+          "host": "zcode",
+          "sourceTool": "ExitPlanMode",
+          "reference": "zcode:ExitPlanMode:plan-sess_bb4bb986-9bb0-4645-90f0-c1c30aecf7ca:release-validation-20261122",
+          "resultText": "User has approved your plan. You can now start coding. Start with updating your todo list if applicable.",
+          "projectRoot": "D:\\projects\\fb-skill",
+          "displayName": "当前请求人",
+          "planText": "## Context｜把剩余工作收成可交付结果\n\nFB Skill 的工具已有 Node18/24 各191项通过，但完整公告需求试点、真实宿主使用、移动/Java/SQL运行和最新分发包还没有闭环。本轮不再只做准备：**完成能实际执行的验证、修复发现的问题、交付最新本地安装包及发布结论。**\n\n移动 App 的 node_modules 确实缺失；Java 的 parent/platform 2.2.3及若干业务依赖也缺失。计划包含在隔离目录恢复准确依赖并实际尝试。仓库不可达、商业许可或设备缺失时保留具体阻塞，不把跳过改成通过。\n\n**本次批准同时确认下列公告试点规则、实施范围和隔离测试动作，不授权线上公告发布。** 公开 npm/GitHub 发布、推送、生产数据库和真实文件上传不属于本轮默认动作。\n\n## 1. 一次批准、真实留痕，不再反复填名\n\n- 先读取有效项目/全局显示名档案，有记录直接复用。\n- 若没有有效档案，本轮采用显示标签 **“当前请求人”**，随本次批准在项目内保存一次；这是日志标签，不宣称真实姓名或企业认证。旧失效/损坏档案不静默覆盖，全局档案不擅自改写。\n- 现有工具只支持 user-message/terminal，补充最小的 **host-plan** 来源支持：记录本次界面确实返回的用户批准结果、原计划内容/哈希、来源引用、录入时间和实际工程；不伪装成用户聊天原话，不发明姓名、消息ID、凭据或点击时间。\n- 复用 `identity.cjs`、`workflow.cjs`、`files.cjs` 的校验、不可变计划、锁和审计；同步评估决策确认。不存在明确批准结果时仍停止生成，普通工具/代理通知绝不能批准。\n- 先在现有公开接口补红绿回归：有效批准、缺来源/合成通知拒绝、计划/输入/根漂移拒绝、显示名复用。保持这是本地防误操作，不冒充IAM或签名。\n\n主要修改：`skills/create-fb-feature/scripts/lib/identity.cjs`、`scripts/workflow.cjs`、`scripts/resolve-identity.cjs`、`scripts/eval-reverse-requirements.cjs`及对应测试/批准指南。\n\n## 2. 确认本次公告规则并完成27项对照\n\n采用当前 requirements.md/ contracts.json 的 R01–R12、C01–C12。七项选择如下，**只用于本地mock试点**：\n\n| 编号 | 本轮采用规则 |\n|---|---|\n| D01 | 查询回第一页；重置清空五项条件、回第一页并只查询一次。 |\n| D02 | 新增日期为mock当天；编辑保留原日期，两者只读。 |\n| D03 | 草稿只要求标题；发布要求标题、类型、单位、范围；正文/附件本轮非必填。 |\n| D04 | 保存/删除成功只刷新一次，保留筛选、回第一页；取消或关闭只读页不保存、不刷新。 |\n| D05 | 保留标题阅读和已发布行只读表单两种入口；最新详情状态优先；没有相应权限时入口隐藏，直接调用写处理函数也不发写请求。 |\n| D06 | 有删除权限时，两种状态均允许确认后单条删除；取消不请求、不刷新；不新增撤回/批量操作。 |\n| D07 | 保存防重；失败保留输入并可重试，不提前变已发布；详情失败禁保存；列表失败提示并保留旧数据或空列表。 |\n\n执行顺序：\n1. 原候选v1/v2/v3计划和四份证据保留。新增本轮评估ID，写入这次真实确认，并绑定每项提案哈希、公开输入和两轮文件范围；**不沿用旧未批准hash**。\n2. 在公开C10补确定性mock控制接口 `window.__smsnoticeMock`：重置、设置权限/成功/业务失败/异常/延迟/陈旧详情、读取请求计数及数据快照。只为测试观察，不增加业务规则。\n3. 生成任务使用**新的上下文**，仅给公开requirements/contracts、相关Skill和允许的准确安装源码；不给旧公告模块、隐藏acceptance/evidence或研究结论。\n4. `prepare → check → startGeneration → 独立生成 → freezeGeneration → runBuild → startServer → 浏览器27项检查 → recordResult`。复用现有工具，不另建AI编排平台。\n5. 按scope生成六份文件：`src/main.js`、`src/mock.js`、`src/service/smsnotice.js`、`src/views/NoticeList.vue`、`NoticeForm.vue`、`NoticeReader.vue`。精确两轮证据/产物沿用generation-scope.json；服务固定 **127.0.0.1:18733**。\n6. 验证列表布局（业务按钮左、查询/重置右、按钮间距）、新增/编辑/两种只读/删除、日期/范围/分页/请求、权限直调、防重/失败重试、附件refer-id回显和正文过滤。保存实际截图、请求、构建log、检查结果和访问范围核对。\n7. 首轮结果先冻结。有问题才在repaired目录做一轮修复复验；首轮失败不倒写。基础设施崩溃保留现场，另立同需求的新评估记录，不删claim/半写证据凑绿。\n\n准确runtime仍为GMRHCP Vue/compiler2.6.12、fb-ui1.1.840、fb-core1.1.824、TP2.2.16及webpack4.47.0，不借SOL07替代。\n\n**明确不把27项mock通过说成真实后端/文件服务、旧页面像素1:1或总体准确率通过。** 当前18731演练不改、不占用。\n\n## 3. 补各端真实验证，不拿别的端代替\n\n### 移动端\n- 在 `.validation-output/release-validation/mobile/` 的新隔离环境恢复目标App锁定依赖：Vue2.7.16、TA-UI0.1.170、ta-js0.0.18、ta-theme0.1.18及准确uni H5工具链。\n- 只从已配置且获授权的包仓库/本地缓存获取；不上传业务源码、不改参考node_modules/锁或全局配置。先禁安装脚本，检查所需构建动作后执行。\n- 用独立合成TA页面真实H5构建、loopback浏览器检验组件、导航/表单/mock请求。缺准确包时不回退到FbUI。\n- 有本机App打包工具才做离线App产物检查；真机、云打包/签名/商业许可未具备时单独阻塞，不由H5结果替代。\n\n### Java\n- 核对本机Maven/JDK和准确依赖；必要时从已配置且获授权的Maven仓库恢复到隔离仓库，不改全局 `.m2` 或用2.2.0冒充2.2.3。\n- 审查构建插件后，在参考工程的隔离副本进行准确module compile/可隔离单测；不启动业务应用、不加载生产连接配置。\n- 再验证独立合成Controller/Service/Mapper/XML链的字段、分页、校验、越权/缺失记录及事务失败；需DB的部分连接下述临时库。若平台依赖仍缺，真实记录解析/编译失败，不编一个同名stub骗过编译。\n\n### SQL\n- 本次仅明确授权**全新、只含合成数据**的一次性测试实例：MySQL固定loopback **18735**、达梦固定loopback **18736**。启动前核对可执行文件/版本、端口和许可；不注册/修改Windows服务、不接现有实例。\n- 优先已有可用工具/镜像；需要公开便携软件时下载官方发行物并校验，达梦许可缺失不绕过。\n- 新增最小双方言测试表，逐项执行DDL、插入/查询、唯一/空值/日期/主键/分页与回滚；只操作本次创建的测试目录/表。绝不把整份旧业务DDL导入未知库。\n- 结束关闭本次进程，保留日志。没有可用数据库环境时保留运行阻塞，不称方言已验收。\n\n### 大屏\n- 用准确screen-base源码及独立样本补布局、真实主题/图表和刷新/销毁检查；现有mock测试继续保留。地图/播放器仅在准确依赖与无真实服务的条件下验证生命周期，缺项单列。\n\n研发新增代表文件：`tests/fixtures/mobile-h5/`、`java-contract/`、`sql-dialect/`及对应runtime测试。均不进入分发Skill；样本和报告写入 `release-validation/`。\n\n## 4. 用最新包做真实消费者与宿主验证\n\n- 从本轮源码实际制作新的tgz，在**全新隔离消费者目录**解包。校验文件清单、链接、包身份、hash及隐藏研发材料排除；不覆盖旧zip/tgz。\n- 用包内CLI完成 scan → 当前清单/真实批准绑定 → apply → rescan；验证三Skill齐全、兄弟引用可用、安装后命令可运行，重复安装/更新与保留自定义内容正确。只安装到该隔离消费者，不动其他真实项目配置。\n- 本机确有Codex CLI：先依据该版本实际帮助/协议验证Skill发现与显式调用，再开干净任务验证自然语言是否选中Skill和按需工作。不手动读文件后冒充宿主自动发现。\n- 可调用已有配置的模型服务做这项测试，仅发送合成需求、Skill及允许的共享框架资料，不读取/改写凭据、账号或模型配置。若账号/服务不可用，记录具体宿主阻塞，不偷偷换付费供应商。\n- Codex的结果只证明该宿主/该版本；ZCode或其他宿主没实测就不泛化通过。\n\n## 5. 兼容性、审查和最终分发\n\n1. Node18/24完整回归；另在隔离目录下载并校验官方便携Node20，跑同一套回归，不修/切换用户nvm。带准确依赖与不提供额外依赖根分别记录，跳过项独立列出。\n2. 按既有公开接口做TDD；实施后独立代码审查，修复确认的问题再完整回归。检查留痕真实性、首轮不可变、包泄漏和任何意外真实网络/数据库访问。\n3. 更新README、CHANGELOG、`docs/validation.md`、`docs/release-readiness.md`及试点档案：每项分成通过、失败、阻塞/未执行，有证据才通过。\n4. 当前 `UNLICENSED` 不擅自改成开源授权。默认交付**内部私有验证包**，说明授权与已验证能力范围；不因许可证字段就声称内部授权分发不合法，也不自动公开npm发布。\n5. 最终重建一致的本地tgz/zip、SHA256清单和安装指南；版本与plugin/bundle一致。最终包必须来自审查和测试后的源码，不把旧0.2.0包当最新。\n\n## 6. 完成标准与边界\n\n交付一张收口表、最新本地安装包、可打开的公告演练及逐层原始证据。**不以“新增测试脚本但都跳过”算全部完成；依赖/许可/设备/服务硬阻塞必须列明已尝试动作、错误和缺的条件。**\n\n本轮默认不commit/push、创建PR/远端CI或公开发布。这些会把源码发送到外部，后续若决定公开渠道再针对实际文件和目标授权；不能把“全部完成”解释成任意对外发布或授予开源许可。\n\n参考业务工程、真实数据库/文件服务、用户全局配置和18731页面保持不变。",
+          "planTextHash": "e3112e515ba2d79878e6ba6837cc60e3d100bff183a76c95dd32bd192d4dcd9c",
+          "recordedAt": "2026-11-22T05:46:56.822+08:00",
+          "hash": "264c1f5b4db2a17478d629e1431497d6e712e1e5fde5d094a1aebe0f957b2074"
+        }
+      }
+    },
+    {
+      "id": "D07",
+      "status": "confirmed",
+      "requirementIds": [
+        "R09",
+        "R12"
+      ],
+      "proposal": "防重复、保存失败保留并可重试、发布失败不提前改状态；详情失败不允许保存，列表失败提示并保留旧数据或空列表",
+      "confirmation": {
+        "decisionId": "D07",
+        "decisionHash": "cf683bab980c916724a50bba1c7f92009bb890db4032ccfb753b942c2c1786a7",
+        "kind": "host-plan",
+        "reference": "zcode:ExitPlanMode:plan-sess_bb4bb986-9bb0-4645-90f0-c1c30aecf7ca:release-validation-20261122",
+        "text": "User has approved your plan. You can now start coding. Start with updating your todo list if applicable.",
+        "confirmedAt": "2026-11-22T05:46:56.943+08:00",
+        "operator": {
+          "schema": "fb-feature-identity/v1",
+          "name": "当前请求人",
+          "email": "",
+          "status": "confirmed",
+          "fixture": false,
+          "revision": 1,
+          "confirmation": {
+            "method": "host-plan",
+            "sourceRef": "zcode:ExitPlanMode:plan-sess_bb4bb986-9bb0-4645-90f0-c1c30aecf7ca:release-validation-20261122",
+            "text": "User has approved your plan. You can now start coding. Start with updating your todo list if applicable.",
+            "hostApproval": {
+              "schema": "fb-host-plan-approval/v1",
+              "host": "zcode",
+              "sourceTool": "ExitPlanMode",
+              "reference": "zcode:ExitPlanMode:plan-sess_bb4bb986-9bb0-4645-90f0-c1c30aecf7ca:release-validation-20261122",
+              "resultText": "User has approved your plan. You can now start coding. Start with updating your todo list if applicable.",
+              "projectRoot": "D:\\projects\\fb-skill",
+              "displayName": "当前请求人",
+              "planText": "## Context｜把剩余工作收成可交付结果\n\nFB Skill 的工具已有 Node18/24 各191项通过，但完整公告需求试点、真实宿主使用、移动/Java/SQL运行和最新分发包还没有闭环。本轮不再只做准备：**完成能实际执行的验证、修复发现的问题、交付最新本地安装包及发布结论。**\n\n移动 App 的 node_modules 确实缺失；Java 的 parent/platform 2.2.3及若干业务依赖也缺失。计划包含在隔离目录恢复准确依赖并实际尝试。仓库不可达、商业许可或设备缺失时保留具体阻塞，不把跳过改成通过。\n\n**本次批准同时确认下列公告试点规则、实施范围和隔离测试动作，不授权线上公告发布。** 公开 npm/GitHub 发布、推送、生产数据库和真实文件上传不属于本轮默认动作。\n\n## 1. 一次批准、真实留痕，不再反复填名\n\n- 先读取有效项目/全局显示名档案，有记录直接复用。\n- 若没有有效档案，本轮采用显示标签 **“当前请求人”**，随本次批准在项目内保存一次；这是日志标签，不宣称真实姓名或企业认证。旧失效/损坏档案不静默覆盖，全局档案不擅自改写。\n- 现有工具只支持 user-message/terminal，补充最小的 **host-plan** 来源支持：记录本次界面确实返回的用户批准结果、原计划内容/哈希、来源引用、录入时间和实际工程；不伪装成用户聊天原话，不发明姓名、消息ID、凭据或点击时间。\n- 复用 `identity.cjs`、`workflow.cjs`、`files.cjs` 的校验、不可变计划、锁和审计；同步评估决策确认。不存在明确批准结果时仍停止生成，普通工具/代理通知绝不能批准。\n- 先在现有公开接口补红绿回归：有效批准、缺来源/合成通知拒绝、计划/输入/根漂移拒绝、显示名复用。保持这是本地防误操作，不冒充IAM或签名。\n\n主要修改：`skills/create-fb-feature/scripts/lib/identity.cjs`、`scripts/workflow.cjs`、`scripts/resolve-identity.cjs`、`scripts/eval-reverse-requirements.cjs`及对应测试/批准指南。\n\n## 2. 确认本次公告规则并完成27项对照\n\n采用当前 requirements.md/ contracts.json 的 R01–R12、C01–C12。七项选择如下，**只用于本地mock试点**：\n\n| 编号 | 本轮采用规则 |\n|---|---|\n| D01 | 查询回第一页；重置清空五项条件、回第一页并只查询一次。 |\n| D02 | 新增日期为mock当天；编辑保留原日期，两者只读。 |\n| D03 | 草稿只要求标题；发布要求标题、类型、单位、范围；正文/附件本轮非必填。 |\n| D04 | 保存/删除成功只刷新一次，保留筛选、回第一页；取消或关闭只读页不保存、不刷新。 |\n| D05 | 保留标题阅读和已发布行只读表单两种入口；最新详情状态优先；没有相应权限时入口隐藏，直接调用写处理函数也不发写请求。 |\n| D06 | 有删除权限时，两种状态均允许确认后单条删除；取消不请求、不刷新；不新增撤回/批量操作。 |\n| D07 | 保存防重；失败保留输入并可重试，不提前变已发布；详情失败禁保存；列表失败提示并保留旧数据或空列表。 |\n\n执行顺序：\n1. 原候选v1/v2/v3计划和四份证据保留。新增本轮评估ID，写入这次真实确认，并绑定每项提案哈希、公开输入和两轮文件范围；**不沿用旧未批准hash**。\n2. 在公开C10补确定性mock控制接口 `window.__smsnoticeMock`：重置、设置权限/成功/业务失败/异常/延迟/陈旧详情、读取请求计数及数据快照。只为测试观察，不增加业务规则。\n3. 生成任务使用**新的上下文**，仅给公开requirements/contracts、相关Skill和允许的准确安装源码；不给旧公告模块、隐藏acceptance/evidence或研究结论。\n4. `prepare → check → startGeneration → 独立生成 → freezeGeneration → runBuild → startServer → 浏览器27项检查 → recordResult`。复用现有工具，不另建AI编排平台。\n5. 按scope生成六份文件：`src/main.js`、`src/mock.js`、`src/service/smsnotice.js`、`src/views/NoticeList.vue`、`NoticeForm.vue`、`NoticeReader.vue`。精确两轮证据/产物沿用generation-scope.json；服务固定 **127.0.0.1:18733**。\n6. 验证列表布局（业务按钮左、查询/重置右、按钮间距）、新增/编辑/两种只读/删除、日期/范围/分页/请求、权限直调、防重/失败重试、附件refer-id回显和正文过滤。保存实际截图、请求、构建log、检查结果和访问范围核对。\n7. 首轮结果先冻结。有问题才在repaired目录做一轮修复复验；首轮失败不倒写。基础设施崩溃保留现场，另立同需求的新评估记录，不删claim/半写证据凑绿。\n\n准确runtime仍为GMRHCP Vue/compiler2.6.12、fb-ui1.1.840、fb-core1.1.824、TP2.2.16及webpack4.47.0，不借SOL07替代。\n\n**明确不把27项mock通过说成真实后端/文件服务、旧页面像素1:1或总体准确率通过。** 当前18731演练不改、不占用。\n\n## 3. 补各端真实验证，不拿别的端代替\n\n### 移动端\n- 在 `.validation-output/release-validation/mobile/` 的新隔离环境恢复目标App锁定依赖：Vue2.7.16、TA-UI0.1.170、ta-js0.0.18、ta-theme0.1.18及准确uni H5工具链。\n- 只从已配置且获授权的包仓库/本地缓存获取；不上传业务源码、不改参考node_modules/锁或全局配置。先禁安装脚本，检查所需构建动作后执行。\n- 用独立合成TA页面真实H5构建、loopback浏览器检验组件、导航/表单/mock请求。缺准确包时不回退到FbUI。\n- 有本机App打包工具才做离线App产物检查；真机、云打包/签名/商业许可未具备时单独阻塞，不由H5结果替代。\n\n### Java\n- 核对本机Maven/JDK和准确依赖；必要时从已配置且获授权的Maven仓库恢复到隔离仓库，不改全局 `.m2` 或用2.2.0冒充2.2.3。\n- 审查构建插件后，在参考工程的隔离副本进行准确module compile/可隔离单测；不启动业务应用、不加载生产连接配置。\n- 再验证独立合成Controller/Service/Mapper/XML链的字段、分页、校验、越权/缺失记录及事务失败；需DB的部分连接下述临时库。若平台依赖仍缺，真实记录解析/编译失败，不编一个同名stub骗过编译。\n\n### SQL\n- 本次仅明确授权**全新、只含合成数据**的一次性测试实例：MySQL固定loopback **18735**、达梦固定loopback **18736**。启动前核对可执行文件/版本、端口和许可；不注册/修改Windows服务、不接现有实例。\n- 优先已有可用工具/镜像；需要公开便携软件时下载官方发行物并校验，达梦许可缺失不绕过。\n- 新增最小双方言测试表，逐项执行DDL、插入/查询、唯一/空值/日期/主键/分页与回滚；只操作本次创建的测试目录/表。绝不把整份旧业务DDL导入未知库。\n- 结束关闭本次进程，保留日志。没有可用数据库环境时保留运行阻塞，不称方言已验收。\n\n### 大屏\n- 用准确screen-base源码及独立样本补布局、真实主题/图表和刷新/销毁检查；现有mock测试继续保留。地图/播放器仅在准确依赖与无真实服务的条件下验证生命周期，缺项单列。\n\n研发新增代表文件：`tests/fixtures/mobile-h5/`、`java-contract/`、`sql-dialect/`及对应runtime测试。均不进入分发Skill；样本和报告写入 `release-validation/`。\n\n## 4. 用最新包做真实消费者与宿主验证\n\n- 从本轮源码实际制作新的tgz，在**全新隔离消费者目录**解包。校验文件清单、链接、包身份、hash及隐藏研发材料排除；不覆盖旧zip/tgz。\n- 用包内CLI完成 scan → 当前清单/真实批准绑定 → apply → rescan；验证三Skill齐全、兄弟引用可用、安装后命令可运行，重复安装/更新与保留自定义内容正确。只安装到该隔离消费者，不动其他真实项目配置。\n- 本机确有Codex CLI：先依据该版本实际帮助/协议验证Skill发现与显式调用，再开干净任务验证自然语言是否选中Skill和按需工作。不手动读文件后冒充宿主自动发现。\n- 可调用已有配置的模型服务做这项测试，仅发送合成需求、Skill及允许的共享框架资料，不读取/改写凭据、账号或模型配置。若账号/服务不可用，记录具体宿主阻塞，不偷偷换付费供应商。\n- Codex的结果只证明该宿主/该版本；ZCode或其他宿主没实测就不泛化通过。\n\n## 5. 兼容性、审查和最终分发\n\n1. Node18/24完整回归；另在隔离目录下载并校验官方便携Node20，跑同一套回归，不修/切换用户nvm。带准确依赖与不提供额外依赖根分别记录，跳过项独立列出。\n2. 按既有公开接口做TDD；实施后独立代码审查，修复确认的问题再完整回归。检查留痕真实性、首轮不可变、包泄漏和任何意外真实网络/数据库访问。\n3. 更新README、CHANGELOG、`docs/validation.md`、`docs/release-readiness.md`及试点档案：每项分成通过、失败、阻塞/未执行，有证据才通过。\n4. 当前 `UNLICENSED` 不擅自改成开源授权。默认交付**内部私有验证包**，说明授权与已验证能力范围；不因许可证字段就声称内部授权分发不合法，也不自动公开npm发布。\n5. 最终重建一致的本地tgz/zip、SHA256清单和安装指南；版本与plugin/bundle一致。最终包必须来自审查和测试后的源码，不把旧0.2.0包当最新。\n\n## 6. 完成标准与边界\n\n交付一张收口表、最新本地安装包、可打开的公告演练及逐层原始证据。**不以“新增测试脚本但都跳过”算全部完成；依赖/许可/设备/服务硬阻塞必须列明已尝试动作、错误和缺的条件。**\n\n本轮默认不commit/push、创建PR/远端CI或公开发布。这些会把源码发送到外部，后续若决定公开渠道再针对实际文件和目标授权；不能把“全部完成”解释成任意对外发布或授予开源许可。\n\n参考业务工程、真实数据库/文件服务、用户全局配置和18731页面保持不变。",
+              "planTextHash": "e3112e515ba2d79878e6ba6837cc60e3d100bff183a76c95dd32bd192d4dcd9c",
+              "recordedAt": "2026-11-22T05:46:56.822+08:00",
+              "hash": "264c1f5b4db2a17478d629e1431497d6e712e1e5fde5d094a1aebe0f957b2074"
+            },
+            "confirmedAt": "2026-11-22T05:46:56.935+08:00"
+          },
+          "updatedAt": "2026-11-21T21:46:56.935Z",
+          "hash": "d822e56a6a041ddd58b647bca613f3d93e6d9db155f9e122a4da78c91804dfd9",
+          "scope": "project",
+          "source": "profile(project)",
+          "profilePath": "D:\\projects\\fb-skill\\.agents\\fb-feature\\profile.json",
+          "profileHash": "d822e56a6a041ddd58b647bca613f3d93e6d9db155f9e122a4da78c91804dfd9"
+        },
+        "hostApproval": {
+          "schema": "fb-host-plan-approval/v1",
+          "host": "zcode",
+          "sourceTool": "ExitPlanMode",
+          "reference": "zcode:ExitPlanMode:plan-sess_bb4bb986-9bb0-4645-90f0-c1c30aecf7ca:release-validation-20261122",
+          "resultText": "User has approved your plan. You can now start coding. Start with updating your todo list if applicable.",
+          "projectRoot": "D:\\projects\\fb-skill",
+          "displayName": "当前请求人",
+          "planText": "## Context｜把剩余工作收成可交付结果\n\nFB Skill 的工具已有 Node18/24 各191项通过，但完整公告需求试点、真实宿主使用、移动/Java/SQL运行和最新分发包还没有闭环。本轮不再只做准备：**完成能实际执行的验证、修复发现的问题、交付最新本地安装包及发布结论。**\n\n移动 App 的 node_modules 确实缺失；Java 的 parent/platform 2.2.3及若干业务依赖也缺失。计划包含在隔离目录恢复准确依赖并实际尝试。仓库不可达、商业许可或设备缺失时保留具体阻塞，不把跳过改成通过。\n\n**本次批准同时确认下列公告试点规则、实施范围和隔离测试动作，不授权线上公告发布。** 公开 npm/GitHub 发布、推送、生产数据库和真实文件上传不属于本轮默认动作。\n\n## 1. 一次批准、真实留痕，不再反复填名\n\n- 先读取有效项目/全局显示名档案，有记录直接复用。\n- 若没有有效档案，本轮采用显示标签 **“当前请求人”**，随本次批准在项目内保存一次；这是日志标签，不宣称真实姓名或企业认证。旧失效/损坏档案不静默覆盖，全局档案不擅自改写。\n- 现有工具只支持 user-message/terminal，补充最小的 **host-plan** 来源支持：记录本次界面确实返回的用户批准结果、原计划内容/哈希、来源引用、录入时间和实际工程；不伪装成用户聊天原话，不发明姓名、消息ID、凭据或点击时间。\n- 复用 `identity.cjs`、`workflow.cjs`、`files.cjs` 的校验、不可变计划、锁和审计；同步评估决策确认。不存在明确批准结果时仍停止生成，普通工具/代理通知绝不能批准。\n- 先在现有公开接口补红绿回归：有效批准、缺来源/合成通知拒绝、计划/输入/根漂移拒绝、显示名复用。保持这是本地防误操作，不冒充IAM或签名。\n\n主要修改：`skills/create-fb-feature/scripts/lib/identity.cjs`、`scripts/workflow.cjs`、`scripts/resolve-identity.cjs`、`scripts/eval-reverse-requirements.cjs`及对应测试/批准指南。\n\n## 2. 确认本次公告规则并完成27项对照\n\n采用当前 requirements.md/ contracts.json 的 R01–R12、C01–C12。七项选择如下，**只用于本地mock试点**：\n\n| 编号 | 本轮采用规则 |\n|---|---|\n| D01 | 查询回第一页；重置清空五项条件、回第一页并只查询一次。 |\n| D02 | 新增日期为mock当天；编辑保留原日期，两者只读。 |\n| D03 | 草稿只要求标题；发布要求标题、类型、单位、范围；正文/附件本轮非必填。 |\n| D04 | 保存/删除成功只刷新一次，保留筛选、回第一页；取消或关闭只读页不保存、不刷新。 |\n| D05 | 保留标题阅读和已发布行只读表单两种入口；最新详情状态优先；没有相应权限时入口隐藏，直接调用写处理函数也不发写请求。 |\n| D06 | 有删除权限时，两种状态均允许确认后单条删除；取消不请求、不刷新；不新增撤回/批量操作。 |\n| D07 | 保存防重；失败保留输入并可重试，不提前变已发布；详情失败禁保存；列表失败提示并保留旧数据或空列表。 |\n\n执行顺序：\n1. 原候选v1/v2/v3计划和四份证据保留。新增本轮评估ID，写入这次真实确认，并绑定每项提案哈希、公开输入和两轮文件范围；**不沿用旧未批准hash**。\n2. 在公开C10补确定性mock控制接口 `window.__smsnoticeMock`：重置、设置权限/成功/业务失败/异常/延迟/陈旧详情、读取请求计数及数据快照。只为测试观察，不增加业务规则。\n3. 生成任务使用**新的上下文**，仅给公开requirements/contracts、相关Skill和允许的准确安装源码；不给旧公告模块、隐藏acceptance/evidence或研究结论。\n4. `prepare → check → startGeneration → 独立生成 → freezeGeneration → runBuild → startServer → 浏览器27项检查 → recordResult`。复用现有工具，不另建AI编排平台。\n5. 按scope生成六份文件：`src/main.js`、`src/mock.js`、`src/service/smsnotice.js`、`src/views/NoticeList.vue`、`NoticeForm.vue`、`NoticeReader.vue`。精确两轮证据/产物沿用generation-scope.json；服务固定 **127.0.0.1:18733**。\n6. 验证列表布局（业务按钮左、查询/重置右、按钮间距）、新增/编辑/两种只读/删除、日期/范围/分页/请求、权限直调、防重/失败重试、附件refer-id回显和正文过滤。保存实际截图、请求、构建log、检查结果和访问范围核对。\n7. 首轮结果先冻结。有问题才在repaired目录做一轮修复复验；首轮失败不倒写。基础设施崩溃保留现场，另立同需求的新评估记录，不删claim/半写证据凑绿。\n\n准确runtime仍为GMRHCP Vue/compiler2.6.12、fb-ui1.1.840、fb-core1.1.824、TP2.2.16及webpack4.47.0，不借SOL07替代。\n\n**明确不把27项mock通过说成真实后端/文件服务、旧页面像素1:1或总体准确率通过。** 当前18731演练不改、不占用。\n\n## 3. 补各端真实验证，不拿别的端代替\n\n### 移动端\n- 在 `.validation-output/release-validation/mobile/` 的新隔离环境恢复目标App锁定依赖：Vue2.7.16、TA-UI0.1.170、ta-js0.0.18、ta-theme0.1.18及准确uni H5工具链。\n- 只从已配置且获授权的包仓库/本地缓存获取；不上传业务源码、不改参考node_modules/锁或全局配置。先禁安装脚本，检查所需构建动作后执行。\n- 用独立合成TA页面真实H5构建、loopback浏览器检验组件、导航/表单/mock请求。缺准确包时不回退到FbUI。\n- 有本机App打包工具才做离线App产物检查；真机、云打包/签名/商业许可未具备时单独阻塞，不由H5结果替代。\n\n### Java\n- 核对本机Maven/JDK和准确依赖；必要时从已配置且获授权的Maven仓库恢复到隔离仓库，不改全局 `.m2` 或用2.2.0冒充2.2.3。\n- 审查构建插件后，在参考工程的隔离副本进行准确module compile/可隔离单测；不启动业务应用、不加载生产连接配置。\n- 再验证独立合成Controller/Service/Mapper/XML链的字段、分页、校验、越权/缺失记录及事务失败；需DB的部分连接下述临时库。若平台依赖仍缺，真实记录解析/编译失败，不编一个同名stub骗过编译。\n\n### SQL\n- 本次仅明确授权**全新、只含合成数据**的一次性测试实例：MySQL固定loopback **18735**、达梦固定loopback **18736**。启动前核对可执行文件/版本、端口和许可；不注册/修改Windows服务、不接现有实例。\n- 优先已有可用工具/镜像；需要公开便携软件时下载官方发行物并校验，达梦许可缺失不绕过。\n- 新增最小双方言测试表，逐项执行DDL、插入/查询、唯一/空值/日期/主键/分页与回滚；只操作本次创建的测试目录/表。绝不把整份旧业务DDL导入未知库。\n- 结束关闭本次进程，保留日志。没有可用数据库环境时保留运行阻塞，不称方言已验收。\n\n### 大屏\n- 用准确screen-base源码及独立样本补布局、真实主题/图表和刷新/销毁检查；现有mock测试继续保留。地图/播放器仅在准确依赖与无真实服务的条件下验证生命周期，缺项单列。\n\n研发新增代表文件：`tests/fixtures/mobile-h5/`、`java-contract/`、`sql-dialect/`及对应runtime测试。均不进入分发Skill；样本和报告写入 `release-validation/`。\n\n## 4. 用最新包做真实消费者与宿主验证\n\n- 从本轮源码实际制作新的tgz，在**全新隔离消费者目录**解包。校验文件清单、链接、包身份、hash及隐藏研发材料排除；不覆盖旧zip/tgz。\n- 用包内CLI完成 scan → 当前清单/真实批准绑定 → apply → rescan；验证三Skill齐全、兄弟引用可用、安装后命令可运行，重复安装/更新与保留自定义内容正确。只安装到该隔离消费者，不动其他真实项目配置。\n- 本机确有Codex CLI：先依据该版本实际帮助/协议验证Skill发现与显式调用，再开干净任务验证自然语言是否选中Skill和按需工作。不手动读文件后冒充宿主自动发现。\n- 可调用已有配置的模型服务做这项测试，仅发送合成需求、Skill及允许的共享框架资料，不读取/改写凭据、账号或模型配置。若账号/服务不可用，记录具体宿主阻塞，不偷偷换付费供应商。\n- Codex的结果只证明该宿主/该版本；ZCode或其他宿主没实测就不泛化通过。\n\n## 5. 兼容性、审查和最终分发\n\n1. Node18/24完整回归；另在隔离目录下载并校验官方便携Node20，跑同一套回归，不修/切换用户nvm。带准确依赖与不提供额外依赖根分别记录，跳过项独立列出。\n2. 按既有公开接口做TDD；实施后独立代码审查，修复确认的问题再完整回归。检查留痕真实性、首轮不可变、包泄漏和任何意外真实网络/数据库访问。\n3. 更新README、CHANGELOG、`docs/validation.md`、`docs/release-readiness.md`及试点档案：每项分成通过、失败、阻塞/未执行，有证据才通过。\n4. 当前 `UNLICENSED` 不擅自改成开源授权。默认交付**内部私有验证包**，说明授权与已验证能力范围；不因许可证字段就声称内部授权分发不合法，也不自动公开npm发布。\n5. 最终重建一致的本地tgz/zip、SHA256清单和安装指南；版本与plugin/bundle一致。最终包必须来自审查和测试后的源码，不把旧0.2.0包当最新。\n\n## 6. 完成标准与边界\n\n交付一张收口表、最新本地安装包、可打开的公告演练及逐层原始证据。**不以“新增测试脚本但都跳过”算全部完成；依赖/许可/设备/服务硬阻塞必须列明已尝试动作、错误和缺的条件。**\n\n本轮默认不commit/push、创建PR/远端CI或公开发布。这些会把源码发送到外部，后续若决定公开渠道再针对实际文件和目标授权；不能把“全部完成”解释成任意对外发布或授予开源许可。\n\n参考业务工程、真实数据库/文件服务、用户全局配置和18731页面保持不变。",
+          "planTextHash": "e3112e515ba2d79878e6ba6837cc60e3d100bff183a76c95dd32bd192d4dcd9c",
+          "recordedAt": "2026-11-22T05:46:56.822+08:00",
+          "hash": "264c1f5b4db2a17478d629e1431497d6e712e1e5fde5d094a1aebe0f957b2074"
+        }
+      }
+    }
+  ],
+  "mockNotices": [
+    {
+      "noticeId": "MOCK-N001",
+      "passKey": "mock-only-001",
+      "noticeTitle": "演练草稿甲",
+      "pubDeptId": "UNIT-MOCK",
+      "pubDeptName": "演练发布单位",
+      "noticeType": "X5401",
+      "noticeTypeName": "演练通知",
+      "pubTime": "20261118",
+      "noticeRange": "X5501,X5502",
+      "noticeStatus": "X5601",
+      "noticeStatusName": "草稿",
+      "noticeContent": "<p>合成草稿正文</p>",
+      "file": {
+        "referType": "SYS1047",
+        "fileList": []
+      }
+    },
+    {
+      "noticeId": "MOCK-N002",
+      "passKey": "mock-only-002",
+      "noticeTitle": "演练发布乙",
+      "pubDeptId": "UNIT-MOCK",
+      "pubDeptName": "演练发布单位",
+      "noticeType": "X5402",
+      "noticeTypeName": "演练提醒",
+      "pubTime": "20261119",
+      "noticeRange": "X5502",
+      "noticeStatus": "X5602",
+      "noticeStatusName": "已发布",
+      "noticeContent": "<p>合成已发布正文</p>",
+      "file": {
+        "referType": "SYS1047",
+        "fileList": [
+          {
+            "attachId": "MOCK-FILE-001"
+          }
+        ]
+      }
+    },
+    {
+      "noticeId": "MOCK-N003",
+      "passKey": "mock-only-003",
+      "noticeTitle": "演练空范围丙",
+      "pubDeptId": "UNIT-MOCK",
+      "pubDeptName": "演练发布单位",
+      "noticeType": "X5401",
+      "noticeTypeName": "演练通知",
+      "pubTime": "20261120",
+      "noticeRange": null,
+      "noticeStatus": "X5601",
+      "noticeStatusName": "草稿",
+      "noticeContent": "",
+      "file": {
+        "referType": "SYS1047",
+        "fileList": []
+      }
+    }
+  ],
+  "mockFileRegistry": [
+    {
+      "attachId": "MOCK-FILE-001",
+      "attachName": "演练附件.pdf",
+      "attachSize": 1024,
+      "mock": true
+    },
+    {
+      "attachId": "MOCK-FILE-002",
+      "attachName": "演练说明.docx",
+      "attachSize": 2048,
+      "mock": true
+    }
+  ],
+  "unknowns": [
+    "Production backend validation, actual dictionary labels, passKey security, server-side status transitions and idempotency are not verified.",
+    "The list response example follows the installed table default; it is not an executed backend sample.",
+    "Real file lifecycle and rich-editor complex interactions are outside this first round."
+  ]
+}

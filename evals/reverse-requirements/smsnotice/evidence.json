@@ -1,0 +1,391 @@
+{
+  "schemaVersion": 1,
+  "caseId": "smsnotice-pilot",
+  "nature": "source-evidence-not-approved-requirement",
+  "sources": [
+    {
+      "id": "smsnotice-list-vue",
+      "root": "D:/projects/T20240246-GMRHCP/T20240246-GMRHCP-Code/branches/V3.51-20261116/mew-manage-ui",
+      "path": "src/views/commonbusiness/smsnotice/list.vue",
+      "sha256": "f4483a9ee60089d67f82e31d9c7b9a11c39da2b0944e4bd481d791a3bd6276b0",
+      "bytes": 7587,
+      "ranges": [
+        {
+          "start": 1,
+          "end": 95,
+          "facts": [
+            "fb-page-search 使用四个具名插槽：query（查询区）、buttons（业务按钮区）、actions（查询/重置区）、table（表格区）",
+            "查询条件 4 个：公告标题(fb-input)、公告类型(fb-select 字典 X54)、发布日期起止(tp-datepicker，起始控 maxDate=结束值、结束控 minDate=起始值，均 YYYY-MM-DD 显示、YYYYMMDD 取值)、状态(fb-select 字典 X56)",
+            "buttons 插槽内『发布公告』按钮挂权限码 OP_MANAGE_SMSNOTICE_ADD，图标 add-circle",
+            "actions 插槽为『查询』(handleQuery)与『重置』(clearForm)两个按钮",
+            "fb-simple-table auto-load 自动加载，data 的 table.service 存公告服务模块，模板 list.vue:61 绑定 table.service.search 函数本身，primaryKey=noticeId，multiple=false，scroll x=800 y=370 autoHeight",
+            "行操作按 noticeStatus 分支：X5601 显『修改』(挂 OP_MANAGE_SMSNOTICE_UPDATE)、X5602 显『查看』(挂 OP_MANAGE_SMSNOTICE_VIEW)、『删除』恒显(挂 OP_MANAGE_SMSNOTICE_DELETE)",
+            "标题列走 v-slot:view 渲染 fb-link-group，点击 handleView 打开 view.vue 弹窗"
+          ]
+        },
+        {
+          "start": 113,
+          "end": 171,
+          "facts": [
+            "formData 初始 5 个字段 noticeTitle/noticeType/pubTimeStart/pubTimeEnd/noticeStatus 均为空串",
+            "表格 6 列：公告标题(宽200, slot view)、发布单位 pubDeptName(140)、公告类型 noticeTypeName(150)、发布日期 pubTime(120)、状态 noticeStatusName(80)、操作(125, slot actions)"
+          ]
+        },
+        {
+          "start": 99,
+          "end": 104,
+          "facts": [
+            "Page mixin 来源为 @common-libs/util/Page"
+          ]
+        },
+        {
+          "start": 177,
+          "end": 240,
+          "facts": [
+            "handleQuery 直调 this.$refs.table.doSearch()",
+            "handleAdd 打开 add.vue 弹窗传空 param，标题『新增公告』",
+            "handleEdit 传 {id:row.noticeId, passKey, noticeStatus} 打开 add.vue，标题按状态定为『修改』(X5601)或『查看』(X5602)",
+            "handleDel 先 $confirm『确定要删除吗？』，delete 服务传 {noticeIds:row.noticeId, passKey}；code==1 提示『删除成功』并 handleQuery 刷新，否则提示『删除失败: '+result.message",
+            "closeDialog 不区分关闭原因一律调用 handleQuery() 刷新列表（取消关闭也会触发一次查询）",
+            "closeDialogTab 仅当回传 param 有值才刷新",
+            "clearForm 手动逐个清空 5 个查询字段并 $message.success『已重置』，不触发列表查询"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "smsnotice-add-vue",
+      "root": "D:/projects/T20240246-GMRHCP/T20240246-GMRHCP-Code/branches/V3.51-20261116/mew-manage-ui",
+      "path": "src/views/commonbusiness/smsnotice/add.vue",
+      "sha256": "617a3e0768d6cadd1075ca200a8379da30b0e916ea79c01af0427236f9e0f7e3",
+      "bytes": 7307,
+      "ranges": [
+        {
+          "start": 1,
+          "end": 90,
+          "facts": [
+            "弹窗表单字段与必填：公告标题(required)、公告类型 X54(required)、发布日期(readonly)、发布单位(readonly, required)、公告范围 X55 multiple(required)、附件(tp-upload accept .doc,.docx,.xlsx,.xls,.pdf，referType SYS1047)、正文(编辑态 fb-editor 富文本 / 只读态 fb-container v-html $xss 渲染)",
+            "底部按钮：『暂存为草稿』仅 noticeStatus != X5602 且非只读时显示；『保存并发布』仅非只读时显示；『取消』恒显"
+          ]
+        },
+        {
+          "start": 127,
+          "end": 150,
+          "facts": [
+            "service=app.$svc.commonbusiness.smsnotice",
+            "formData.noticeRange 初始为空串（136 行），与 multiple 多选下拉期望的数组形态不一致",
+            "formData.pubTime 初始空串，组件级 pubTime 初始为 dayjs 当天 YYYYMMDD（144 行）",
+            "readonly 初始 false；新增（无 noticeStatus 入参）时保持可编辑"
+          ]
+        },
+        {
+          "start": 159,
+          "end": 174,
+          "facts": [
+            "init：param.id 有值视为修改，赋 noticeId/passKey 并调 view() 回填；否则发布单位取 $datax userInfo.ascnId/ascnName",
+            "param.noticeStatus==X5602 时 readonly=true；==X5601 时 readonly=false"
+          ]
+        },
+        {
+          "start": 177,
+          "end": 193,
+          "facts": [
+            "draft() 不做表单校验，直接置 noticeStatus=X5601 并提交（草稿可绕过前端必填）",
+            "formal() 先 $refs.fbform.validate 通过后才置 noticeStatus=X5602 提交"
+          ]
+        },
+        {
+          "start": 195,
+          "end": 234,
+          "facts": [
+            "提交前 formData.pubTime = pubTime（198 行，组件初始化的当天值），编辑已有公告也会覆盖其原发布日期",
+            "noticeRange 在提交前 join(',') 拼成英文逗号串（199-202 行）",
+            "有 noticeId 调 update、否则调 add；code==1 提示『修改成功/新增成功』并 closeTpDialog 关弹窗；失败提示 message",
+            "updateCount 被赋值为 0（216、230 行）但全文件无任何读取方；提交过程无 loading/禁用等防重复提交措施"
+          ]
+        },
+        {
+          "start": 237,
+          "end": 250,
+          "facts": [
+            "view() 调 service.view({noticeId, passKey})；code==1 时整体 formData=result.data，并将 noticeRange split(',') 拆回数组供多选回显（243 行）",
+            "init 在 163 行写入的列表 passKey 会在 242 行整体替换时丢失；旧 update 是否携带 passKey 依赖详情响应是否返还，真实后端该契约未验证",
+            "附件回显并非直接渲染 formData.file：tp-upload 的 referid 立即监听查询独立 file.byReferId，并向父级 file.fileList 回写 [{attachId}]；提交 197 行赋 formData.file=组件级 file"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "smsnotice-view-vue",
+      "root": "D:/projects/T20240246-GMRHCP/T20240246-GMRHCP-Code/branches/V3.51-20261116/mew-manage-ui",
+      "path": "src/views/commonbusiness/smsnotice/view.vue",
+      "sha256": "57fe4f64c1b416519637ccc08d99fc4a574d542db80d9a4fe73b7f7c88cfaebe",
+      "bytes": 3235,
+      "ranges": [
+        {
+          "start": 1,
+          "end": 56,
+          "facts": [
+            "纯展示页：居中大字公告标题、发布单位/发布日期两列次要文字、附件 tp-upload readonly、正文 fb-container v-html $xss(formData.noticeContent)；无公告类型与公告范围展示",
+            "底部仅『关闭』按钮"
+          ]
+        },
+        {
+          "start": 88,
+          "end": 115,
+          "facts": [
+            "formData 声明含 noticePath/enterDeptId/isActive/creator/createTime/updator/updateTime 等字段，与 add.vue 的 formData 字段集不同",
+            "file.referType 同为 SYS1047"
+          ]
+        },
+        {
+          "start": 119,
+          "end": 146,
+          "facts": [
+            "init 取 param.id/passKey 后调 view()；view() 调 service.view({noticeId, passKey})，code==1 整体赋值 formData，不拆 noticeRange（本页也不展示该字段）"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "smsnotice-service-index",
+      "root": "D:/projects/T20240246-GMRHCP/T20240246-GMRHCP-Code/branches/V3.51-20261116/mew-manage-ui",
+      "path": "src/service/commonbusiness/smsnotice/index.js",
+      "sha256": "331388cff4c7b6e0970bc56678637de6235a52592ebdf9eea4a63cf4bce5ee6e",
+      "bytes": 1073,
+      "ranges": [
+        {
+          "start": 3,
+          "end": 41,
+          "facts": [
+            "search=GET /psncenter/smsnotice/list；searchPub=GET /psncenter/smsnotice/listPub；view=GET /psncenter/smsnotice/view；delete=GET /psncenter/smsnotice/delete（删除走 GET 查询串）",
+            "add=POST /psncenter/smsnotice/add；update=POST /psncenter/smsnotice/update；均 Content-Type application/json、responseType json、timeout 5000",
+            "URL 前缀 /psncenter/ 属个人中心后端家族，但服务定义位于项目侧 src/service/commonbusiness/smsnotice，不在 common-libs"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "smsnotice-router-index",
+      "root": "D:/projects/T20240246-GMRHCP/T20240246-GMRHCP-Code/branches/V3.51-20261116/mew-manage-ui",
+      "path": "src/router/commonbusiness/smsnotice/index.js",
+      "sha256": "30156512319c32b15f4dfd89fdf947530bf97053c9dae95b427fe5534bd478b7",
+      "bytes": 199,
+      "ranges": [
+        {
+          "start": 3,
+          "end": 12,
+          "facts": [
+            "唯一路由 path=/commonbusiness/smsnotice/list，meta.title=通知公告，懒加载 list.vue；add/view 无独立路由，均为弹窗形态"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fbui-fbpagesearch-vue",
+      "root": "D:/projects/T20240246-GMRHCP/T20240246-GMRHCP-Code/branches/V3.51-20261116/mew-manage-ui",
+      "path": "node_modules/fb-ui/packages/components/page/src/FbPageSearch.vue",
+      "sha256": "c9034e8d02540e6a42b7b809682ae9fa988bc7c31f227c10515b50b726bae8d6",
+      "bytes": 1945,
+      "ranges": [
+        {
+          "start": 1,
+          "end": 35,
+          "facts": [
+            "FbPageSearch 结构化插槽：query 独立查询面板；list-panel 的 header 内含 buttons（业务按钮）与 actions（查询/重置）两个插槽，table、pager 各占一层",
+            "footer-left/footer-center/footer-right 三插槽默认渲染在 display:none 容器；仅当传入 dialog prop 时经 on-dialog-footer 事件转交弹窗",
+            "query 面板与 list-panel 均有 $slots 判空，缺槽不渲染对应层"
+          ]
+        },
+        {
+          "start": 37,
+          "end": 79,
+          "facts": [
+            "组件 name=FbPageSearch，props 仅 dialog；根 class 为 prefix-page 与 prefix-page-search 两个类名（prefix 来自 fb-ui src/config）"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fbui-pagesearch-less",
+      "root": "D:/projects/T20240246-GMRHCP/T20240246-GMRHCP-Code/branches/V3.51-20261116/mew-manage-ui",
+      "path": "node_modules/fb-ui/packages/theme/pc3/src/page-search.less",
+      "sha256": "f624673562633f0c8cdd492058ae1169257ab79cbaddf5393b147c03dd049fef",
+      "bytes": 1186,
+      "ranges": [
+        {
+          "start": 7,
+          "end": 65,
+          "facts": [
+            "query-panel 白底圆角独立面板；list-panel 与其间隔 margin-top 8px，同样白底圆角",
+            "header 高 52px：buttons 插槽绝对定位 left:0（业务动作在左，右间距 8px）；actions 插槽绝对定位 right:0（查询/重置在右，左间距 8px）",
+            "table 区 min-height 100px；pager 右对齐、上下 padding 12px"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fbui-fbsimpletable-vue",
+      "root": "D:/projects/T20240246-GMRHCP/T20240246-GMRHCP-Code/branches/V3.51-20261116/mew-manage-ui",
+      "path": "node_modules/fb-ui/packages/components/table/src/FbSimpleTable.vue",
+      "sha256": "0e528c398cbb830e3b730454b167b0349e2f695cc408ea7c737548a5ac23810a",
+      "bytes": 50100,
+      "ranges": [
+        { "start": 362, "end": 377, "facts": ["默认 dataParse 消费 json.data.records/total/size/current/pages；这是组件消费结构，不是已运行后端响应证据"] },
+        { "start": 1646, "end": 1720, "facts": ["doSearch 默认 pageRedirect=true，查询置 current=1；fetchData 对 service 函数直调，否则取 service.list；参数合并 sorter/filter/query/pager，pager 可能带额外 UI 键", "fetchData 的 catch 静默吞异常，不能把该行为当成列表失败的正确答案"] },
+        { "start": 1882, "end": 1884, "facts": ["autoLoad 在 mounted 中触发一次 fetchData"] }
+      ]
+    },
+    {
+      "id": "tp-upload-vue",
+      "root": "D:/projects/T20240246-GMRHCP/T20240246-GMRHCP-Code/branches/V3.51-20261116/mew-manage-ui",
+      "path": "node_modules/@topinfo/tp-components/src/components/tp-upload/tp-upload.vue",
+      "sha256": "761470e8d22739213c01b1d64fbe57be91b289b8013c81c4588585e7fe6d0c16",
+      "bytes": 6058,
+      "ranges": [
+        { "start": 186, "end": 189, "facts": ["v-model 以 value/listener 配对"] },
+        { "start": 240, "end": 262, "facts": ["formatFile 把富附件记录映射为 [{attachId}]，经 listener 回写父级文件数组，用于提交"] },
+        { "start": 264, "end": 295, "facts": ["referid 真值触发 download，watch immediate=true；调用 app.$svc.sys.file.byReferId({referId,referType})，code=1 时以 result.data 覆盖组件展示列表，再回写父级", "readonly 不抑制 referid 监听和按关联 ID 读取附件"] }
+      ]
+    },
+    {
+      "id": "fbui-fbupload-vue",
+      "root": "D:/projects/T20240246-GMRHCP/T20240246-GMRHCP-Code/branches/V3.51-20261116/mew-manage-ui",
+      "path": "node_modules/fb-ui/packages/components/upload/src/FbUpload.vue",
+      "sha256": "d4542b227a72322aca3b7479ca3afeb02a94afe9a6e596472708fa9165f1bed7",
+      "bytes": 13828,
+      "ranges": [
+        { "start": 420, "end": 438, "facts": ["初始化附件有 attachId 时，展示 name 来源 attachName，uid 来源 attachId，size 来源 attachSize"] },
+        { "start": 455, "end": 482, "facts": ["fileList watcher 对带 attachId 的记录做相同字段归一；仅有 name 而无 attachName 的合成记录不能按该契约正常显示名称"] }
+      ]
+    },
+    {
+      "id": "sys-file-service-index",
+      "root": "D:/projects/T20240246-GMRHCP/T20240246-GMRHCP-Code/branches/V3.51-20261116/mew-manage-ui",
+      "path": "src/service/sys/file/index.js",
+      "sha256": "37d1d79808a2f79dd40905bfb46de937f487c4f07e481ef8e8dc80482879a9b3",
+      "bytes": 990,
+      "ranges": [
+        { "start": 12, "end": 18, "facts": ["真实 upload 使用 /platform/file/upload，timeout=300000；试点不执行该真实服务"] },
+        { "start": 20, "end": 37, "facts": ["byReferId 在 29-31 行定义 GET /platform/file/refer-id，params 透传；下载/预览是另外的服务调用，不因只读展示就得到真实操作授权"] }
+      ]
+    }
+  ],
+  "unknowns": [
+    "fb-ui 表组件默认 dataParse 已读取，消费 json.data.records/total/size/current/pages；真实后端 /psncenter/smsnotice/list 是否按此包装返回仍未执行验证",
+    "后端 /psncenter/smsnotice/* 的 Controller/DTO 未读：字段长度、必填、模糊/精确匹配、状态机与去重的服务端口径全部未知",
+    "字典 X54（公告类型）、X55（公告范围）、X56（状态）的实际选项文本未读，本证据仅标码；X5601=草稿、X5602=已发布的中文语义为页面行为推断，未经字典数据核实",
+    "searchPub（GET /psncenter/smsnotice/listPub）在已读页面中未发现调用方，用途未知",
+    "delete 走 GET，后端如何从查询串接收 noticeIds/passKey 未读",
+    "view 接口对 add.vue 与 view.vue 两个读路径返回的字段是否完全一致未验证（两处 formData 声明集不同）",
+    "passKey 的生成与校验契约未知",
+    "前端 draft 绕过必填提交 X5601 能否被服务端接受未知",
+    "前端无防重的实际后果（后端是否有幂等/去重保护）未知",
+    "文件 /platform/file/refer-id 响应的富记录形态由已装组件消费反推，未直接运行真实文件服务；attachName/attachSize 等仅作合成 mock 契约",
+    "旧 update 直接提交详情整体回显与 file，后端是否需要契约附件未列出的额外回显字段未知",
+    "运行时全局配置（如 exportMaxLength）具体数值未知（沿用前轮结论）"
+  ],
+  "legacyIssues": [
+    {
+      "id": "LI-01",
+      "summary": "弹窗关闭（含取消）一律刷新列表：closeDialog 不区分关闭原因，取消也会触发一次查询",
+      "sourceIds": ["smsnotice-list-vue", "smsnotice-add-vue"],
+      "status": "observed-not-remediated"
+    },
+    {
+      "id": "LI-02",
+      "summary": "重置只清空不重新查询：clearForm 手动清空并提示『已重置』但不触发 doSearch（与 equipment 的 resetFields 两种写法并存）",
+      "sourceIds": ["smsnotice-list-vue"],
+      "status": "observed-not-remediated"
+    },
+    {
+      "id": "LI-03",
+      "summary": "发布日期覆盖：提交时 pubTime 被组件初始化的当天值覆盖（add.vue:198），编辑已有公告保存后原发布日期丢失",
+      "sourceIds": ["smsnotice-add-vue"],
+      "status": "observed-not-remediated"
+    },
+    {
+      "id": "LI-04",
+      "summary": "noticeRange 形态变形：初始空串（add.vue:136）、提交 join 成逗号串（199-202）、回填 split 成数组（243），三种形态在生命周期内切换",
+      "sourceIds": ["smsnotice-add-vue"],
+      "status": "observed-not-remediated"
+    },
+    {
+      "id": "LI-05",
+      "summary": "两只读路径字段区别：X5602 行内『查看』走 add.vue 表单只读态（显示类型/范围并拆 noticeRange），标题链接走 view.vue 展示页（不显示类型/范围、不拆 noticeRange），同一 view 接口两套消费；这是观察到的差异，不自动判为缺陷",
+      "sourceIds": ["smsnotice-add-vue", "smsnotice-view-vue"],
+      "status": "observed-difference-not-defect-conclusion"
+    },
+    {
+      "id": "LI-06",
+      "summary": "防重缺失：add/update 提交无 loading/禁用防重复点击，updateCount 赋值后无任何消费（add.vue:216,230）",
+      "sourceIds": ["smsnotice-add-vue"],
+      "status": "observed-not-remediated"
+    },
+    {
+      "id": "LI-07",
+      "summary": "删除走 GET 查询串携带 noticeIds/passKey（service 定义与 list.vue 调用一致）",
+      "sourceIds": ["smsnotice-service-index", "smsnotice-list-vue"],
+      "status": "observed-not-remediated"
+    },
+    {
+      "id": "LI-08",
+      "summary": "searchPub 已定义但已读页面无调用方；仅说明本次有界范围未发现使用，不能据此证明整个项目是死代码",
+      "sourceIds": ["smsnotice-service-index"],
+      "status": "observed-callsite-unresolved"
+    }
+  ],
+  "runtime": {
+    "projectRoot": "D:/projects/T20240246-GMRHCP/T20240246-GMRHCP-Code/branches/V3.51-20261116/mew-manage-ui",
+    "packages": [
+      {
+        "name": "vue",
+        "declared": "2.6.12",
+        "installed": "2.6.12",
+        "sourcePath": "node_modules/vue"
+      },
+      {
+        "name": "vue-template-compiler",
+        "declared": "2.6.12",
+        "installed": "2.6.12",
+        "sourcePath": "node_modules/vue-template-compiler"
+      },
+      {
+        "name": "fb-ui",
+        "declared": "^1.1.728",
+        "installed": "1.1.840",
+        "sourcePath": "node_modules/fb-ui"
+      },
+      {
+        "name": "fb-core",
+        "declared": "^1.1.723",
+        "installed": "1.1.824",
+        "sourcePath": "node_modules/fb-core"
+      },
+      {
+        "name": "@topinfo/tp-components",
+        "declared": "^2.2.4",
+        "installed": "2.2.16",
+        "sourcePath": "node_modules/@topinfo/tp-components"
+      }
+    ],
+    "buildTooling": [
+      {
+        "name": "@vue/cli-service",
+        "installed": "4.5.19"
+      },
+      {
+        "name": "webpack",
+        "installed": "4.47.0"
+      },
+      {
+        "name": "vue-loader",
+        "installed": "15.11.1"
+      },
+      {
+        "name": "@babel/parser",
+        "installed": "7.29.14"
+      }
+    ]
+  }
+}

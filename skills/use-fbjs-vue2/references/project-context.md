@@ -37,7 +37,8 @@ Upstream repositories are optional. Supply them through `--fbjs-root`, `--admin-
 
 ## Selecting evidence
 
-- Prefer exact installed source over a newer upstream checkout.
+- Prefer the implementation actually registered by the target entry/page, including reviewed project-local overrides; inspect its exact source and version.
+- Prefer exact installed package source over a newer upstream checkout when that package is the effective owner.
 - Use upstream code to investigate drift or missing context, never to silently introduce an API absent from the installed package.
 - Use target-project examples for wiring and naming, then verify their component APIs against installed source.
 - Treat backups, demos, tests, generated bundles, README files, `.d.ts`, `llm.md`, and legacy agent rules as secondary evidence.

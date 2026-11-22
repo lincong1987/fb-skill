@@ -1,3 +1,16 @@
 node_modules/
 .agents/fbjs-vue2/
+.agents/fb-feature/
+.validation-output/
+# Historical reference copies are local evidence, not synthetic test standards.
+tests/fixtures/java-contract/sources/
+tests/fixtures/java-contract/manifest.json
+tests/fixtures/java-contract/fixture.cjs
+tests/fixtures/java-contract/prepare.cjs
+*.tgz
 .DS_Store
+
+# Local historical artifacts and internal research notes stay out of the public repo.
+fb-skill.zip
+*.zip
+docs/reverse-requirements-feasibility.md

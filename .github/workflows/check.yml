@@ -1,0 +1,26 @@
+name: Core tests and skill structure
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  local-tools:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [18, 20, 24]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Test zero-dependency management tools
+        run: npm test
+      - name: Validate skill format and local links
+        run: npm run check
+      - name: Inspect distribution file list
+        run: npm run pack:check
+
+# Parser-dependent catalog and browser/full-stack tests require explicit target
+# tooling/environment. Core CI does not claim to run those when they are skipped.

@@ -17,12 +17,23 @@ const DEFAULT_EXTERNAL_ROOTS = {
 
 const dependencyCache = new Map()
 
+// Extra node_modules root (option --deps-root / env FBJS_DEPS_ROOT) searched before the
+// default resolution chain. Used by sandboxed tests so fixtures need no real installs.
+let DEPS_ROOT = process.env.FBJS_DEPS_ROOT || null
+
+function setDepsRoot (root) {
+	DEPS_ROOT = root ? path.resolve(root) : null
+	dependencyCache.clear()
+}
+
 function loadProjectDependency (packageName, searchRoot = PROJECT_ROOT) {
 	const key = `${packageName}|${path.resolve(searchRoot)}`
 	if (dependencyCache.has(key)) return dependencyCache.get(key)
+	const searchPaths = [searchRoot, PROJECT_ROOT, SKILL_ROOT]
+	if (DEPS_ROOT) searchPaths.unshift(DEPS_ROOT)
 	let resolved
 	try {
-		resolved = require.resolve(packageName, { paths: [searchRoot, PROJECT_ROOT, SKILL_ROOT] })
+		resolved = require.resolve(packageName, { paths: searchPaths })
 	} catch (error) {
 		throw new Error(`Missing ${packageName}. Install the target Vue 2 project's dependencies before running this skill.`)
 	}
@@ -52,6 +63,14 @@ const PACKAGES = [
 	{ owner: '@topinfo/screen-base', packageName: '@topinfo/screen-base', kind: 'registry', registry: 'src/components/index.js' },
 	{ owner: '@topinfo/fb-player', packageName: '@topinfo/fb-player', kind: 'registry', registry: 'src/components/index.js' },
 	{ owner: '@topinfo/fb-three', packageName: '@topinfo/fb-three', kind: 'registry', registry: 'src/components/index.js' },
+	// Source-first registries: never fall back to built lib/dist output. If the installed
+	// package ships no source registry, it yields no records and project usage stays
+	// unresolved (reported honestly) instead of being reconstructed from Vue3 or bundles.
+	{ owner: '@topinfo/fb-mars3d', packageName: '@topinfo/fb-mars3d', kind: 'registry', registry: 'src/components/index.js' },
+	// Evidence: D:/projects/topinfo/fb-ai/package.json declares name "fb-ai" (unscoped,
+	// 1.0.35) and ships src/; src/index.js:12 forwards to ./components/index.js whose
+	// `const components = [...]` array at :41 is the registry. Do not invent a scoped name.
+	{ owner: 'fb-ai', packageName: 'fb-ai', kind: 'registry', registry: 'src/components/index.js' },
 ]
 
 const OPTIONAL_COMPONENTS = [
@@ -112,9 +131,35 @@ function directoryExists (directory) {
 }
 
 function resolveInstalledPackage (packageName, projectRoot = PROJECT_ROOT) {
-	const manifest = path.join(projectRoot, 'node_modules', ...packageName.split('/'), 'package.json')
-	if (!fileExists(manifest)) return null
-	return { root: path.dirname(manifest), manifest: readJson(manifest) }
+	// Node-style upward resolution: the package may be hoisted into a parent workspace
+	// node_modules (lerna/yarn/pnpm) even when the project root has its own node_modules.
+	let dir = path.resolve(projectRoot)
+	for (;;) {
+		const manifest = path.join(dir, 'node_modules', ...packageName.split('/'), 'package.json')
+		if (fileExists(manifest)) {
+			return { root: path.dirname(manifest), manifest: readJson(manifest), resolvedFrom: dir }
+		}
+		const parent = path.dirname(dir)
+		if (parent === dir) return null
+		dir = parent
+	}
+}
+
+function findApplicationRoot (startDir, stopRoot = null) {
+	// Nearest directory at or above startDir that owns a package.json. Sub-entries such as
+	// screen-v5/ or screensj/ have none of their own; the application root is what installs
+	// the FBJS dependencies and what every scan must be anchored to. stopRoot bounds the
+	// upward walk (inclusive): passing a sandbox/tmp boundary keeps promotion deterministic
+	// even when the real filesystem has stray package.json files above it.
+	let dir = path.resolve(startDir)
+	const stop = stopRoot ? path.resolve(stopRoot) : null
+	for (;;) {
+		if (fileExists(path.join(dir, 'package.json'))) return dir
+		if (stop && dir === stop) return null
+		const parent = path.dirname(dir)
+		if (parent === dir) return null
+		dir = parent
+	}
 }
 
 function parseArgs (argv) {
@@ -144,7 +189,7 @@ function parseArgs (argv) {
 			options.adminRef = value
 			continue
 		}
-		const match = arg.match(/^--(project|output|fbjs|admin|screen|ai|player)-root(?:=(.*))?$/)
+		const match = arg.match(/^--(project|output|fbjs|admin|screen|ai|player|deps|stop)-root(?:=(.*))?$/)
 		if (!match) throw new Error(`Unknown option: ${arg}`)
 		const inline = match[2] !== undefined
 		const value = inline ? match[2] : argv[++index]
@@ -152,6 +197,8 @@ function parseArgs (argv) {
 		const resolved = path.resolve(value)
 		if (match[1] === 'project') options.projectRoot = resolved
 		else if (match[1] === 'output') options.outputRoot = resolved
+		else if (match[1] === 'deps') options.depsRoot = resolved
+		else if (match[1] === 'stop') options.stopRoot = resolved
 		else options.externalRoots[match[1]] = resolved
 	}
 	if (!options.outputRoot) options.outputRoot = defaultOutputRoot(options.projectRoot)
@@ -184,6 +231,18 @@ function sourceAlias (file, context) {
 			return `${alias}:${slash(path.relative(resolvedRoot, absolute))}`
 		}
 	}
+	// Hoisted install: the file lives under some ancestor's node_modules (lerna/pnpm
+	// workspace root), not under <projectRoot>/node_modules. Label it by that real root
+	// instead of degrading to `external:<basename>`.
+	let dir = path.dirname(absolute)
+	for (;;) {
+		if (path.basename(dir) === 'node_modules') {
+			return `installed:${slash(path.relative(dir, absolute))}`
+		}
+		const parent = path.dirname(dir)
+		if (parent === dir) break
+		dir = parent
+	}
 	return `external:${path.basename(absolute)}`
 }
 
@@ -202,22 +261,18 @@ function listFiles (root, filter, output = []) {
 	return output
 }
 
-function parseProgram (source, file) {
+function parseProgram (source, file, options = {}) {
 	const parser = loadProjectDependency('@babel/parser', file ? path.dirname(file) : PROJECT_ROOT)
+	const plugins = [
+		'dynamicImport', 'exportDefaultFrom', 'exportNamespaceFrom', 'jsx',
+		'objectRestSpread', 'optionalChaining', 'nullishCoalescingOperator',
+		'classProperties', 'decorators-legacy',
+	]
+	if (options.typescript || file && path.extname(file).toLowerCase() === '.ts') plugins.push('typescript')
 	return parser.parse(source, {
 		sourceType: 'unambiguous',
 		sourceFilename: file,
-		plugins: [
-			'dynamicImport',
-			'exportDefaultFrom',
-			'exportNamespaceFrom',
-			'jsx',
-			'objectRestSpread',
-			'optionalChaining',
-			'nullishCoalescingOperator',
-			'classProperties',
-			'decorators-legacy',
-		],
+		plugins,
 	})
 }
 
@@ -230,6 +285,7 @@ function parseSourceFile (file) {
 		source,
 		script: descriptor.script ? descriptor.script.content : '',
 		template: descriptor.template ? descriptor.template.content : '',
+		scriptLang: descriptor.script && descriptor.script.attrs ? descriptor.script.attrs.lang || 'js' : 'js',
 	}
 }
 
@@ -600,6 +656,17 @@ function scanAiUpstream (context) {
 	return scanRegistryFile('fb-ai', manifest.version, registryFile, root, context, 'not-installed')
 }
 
+function isLocalComponentName (name) {
+	// Local overrides declare their `name` in any casing: PascalCase (`TpDialog`), kebab
+	// (`tp-dialog`, e.g. mine-gov-ui/src/components/tp-dialog/tp-dialog.vue) or camel
+	// (`tpDialog`). All three must be captured, otherwise project-local overrides of
+	// installed tp-*/fb-*/screen-* components silently disappear from the catalog.
+	if (!name) return false
+	return /^(Fb|Tp|Screen)/.test(name)
+		|| /^(fb|tp|screen)-/.test(name)
+		|| /^(fb|tp|screen)[A-Z]/.test(name)
+}
+
 function scanLocalComponents (context) {
 	const files = []
 	for (const relative of projectScanDirs(context.projectRoot)) {
@@ -608,7 +675,7 @@ function scanLocalComponents (context) {
 	const components = []
 	for (const file of files) {
 		const api = extractComponentApi(file)
-		if (!api.name || !/^(Fb|Tp|Screen)/.test(api.name)) continue
+		if (!isLocalComponentName(api.name)) continue
 		components.push({
 			...api,
 			owner: 'project-local',
@@ -732,6 +799,7 @@ function buildBaselines (context) {
 		'vue', 'fb-core', 'fb-ui', 'fb-third', 'fb-assets',
 		'@topinfo/admin-base', '@topinfo/screen-base', '@topinfo/tp-components',
 		'@topinfo/fb-player', '@topinfo/fb-three', 'fb-ai',
+		'@topinfo/fb-ai', '@topinfo/fb-mars3d',
 	]
 	const installed = installedNames.map(packageName => {
 		const found = resolveInstalledPackage(packageName, context.projectRoot)
@@ -769,8 +837,16 @@ function buildBaselines (context) {
 }
 
 function buildCatalog (options = {}) {
+	const requestedRoot = path.resolve(options.projectRoot || PROJECT_ROOT)
+	const effectiveRoot = findApplicationRoot(requestedRoot, options.stopRoot)
+	if (!effectiveRoot) {
+		throw new Error(`No package.json found at or above ${requestedRoot}. Pass the application root that installs the FBJS dependencies (for a sub-entry such as screen-v5/, pass the repository root).`)
+	}
+	if (options.depsRoot) setDepsRoot(options.depsRoot)
 	const context = {
-		projectRoot: path.resolve(options.projectRoot || PROJECT_ROOT),
+		projectRoot: effectiveRoot,
+		requestedProjectRoot: requestedRoot,
+		projectRootPromoted: effectiveRoot !== requestedRoot,
 		externalRoots: { ...DEFAULT_EXTERNAL_ROOTS, ...(options.externalRoots || {}) },
 		adminRef: options.adminRef || 'HEAD',
 	}
@@ -936,6 +1012,8 @@ module.exports = {
 	SKILL_ROOT,
 	buildCatalog,
 	defaultOutputRoot,
+	findApplicationRoot,
+	isLocalComponentName,
 	kebabCase,
 	loadProjectDependency,
 	parseArgs,
@@ -944,7 +1022,9 @@ module.exports = {
 	pascalCase,
 	publicCatalog,
 	readText,
-	stripComments,
+	resolveInstalledPackage,
 	renderComponentCatalog,
 	renderSourceBaseline,
+	setDepsRoot,
+	stripComments,
 }

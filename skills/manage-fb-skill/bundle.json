@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "name": "fb-skill",
+  "version": "0.2.1",
+  "skills": ["create-fb-feature", "use-fbjs-vue2", "manage-fb-skill"],
+  "format": "agent-skills",
+  "managementRuntime": "Node.js >=18.17",
+  "note": "This bundle version describes FB Skills, not the target project's package version."
+}

@@ -40,4 +40,4 @@ Do not assume every `<screen-*>` tag belongs to screen-base. Target repositories
 
 ## Project-local components
 
-Local `name: 'Fb...'` or `name: 'Screen...'` does not turn a component into FbUI. Keep its verified local import/registration pattern. When duplicate local names exist, inspect the importing page and never select an implementation by tag name alone.
+Local PascalCase, camelCase or kebab-case names (`TpDialog`, `tpDialog`, `tp-dialog`) do not turn a component into a library component. Keep its verified local import/registration pattern. The static catalog lists candidates, not proof that every candidate is installed globally. When duplicate names exist, verify the active entry/import and narrow with `--owner`/`--file`; do not select by tag or usage count alone.

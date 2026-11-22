@@ -1,0 +1,6 @@
+interface:
+  display_name: "FB 全栈功能开发"
+  short_description: "按需取证、真实批准后实现 PC、移动、大屏、Java 与 SQL"
+  default_prompt: "Use $create-fb-feature to inspect the target project, propose this feature from the supplied requirement or prototype, and implement only after explicit human approval with traceable verification."
+policy:
+  allow_implicit_invocation: true

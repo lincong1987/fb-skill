@@ -79,12 +79,6 @@ const RULES = [
 		pattern: /<fb-datepicker\b[^>]*\b(?:v-bind:|:)?value-format\s*=/gis,
 		message: 'Raw FbDatepicker has no value-format prop; use TpDatepicker for conversion.',
 	},
-	{
-		id: 'raw-fb-upload',
-		extensions: ['.vue'],
-		pattern: /<fb-upload(?:\s|>)/gi,
-		message: 'Use TpUpload or TpUploadPath for new project business uploads.',
-	},
 ]
 
 const IGNORED_DIRS = new Set(['node_modules', '.git', '.svn', '.idea', '.agents', 'dist', 'lib', 'coverage'])
@@ -112,8 +106,9 @@ function listFiles (root, output = []) {
 	for (const entry of entries) {
 		if (entry.isDirectory() && IGNORED_DIRS.has(entry.name)) continue
 		const file = path.join(root, entry.name)
+		if (entry.isSymbolicLink()) throw new Error(`File check incomplete: linked path is not scanned: ${file}`)
 		if (entry.isDirectory()) listFiles(file, output)
-		else output.push(file)
+		else if (entry.isFile()) output.push(file)
 	}
 	return output
 }
@@ -159,9 +154,9 @@ function findConfirmViolations (file, relativePath) {
 	try {
 		parsed = parseSourceFile(file)
 		if (!parsed.script.trim()) return []
-		ast = parseProgram(parsed.script, file)
+		ast = parseProgram(parsed.script, file, { typescript: parsed.scriptLang === 'ts' })
 	} catch (error) {
-		return []
+		throw new Error(`AST check incomplete for ${relativePath}: ${error.message}`)
 	}
 	const violations = []
 	function add (rule, message, node) {
@@ -203,7 +198,7 @@ function findViolations (root) {
 		try {
 			content = fs.readFileSync(file, 'utf8')
 		} catch (error) {
-			continue
+			throw new Error(`File check incomplete for ${file}: ${error.message}`)
 		}
 		const scanContent = extension === '.json' ? content : stripComments(content)
 		const relativePath = slash(path.relative(root, file))

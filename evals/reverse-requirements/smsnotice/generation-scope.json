@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "caseId": "smsnotice-pilot",
+  "status": "candidate-awaiting-input-and-implementation-approval",
+  "dependencyRoot": "D:/projects/T20240246-GMRHCP/T20240246-GMRHCP-Code/branches/V3.51-20261116/mew-manage-ui",
+  "host": "127.0.0.1",
+  "port": 18733,
+  "sources": [
+    "src/main.js",
+    "src/mock.js",
+    "src/views/NoticeList.vue",
+    "src/views/NoticeForm.vue",
+    "src/views/NoticeReader.vue",
+    "src/service/smsnotice.js"
+  ],
+  "evidenceFiles": [
+    "evidence/read-scope.json",
+    "evidence/generation-response.md",
+    "evidence/runtime-versions.json",
+    "evidence/browser-observations.json",
+    "evidence/requests.json",
+    "evidence/list.png",
+    "evidence/create.png",
+    "evidence/edit.png",
+    "evidence/reader.png",
+    "evidence/published-readonly.png",
+    "evidence/failure.png",
+    "evidence/supplied-result.json"
+  ],
+  "readPolicy": {
+    "nature": "context-separation-plus-access-review-not-os-sandbox",
+    "generatorInputs": ["workspace/inputs/requirements.md", "workspace/inputs/contracts.json"],
+    "allowedPublicPackages": ["fb-ui", "fb-core", "@topinfo/tp-components"],
+    "allowedSkill": "skills/create-fb-feature and explicitly needed shared references/source-inspection tools",
+    "excludedFromGeneratorContext": [
+      "reference project business src/views, src/service, src/router and common-libs business services",
+      "evals/reverse-requirements/smsnotice/acceptance.json",
+      "evals/reverse-requirements/smsnotice/evidence.json",
+      "docs/reverse-requirements-feasibility.md",
+      "user identity/profile and audit confirmation content",
+      "reference vue.config.js, project.config.js, .env or secrets"
+    ],
+    "accessRecord": "Record the actual visible tools and reads, state unavailable coverage; declarations are not automatic proof of isolation.",
+    "builderReads": "The exact workspace source set, copied public inputs, declared target dependency packages and approved fixture tools only; no original business startup configuration."
+  },
+  "scopeNotes": [
+    "All paths are expanded under .validation-output/reverse-requirements/<evaluation-id>/first and /repaired and are declared before the first generation.",
+    "Each workspace holds only inputs/requirements.md, inputs/contracts.json and the six sources above. Hidden acceptance/evidence stay outside the workspace.",
+    "Each round also declares source-manifest.json, dist/index.html, dist/app.js, build-report.json, build.log, serve.log, result.json and report.md.",
+    "A source manifest is written only after actual source files exist; no future source hash is invented in advance.",
+    "Build assets are restricted to the one JavaScript bundle and local index.html; CSS/fonts/images are inlined. Unexpected assets fail without expanding the approved scope.",
+    "serve.log is an append-only run log, not an immutable verdict. Actual browser/access evidence and the supplied results are separately recorded; not-run items must not acquire invented evidence files.",
+    "The prepared plan is still a candidate: this attachment does not confirm D01-D07, a user display name or generation authorization.",
+    "The first snapshot/result is retained before repairing. Changed requirements, tool bytes or plan scope require a new evaluation, not a repaired score."
+  ]
+}

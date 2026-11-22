@@ -1,6 +1,6 @@
 interface:
-  display_name: "FBJS Vue2 Development Rules"
-  short_description: "Source-grounded Vue2 FBJS component and ecosystem guidance"
-  default_prompt: "Use $use-fbjs-vue2 to implement or review Vue2 FBJS UI code from the installed runtime sources."
+  display_name: "FB Vue 2 源码取证"
+  short_description: "核对实际组件拥有者、API、本地覆盖与窄守卫结果"
+  default_prompt: "Use $use-fbjs-vue2 to verify the actual installed and registered component source in this Vue 2 FB project, reporting unresolved APIs and validation limits honestly."
 policy:
   allow_implicit_invocation: true

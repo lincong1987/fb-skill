@@ -1,0 +1,13 @@
+{
+  "name": "fb-skill-runtime-smoke-fixture",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Isolated mock validation fixture; not a production feature or real approval record",
+  "dependencies": {
+    "vue": "2.6.12",
+    "fb-ui": "1.1.826",
+    "fb-core": "1.1.824",
+    "@topinfo/tp-components": "2.2.15",
+    "@topinfo/screen-base": "1.0.81"
+  }
+}

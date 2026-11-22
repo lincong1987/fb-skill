@@ -1,0 +1,15 @@
+{
+  "name": "fb-skill",
+  "version": "0.2.1",
+  "private": true,
+  "description": "Source-first Topinfo FB full-stack skills with project detection, approval records and bounded installation",
+  "license": "UNLICENSED",
+  "engines": { "node": ">=18.17.0" },
+  "bin": { "fb-skill": "bin/fb-skill.cjs" },
+  "files": ["bin/", "skills/", "docs/", "scripts/check-skills.cjs", "README.md", "CHANGELOG.md", ".codex-plugin/plugin.json"],
+  "scripts": {
+    "check": "node scripts/check-skills.cjs",
+    "test": "node scripts/run-tests.cjs",
+    "pack:check": "npm pack --dry-run --ignore-scripts"
+  }
+}
