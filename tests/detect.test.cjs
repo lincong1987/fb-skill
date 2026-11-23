@@ -75,6 +75,77 @@ test('discovers Maven modules and DDL below supplied parent; reports coverage', 
   assert.equal(result.coverage.truncated, false)
 })
 
+test('TopInfo platform version is read from a declared dependency and routes to a 2.x profile', t => {
+  const f = fixture(t)
+  f.write('pom.xml', `<project>
+  <parent><groupId>com.topinfo.basic.platform</groupId><artifactId>topinfo-platform</artifactId><version>2.2.3-SNAPSHOT</version></parent>
+  <dependencies><dependency>
+    <groupId>com.topinfo.basic.platform</groupId>
+    <artifactId>topinfo-platform-admin</artifactId>
+    <version>2.2.0-SNAPSHOT</version>
+  </dependency></dependencies>
+</project>`)
+  const unit = detectProject({ projectRoot: f.root }).units[0]
+  assert.ok(unit.profiles.includes('java-topinfo-2x-candidate'))
+  assert.ok(!unit.profiles.includes('java-topinfo-3x-candidate'))
+  assert.deepEqual(unit.platform, {
+    name: 'topinfo-platform', version: '2.2.0-SNAPSHOT', versionExpression: null,
+    declaredIn: 'pom.xml', artifactId: 'topinfo-platform-admin', parentVersion: '2.2.3-SNAPSHOT',
+    declaredAs: 'dependency'
+  })
+})
+
+test('TopInfo 3.x dependency routes to the 3.x profile, not 2.x', t => {
+  const f = fixture(t)
+  f.write('pom.xml', `<project><dependencies><dependency>
+    <groupId>com.topinfo.basic.platform</groupId>
+    <artifactId>topinfo-platform-admin</artifactId>
+    <version>3.1.0</version>
+  </dependency></dependencies></project>`)
+  const unit = detectProject({ projectRoot: f.root }).units[0]
+  assert.ok(unit.profiles.includes('java-topinfo-3x-candidate'))
+  assert.ok(!unit.profiles.includes('java-topinfo-2x-candidate'))
+  assert.equal(unit.platform.version, '3.1.0')
+  assert.equal(unit.platform.declaredAs, 'dependency')
+  assert.equal(unit.platform.parentVersion, null)
+})
+
+test('a pom that only inherits TopInfo through its parent is still routed by the parent version', t => {
+  const f = fixture(t)
+  f.write('pom.xml', `<project>
+  <parent><groupId>com.topinfo.basic.platform</groupId><artifactId>topinfo-platform</artifactId><version>2.2.3-SNAPSHOT</version></parent>
+  <artifactId>mew-manage</artifactId>
+</project>`)
+  const unit = detectProject({ projectRoot: f.root }).units[0]
+  assert.ok(unit.profiles.includes('java-topinfo-2x-candidate'))
+  assert.equal(unit.platform.declaredAs, 'parent')
+  assert.equal(unit.platform.version, null)
+  assert.equal(unit.platform.parentVersion, '2.2.3-SNAPSHOT')
+})
+
+test('TopInfo version left as a property expression is reported, never guessed into a profile', t => {
+  const f = fixture(t)
+  f.write('pom.xml', `<project><properties><topinfo.version>2.2.3-SNAPSHOT</topinfo.version></properties><dependencies><dependency>
+    <groupId>com.topinfo.basic.platform</groupId>
+    <artifactId>topinfo-platform-admin</artifactId>
+    <version>\${topinfo.version}</version>
+  </dependency></dependencies></project>`)
+  const unit = detectProject({ projectRoot: f.root }).units[0]
+  assert.ok(!unit.profiles.includes('java-topinfo-2x-candidate'))
+  assert.ok(!unit.profiles.includes('java-topinfo-3x-candidate'))
+  assert.equal(unit.platform.version, null)
+  assert.equal(unit.platform.versionExpression, '${topinfo.version}')
+  assert.ok(unit.requiresReview.some(item => /property/i.test(item)))
+})
+
+test('a pom without TopInfo coordinates has no platform field and no TopInfo profile', t => {
+  const f = fixture(t)
+  f.write('pom.xml', '<project><artifactId>spring-boot</artifactId></project>')
+  const unit = detectProject({ projectRoot: f.root }).units[0]
+  assert.equal(unit.platform, undefined)
+  assert.ok(!unit.profiles.some(item => item.startsWith('java-topinfo-')))
+})
+
 test('hoisted workspace installed dependency is reported with its actual path', t => {
   const f = fixture(t)
   f.write('packages/client/package.json', { name: 'client', dependencies: { 'fb-ui': '^1.1.0' } })

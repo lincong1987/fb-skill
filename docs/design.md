@@ -21,6 +21,22 @@
 
 每个契约注明证据文件、版本与仍未知的部分。响应码、URL、日期、主键、审计字段、UI 谱系和大屏比例跟随实际目标；不强迫所有项目迁成单一历史样本。
 
+## 后端团队 ai-playbook 的融合取舍（2026-11-23）
+
+后端团队提供了 `ai-playbook`（61 篇 md）：一套后端开发 SOP + 四份 `topinfo-platform v3.1.0` 框架规范。本 Skill 原有的 `backend-java.md` / `database.md` 只有原则与反模式，没有字段名、注解、错误码——Playbook 的框架规范正好补这一层。
+
+**吸收了什么**：
+- 四份框架规范提炼为 `references/frameworks/` 三份：`topinfo-api.md`（响应/分页/鉴权三元组/passKey 成对/错误码分段）、`topinfo-db.md`（表前缀/通用字段/主键/逻辑删除）、`topinfo-versions.md`（**两代对照表**）。
+- `detect-project.cjs` 的 `javaUnit` 新增读 pom 的 `topinfo-platform` 坐标与版本，输出 `platform{version, parentVersion, versionExpression, declaredAs}` 与 `java-topinfo-2x/3x-candidate` profile。`${...}` 占位不猜值，只报 `versionExpression`。
+- Playbook 里与版本无关的硬规则并入 `pitfalls.md`（鉴权三列、passKey 成对、写接口不列 20008、一码一义、级联删除纪律、超 20 文件报备）和 `output-conventions.md`（交付说明七项映射到现有档案 JSON 字段）。
+
+**没吸收什么，为什么**：
+- 八环节两闸门流程（需求卡→HLD→详细设计→表设计→接口卡→计划→编码→复核，每步人工签字）：对"小白 + 一个页面"过重，与现有「方案→批准→实施」重叠。只取其中可核对的硬检查。
+- 400 行常驻 `AGENTS.md`、20 个提示词文件、培训材料：与本 Skill"按需加载、不常驻全集"相反。
+- 租户层级编码、权限编码总表等 admin 业务专属内容：业务模块不涉及。
+
+**两个技术线，一套开发规范**：Playbook 针对正在开发的新后端 v3.1.0（Java 21 / Boot 3.5），是正式规范和未来主线；本机现行工程全是 2.2.x（Java 8 / Boot 2.2~2.7），技术栈不同但开发规范相通。深核结果：`JsonResponse`（成功码 1）、`buildPassKey`、`@Authorization(businessKey)`、`CommonDateUtil`、`SessionHolder`、`IPage` 两代一致；`@Authorization(perms/logical)`、`DataScopeHelper`、`common.enums.ErrorCode`（2.2.x 在 `bean` 包）、`BlockAttackInnerInterceptor` 在 2.2.x 无证据。因此**现行 2.2.x 工程按"实际代码 + Playbook"处理**：规范层（鉴权三列、passKey 成对、一码一义、分页出参、逻辑删除）照 Playbook，新代码必须遵守、老代码的问题不照抄；实现层照实际 jar/源码，缺的能力先 `javap` 确认，没有就用目标现有手段实现同一规范并记待办。`topinfo-versions.md` 每条"已核实"都有 jar/源码路径对应。
+
 ## 可执行门禁与留痕
 
 - 身份只登记一次：有效项目档案优先，其次有效全局档案，直接复用，不重复询问姓名或保存。仅没有有效档案时自动获取 Git/SVN/系统候选，由用户自报/确认后首次持久化；旧无确认、invalidated、fixture 或损坏档案不自动升级。复用显示名不等于批准当前方案。

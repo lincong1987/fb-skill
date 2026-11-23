@@ -40,6 +40,8 @@ node "<skill-root>/scripts/resolve-identity.cjs" --project-root "<目标工程>"
 | 图表、轮询、地图、播放器 | [大屏数据与资源](references/screen-data-theme.md) |
 | Java 接口、业务、Mapper、测试 | [Java 后端](references/backend-java.md) |
 | 表设计、字段变更、DDL/SQL | [数据库](references/database.md) |
+| 工程依赖 topinfo-platform（探测报 `java-topinfo-*`） | [TopInfo 接口口径](references/frameworks/topinfo-api.md)、[TopInfo 表约定](references/frameworks/topinfo-db.md) |
+| 不确定某条框架规则是否适用当前版本 | [TopInfo 版本差异](references/frameworks/topinfo-versions.md) |
 | 准备实施或写留痕 | [批准与归档](references/output-conventions.md) |
 | 对应领域的检查 | [验证清单](references/pitfalls.md) |
 

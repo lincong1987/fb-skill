@@ -18,6 +18,8 @@
 
 类位于平台依赖包时，核对依赖/JAR/可得源码，不造一个同名基类骗过编译。路径和字段闭合后再写模板。
 
+**依赖 topinfo-platform 时**（探测报 `java-topinfo-2x-candidate` / `3x-candidate`）：先读 [接口口径](frameworks/topinfo-api.md) 和 [版本差异](frameworks/topinfo-versions.md)。**规范层照 Playbook**——鉴权三列、passKey 成对、写接口不列 `20008`、一码一义、分页 `records/total`、查询 DTO 不放身份字段，新代码必须遵守，周围老代码没遵守也不照抄。**实现层照实际 jar/源码**：版本差异表标"⚠️"的能力（2.2.x 的 `perms`、`ErrorCode` 包路径、`DataScopeHelper` 等），先 `javap` 或 IDE 查目标 jar，有就按规范用，没有就用目标现有手段实现同一规范，并在 `todos` 记"2.2.x 用 XX 替代了 v3.1.0 的 YY"。老代码里的裸 `jwtpid`、无范围过滤是已知问题（`docs/legacy-issues.md`），新代码不写成规范、老代码不顺手改。
+
 ## 生成边界
 
 按目标层次生成最小必要文件。Controller 负责映射/验证/调用，Service 处理用例，Mapper 做持久化；DTO/Query/VO/Entity 是否拆分与命名跟随该模块，避免为一行改动生成一堆空壳。

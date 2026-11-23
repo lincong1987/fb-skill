@@ -151,6 +151,39 @@ function frontendUnit(root, notes) {
   }
 }
 
+// 从 pom 文本读 TopInfo 平台坐标与版本。只认字面版本；${...} 占位保留表达式不猜值。
+// parent 块单独解析，避免把 <parent> 里的聚合坐标当成业务依赖的坐标。
+function topinfoPlatform(text) {
+  const parent = /<parent>[\s\S]*?<\/parent>/.exec(text)
+  const parentText = parent ? parent[0] : ''
+  const body = parent ? text.replace(parent[0], '') : text
+  const artifact = /<artifactId>\s*(topinfo-platform(?:-[a-z]+)*)\s*<\/artifactId>/i.exec(body)
+  const parentArtifact = /<artifactId>\s*(topinfo-platform(?:-[a-z]+)*)\s*<\/artifactId>/i.exec(parentText)
+  if (!artifact && !parentArtifact) return null
+  const block = artifact ? body.slice(artifact.index, artifact.index + 400) : ''
+  const version = /<version>\s*([^<]+?)\s*<\/version>/.exec(block)
+  const parentVersion = /<version>\s*([^<]+?)\s*<\/version>/.exec(parentText)
+  const raw = version ? version[1].trim() : null
+  const isExpression = raw !== null && /^\$\{[^}]+\}$/.test(raw)
+  return {
+    name: 'topinfo-platform',
+    version: raw !== null && !isExpression ? raw : null,
+    versionExpression: isExpression ? raw : null,
+    declaredIn: 'pom.xml',
+    artifactId: artifact ? artifact[1] : parentArtifact[1],
+    parentVersion: parentVersion ? parentVersion[1].trim() : null,
+    declaredAs: artifact ? 'dependency' : 'parent'
+  }
+}
+
+function topinfoProfile(platform) {
+  const version = platform.version || platform.parentVersion
+  if (!version) return null
+  if (/^3\./.test(version)) return 'java-topinfo-3x-candidate'
+  if (/^2\./.test(version)) return 'java-topinfo-2x-candidate'
+  return 'java-topinfo-unversioned'
+}
+
 function javaUnit(root, notes) {
   const file = path.join(root, 'pom.xml')
   const text = readText(file, notes)
@@ -163,12 +196,18 @@ function javaUnit(root, notes) {
   const profiles = []
   if (/mybatis-plus/i.test(text)) profiles.push('java-mybatis-plus-candidate')
   if (/spring-boot/i.test(text)) profiles.push('java-spring-boot-candidate')
+  const platform = topinfoPlatform(text)
+  const platformProfile = platform ? topinfoProfile(platform) : null
+  if (platformProfile) profiles.push(platformProfile)
   if (!profiles.length) profiles.push('java-maven-unclassified')
+  const requiresReview = ['Resolve parent POM and dependency versions; inspect actual controller, request model, mapper XML, identity resolver and database DDL.']
+  if (platform && !platformProfile) requiresReview.push('TopInfo platform version is a property expression; resolve it from the effective POM before using version-specific framework references.')
   return {
     root, kind: 'backend', profiles, evidence: [{ file, line: 1 }],
     hasSourceRoot: existsDirectory(path.join(root, 'src', 'main', 'java')),
     modules, databaseDriverCandidates: drivers,
-    requiresReview: ['Resolve parent POM and dependency versions; inspect actual controller, request model, mapper XML, identity resolver and database DDL.']
+    ...(platform ? { platform } : {}),
+    requiresReview
   }
 }
 
