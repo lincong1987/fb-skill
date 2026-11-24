@@ -64,9 +64,9 @@ test('TA app reports UI line, team rules, local wrappers and an existing CRUD mo
   f.write('.agents/rules/project_rules.md', '# team rules')
   f.write('src/components/cu-page-frame/cu-page-frame.vue', '<template><view/></template>')
   f.write('src/components/ta-list/ta-list.vue', '<template><view/></template>')
-  f.write('src/pages/notice/notice-list.vue', '')
-  f.write('src/pages/notice/notice-add.vue', '')
-  f.write('src/pages/notice/notice-view.vue', '')
+  f.write('src/pages/notice/notice-list.vue', '<template><ta-list/></template>')
+  f.write('src/pages/notice/notice-add.vue', '<template><ta-form/></template>')
+  f.write('src/pages/notice/notice-view.vue', '<template><ta-view/></template>')
   f.write('src/pages/index/index.vue', '')
   const unit = detectProject({ projectRoot: f.root }).units[0]
   assert.deepEqual(unit.profiles, ['mobile-ta-uni'])
@@ -92,6 +92,79 @@ test('TA 1.x line is taken from the lock and warns that 0.1-only template props 
   assert.deepEqual(unit.taApp.localComponents, [])
   assert.deepEqual(unit.taApp.referenceModules, [])
   assert.ok(unit.requiresReview.some(item => item.includes('customResultMapp')))
+  assert.equal(unit.taApp.componentRegistration.entry, null)
+  assert.equal(unit.taApp.componentRegistration.registered, null)
+  assert.equal(unit.taApp.componentRegistration.unregisteredTags, null)
+  assert.ok(unit.requiresReview.some(item => item.includes('registration could not be resolved')))
+})
+
+test('reference modules skip shell pages and modules whose $service key does not exist', t => {
+  const f = fixture(t)
+  f.write('src/pages.json', {})
+  f.write('src/manifest.json', {})
+  f.write('package.json', { name: 'ta-app', dependencies: { '@topinfoapp/ta-ui': '1.0.9' } })
+  f.write('src/service/notice-board/index.js', 'export default {}')
+  f.write('src/pages/notice/notice-list.vue', '<template><ta-list/></template><script>export default { data() { return { service: this.$service.noticeBoard } } }</script>')
+  f.write('src/pages/notice/notice-add.vue', '<template><ta-form></ta-form></template>')
+  f.write('src/pages/notice/notice-edit.vue', '<template><view></view></template><script>export default { methods: {} }</script>')
+  f.write('src/pages/process/process-list.vue', '<template><ta-list/></template><script>export default { data() { return { service: this.$service.cardisp } } }</script>')
+  f.write('src/pages/process/process-view.vue', '<template><cu-page-frame></cu-page-frame></template><script>export default { data() { return {} } }</script>')
+  const unit = detectProject({ projectRoot: f.root }).units[0]
+  assert.deepEqual(unit.taApp.referenceModules, [{ module: 'notice', pages: ['notice-add.vue', 'notice-list.vue'] }])
+  assert.equal(unit.taApp.skippedReferenceModules.length, 1)
+  const skipped = unit.taApp.skippedReferenceModules[0]
+  assert.equal(skipped.module, 'process')
+  assert.deepEqual(skipped.pages, ['process-list.vue', 'process-view.vue'])
+  assert.ok(skipped.reasons.some(reason => reason.includes('process-view.vue')))
+  assert.ok(skipped.reasons.some(reason => reason.includes('cardisp')))
+  assert.ok(unit.requiresReview.some(item => item.includes('process')))
+})
+
+test('reads the lite.js registration main.js actually uses and lists tags neither registered nor imported', t => {
+  const f = fixture(t)
+  f.write('src/pages.json', '{\n  /* block comment */\n  "pages": [{ "path": "pages/demo/a", "style": { "url": "http://x//y" } }] // tail\n}')
+  f.write('src/manifest.json', {})
+  f.write('package.json', { name: 'ta-app', dependencies: { '@topinfoapp/ta-ui': '1.0.9' } })
+  f.write('node_modules/@topinfoapp/ta-ui/package.json', { name: '@topinfoapp/ta-ui', version: '1.0.9' })
+  f.write('node_modules/@topinfoapp/ta-ui/ta-ui/lite.js', "import taInput from './components/form/ta-input/ta-input.vue'\nimport taForm from \"./components/form/ta-form/ta-form.vue\"\nimport taToast from './components/feedback/ta-toast/index.js'\nVue.prototype['$toast'] = taToast\n")
+  f.write('node_modules/@topinfoapp/ta-ui/ta-ui/components/form/ta-date-picker/ta-date-picker.vue', '<template/>')
+  f.write('src/main.js', "import Vue from 'vue'\n// import full from '@topinfoapp/ta-ui/ta-ui/index.js'\nimport taUi from '@topinfoapp/ta-ui/ta-ui/lite.js'\nVue.use(taUi)\n")
+  f.write('src/components/ta-list/ta-list.vue', '<template/>')
+  f.write('src/pages/demo/a.vue', "<template><ta-form><ta-input/><ta-date-picker/><ta-list/><ta-prompt/></ta-form></template>\n<script>import taPrompt from '@topinfoapp/ta-ui/ta-ui/components/feedback/ta-prompt/ta-prompt'\nexport default { components: { taPrompt } }</script>")
+  f.write('src/pages/x/b.vue', '<template><ta-filter></ta-filter><ta-date-picker/></template>')
+  const result = detectProject({ projectRoot: f.root })
+  const unit = result.units[0]
+  const reg = unit.taApp.componentRegistration
+  assert.equal(reg.entry, '@topinfoapp/ta-ui/ta-ui/lite.js')
+  assert.equal(reg.entryKind, 'lite')
+  assert.equal(reg.source, 'installed')
+  assert.deepEqual(reg.registered, ['ta-form', 'ta-input'])
+  assert.deepEqual(reg.globals, ['$toast'])
+  assert.equal(reg.easycom.autoscan, true)
+  assert.deepEqual(reg.easycom.custom, {})
+  assert.ok(!result.notes.some(note => note.reason.includes('pages.json')))
+  assert.deepEqual(reg.unregisteredTags, [
+    { tag: 'ta-date-picker', files: ['demo/a.vue', 'x/b.vue'], importPath: '@topinfoapp/ta-ui/ta-ui/components/form/ta-date-picker/ta-date-picker.vue' },
+    { tag: 'ta-filter', files: ['x/b.vue'], importPath: null }
+  ])
+  assert.ok(unit.requiresReview.some(item => item.includes('lite.js') && item.includes('2 components')))
+  assert.ok(unit.requiresReview.some(item => item.includes('neither registered nor imported') && item.includes('ta-filter')))
+})
+
+test('falls back to the project copy of ta-ui as unverified; easycom custom rules count as registered', t => {
+  const f = fixture(t)
+  f.write('src/pages.json', { easycom: { custom: { '^ta-(.*)': '@topinfoapp/ta-ui/ta-ui/components/$1/$1.vue' } }, pages: [] })
+  f.write('src/manifest.json', {})
+  f.write('package.json', { name: 'ta-app', dependencies: { '@topinfoapp/ta-ui': '1.0.9' } })
+  f.write('src/ta-ui/lite.js', "import taInput from './components/form/ta-input/ta-input.vue'\n")
+  f.write('src/main.js', "import taUi from '@topinfoapp/ta-ui/ta-ui/lite.js'\nVue.use(taUi)\n")
+  f.write('src/pages/demo/a.vue', '<template><ta-filter/></template>')
+  const unit = detectProject({ projectRoot: f.root }).units[0]
+  const reg = unit.taApp.componentRegistration
+  assert.equal(reg.source, 'project-copy-unverified')
+  assert.deepEqual(reg.registered, ['ta-input'])
+  assert.deepEqual(reg.unregisteredTags, [])
+  assert.ok(unit.requiresReview.some(item => item.includes('src/ta-ui')))
 })
 
 test('TA UI line stays unknown for an unparseable declaration instead of guessing', t => {

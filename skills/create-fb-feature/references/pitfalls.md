@@ -28,6 +28,7 @@
 - TA 项目（[团队规范](frameworks/ta-app-mobile.md)）：`jpx-icon-*` 类名在项目 iconfont CSS 中真实存在，不编造；`txHeight` 由设计稿 `topY`/`bottomGap` 换算并注释取值，不写死经验值。
 - 图片/附件用 `ta-image-uploader`/`ta-file-uploader`，新增与详情 `referType` 一致；1.x 版本线不出现 `customResultMapp`、`fileSize`、`@fileExceedLimit`、`lgnoreDelIds`。
 - pages.json 注册方式（主包/分包、`navigationStyle`）与目标现有页面一致；修改页可凭 id 直达，不只靠 Store 回显；保存不重复提交。
+- 新页面用到的每个 `ta-*` 标签要么在 `componentRegistration.registered`、要么是本地组件或命中 easycom、要么在页面内 import；照抄的参考页不在 `skippedReferenceModules` 里。
 
 ## 大屏
 

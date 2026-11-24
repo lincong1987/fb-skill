@@ -1,6 +1,6 @@
 # TA 移动端团队规范（ta-app-frame 写法）
 
-**何时读**：探测结果为 `mobile-ta-uni`。先看探测里的 `taApp`：`teamRules` 不为空就**先读项目自己的** `.agents/rules/project_rules.md`，它比本文优先；`referenceModules` 列出的现成模块是首选照抄对象；`uiLine` 决定下面哪些组件属性可用。通用原则见 [移动页面](../mobile-page-templates.md)、[移动基础能力](../mobile-infrastructure.md)。
+**何时读**：探测结果为 `mobile-ta-uni`。先看探测里的 `taApp`：`teamRules` 不为空就**先读项目自己的** `.agents/rules/project_rules.md`，它比本文优先；`referenceModules` 列出的现成模块是首选照抄对象（已按内容排除空壳页和引用不存在 `$service` 的模块，排除的列在 `skippedReferenceModules` 并附原因）；`componentRegistration` 决定哪些 `ta-*` 标签能直接写；`uiLine` 决定下面哪些组件属性可用。通用原则见 [移动页面](../mobile-page-templates.md)、[移动基础能力](../mobile-infrastructure.md)。
 
 来源：移动端团队 `@topinfoapp/ta-app-trae@0.0.9`（2026-11-10，含 `project_rules.md` 与生成业务模块/首页两个 skill）。组件属性按 `@topinfoapp/ta-ui@0.1.208` 源码核实，并与 `1.0.37` 逐个比对。本文是**团队写法**，不是所有 uni-app 的禁令；项目现有写法不同就跟项目。
 
@@ -26,6 +26,15 @@ Vue 2 遇到不认识的属性**不报错、直接忽略**，所以版本线弄�
 | 样式 | SCSS + scoped、rpx、`@include flexMi(row/column)`、颜色用主题变量 `var(--brand-color)` / `var(--xx_N)` |
 
 `cu-page-frame`、`ta-list` 是**项目本地组件**（探测 `localComponents`），不在 ta-ui 包里；用之前读项目里的实现确认 props 与插槽（`#content/#title/#footer/#ext`）。
+
+## 组件注册范围（先看再写标签）
+
+`main.js` 引的 ta-ui 入口决定哪些组件全局可用。`lite.js` 只注册约 17 个（button/input/form/form-item/textarea/view/picker/picker-custom/title/text/search-bar/card/tag/icon/list-group/list-item/empty-view）和 `$toast`/`$dialog`；`ta-date-picker`、`ta-button-custom`、`ta-filter`、`ta-image-uploader`、`ta-file-uploader`、`ta-grid` 等**不在其中**。未注册的标签不报错、不渲染。
+
+- 看探测 `componentRegistration`：`registered` 之外的组件，在页面里 `import` 后写进 `components`，路径用 `unregisteredTags[].importPath` 或包内实际文件（写法同项目 `login.vue`）。
+- `unregisteredTags` 列出的是**现有页面里已经没注册的标签**，这些页面不能证明标签可用，不要照抄标签本身。
+- `source` 为 `project-copy-unverified` 时清单来自项目内 `src/ta-ui/` 副本（依赖未安装），与锁定版本核对后再用。
+- `pages.json` 配了 `easycom.custom` 的项目，命中规则的标签视为已注册；`src/components/<名>/<名>.vue` 由 uni-app 默认 easycom 自动注册。
 
 ## 页面闭环（团队模板的链路）
 

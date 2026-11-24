@@ -55,6 +55,10 @@
 - “只做 H5”：只在目标项目本身如此配置时遵守，不升格为所有 uni-app 的规则。
 - 团队模板自身的缺口（`onShow` 刷新与 `callPreDataFun` 双重请求、修改页只靠 Store 回显、保存无防重）写成“照抄时注意”，不原样复制。
 
+**端到端演练后的修正（2026-11-24）**：在 `topinfo-ai-plug-ui` 的隔离副本上按“通知公告管理”跑到批准门禁，暴露两处探测缺陷，均先写失败测试再修：
+- 参考模块只按文件名推荐，把 `process`（两个空壳页、`this.$service.cardisp` 在 `src/service` 下不存在）当成范本。现在按内容判断：既无 `ta-*` 组件也无 `this.` 访问的页面算空壳；`$service` 键按项目 `service-util.js` 的规则（相对路径去 `.js`、去末尾 `index`、lodash `camelCase`）核对。不合格的进 `skippedReferenceModules` 并写明原因。
+- 没有识别注册范围。项目 `main.js` 只引 `lite.js`（17 个组件），团队模板常用的日期选择、自定义按钮、筛选、上传都没注册，现有页面里有 13 个这样的标签。现在输出 `componentRegistration`：入口与类型、注册清单、全局方法、easycom、页面里既没注册也没 import 的标签及其包内 import 路径。依赖未安装时退回项目 `src/` 副本并标 `project-copy-unverified`，不当已核实。
+
 ## 可执行门禁与留痕
 
 - 身份只登记一次：有效项目档案优先，其次有效全局档案，直接复用，不重复询问姓名或保存。仅没有有效档案时自动获取 Git/SVN/系统候选，由用户自报/确认后首次持久化；旧无确认、invalidated、fixture 或损坏档案不自动升级。复用显示名不等于批准当前方案。

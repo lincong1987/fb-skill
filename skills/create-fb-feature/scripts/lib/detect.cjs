@@ -100,20 +100,213 @@ function childDirectories(directory, notes) {
   }
 }
 
-// 只读列出：团队规则、项目本地 ta-/cu- 包装组件、可照抄的现成增删改查模块（list + add/update/edit/view）。
-function taAppInfo(root, dependency, notes) {
-  const rules = path.join(root, '.agents', 'rules', 'project_rules.md')
-  const localComponents = childDirectories(path.join(root, 'src', 'components'), notes).filter(name => /^(ta|cu)-/.test(name)).slice(0, 40)
-  const referenceModules = []
+// 去掉注释，字符串里的 // 与 /* 原样保留：pages.json 是 JSONC，常带 /* */ 分段注释和 http:// 地址。
+function stripComments(text) {
+  let out = ''
+  let quote = null
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i]
+    const n = text[i + 1]
+    if (quote) {
+      out += c
+      if (c === '\\') { out += n === undefined ? '' : n; i++ } else if (c === quote) quote = null
+      continue
+    }
+    if (c === '"' || c === "'" || c === '`') { quote = c; out += c; continue }
+    if (c === '/' && n === '/') {
+      while (i < text.length && text[i] !== '\n') i++
+      out += '\n'
+      continue
+    }
+    if (c === '/' && n === '*') {
+      const end = text.indexOf('*/', i + 2)
+      const stop = end < 0 ? text.length : end + 2
+      out += text.slice(i, stop).replace(/[^\n]/g, '')
+      i = stop - 1
+      continue
+    }
+    out += c
+  }
+  return out
+}
+
+function listFiles(directory, accept, notes, limit = 600, depth = 6) {
+  const files = []
+  let truncated = false
+  const visit = (dir, level) => {
+    let children
+    try { children = fs.readdirSync(dir, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name)) } catch (error) {
+      if (error.code !== 'ENOENT') notes.push({ file: dir, reason: error.message })
+      return
+    }
+    for (const child of children) {
+      if (child.isSymbolicLink()) continue
+      const full = path.join(dir, child.name)
+      if (child.isDirectory()) { if (level < depth) visit(full, level + 1); else truncated = true } else if (child.isFile() && accept(child.name)) {
+        if (files.length < limit) files.push(full)
+        else truncated = true
+      }
+    }
+  }
+  visit(directory, 0)
+  return { files, truncated }
+}
+
+// 与 service-util.js 一致：src/service 下相对路径去 .js、去末尾 index，再按 lodash camelCase 合成键。
+function camelKey(parts) {
+  const words = parts.join(',').split(/[^A-Za-z0-9]+/).flatMap(word => word.split(/(?<=[a-z0-9])(?=[A-Z])/)).filter(Boolean)
+  return words.map((word, index) => { const lower = word.toLowerCase(); return index ? lower[0].toUpperCase() + lower.slice(1) : lower }).join('')
+}
+
+function serviceKeys(root, notes) {
+  const directory = path.join(root, 'src', 'service')
+  if (!existsDirectory(directory)) return null
+  return new Set(listFiles(directory, name => name.endsWith('.js'), notes).files.map(file => {
+    const parts = path.relative(directory, file).replace(/\.js$/, '').split(path.sep)
+    if (parts[parts.length - 1] === 'index') parts.pop()
+    return camelKey(parts)
+  }))
+}
+
+// 模板去掉 script/style/HTML 注释，脚本去掉 JS 注释：注释掉的标签和 import 不算数。
+function vueParts(text) {
+  const script = [...text.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi)].map(match => stripComments(match[1])).join('\n')
+  const template = text.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '').replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, '').replace(/<!--[\s\S]*?-->/g, '')
+  return { template, script }
+}
+
+const TA_TAG = /<(ta-[a-z0-9-]+)(?=[\s>/])/g
+
+// 只按文件名推荐会把空壳页、引用不存在 $service 的模块当范本；读内容后不合格的单列原因。
+function referenceModules(root, notes) {
   const pagesRoot = path.join(root, 'src', 'pages')
+  const keys = serviceKeys(root, notes)
+  const modules = []
+  const skipped = []
   for (const module of childDirectories(pagesRoot, notes)) {
     let files
     try { files = fs.readdirSync(path.join(pagesRoot, module)).sort() } catch (error) { notes.push({ file: path.join(pagesRoot, module), reason: error.message }); continue }
     const pages = files.filter(name => new RegExp(`^${module.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}-(list|add|update|edit|view)\\.vue$`).test(name))
-    if (pages.includes(`${module}-list.vue`) && pages.length > 1) referenceModules.push({ module, pages })
-    if (referenceModules.length === 5) break
+    if (!pages.includes(`${module}-list.vue`) || pages.length < 2) continue
+    const real = []
+    const shells = []
+    const missing = new Set()
+    for (const page of pages) {
+      const { template, script } = vueParts(readText(path.join(pagesRoot, module, page), notes) || '')
+      if (!/<ta-[a-z0-9-]+(?=[\s>/])/.test(template) && !/\bthis\s*\./.test(script)) { shells.push(page); continue }
+      real.push(page)
+      if (keys) for (const match of script.matchAll(/this\.\$service\.([A-Za-z_$][\w$]*)/g)) if (!keys.has(match[1])) missing.add(match[1])
+    }
+    if (real.includes(`${module}-list.vue`) && real.length > 1 && !missing.size) {
+      if (modules.length < 5) modules.push({ module, pages: real })
+      continue
+    }
+    const reasons = [
+      ...shells.map(page => `${page} is a shell page (no ta-* component and no this. access)`),
+      ...[...missing].sort().map(key => `this.$service.${key} has no matching file under src/service`)
+    ]
+    if (skipped.length < 10) skipped.push({ module, pages, reasons })
   }
-  return { ...taUiLine(dependency), teamRules: existsFile(rules) ? rules : null, localComponents, referenceModules }
+  return { modules, skipped }
+}
+
+const TA_UI_IMPORT = /import\s+[\w$]+\s+from\s+['"](@topinfoapp\/ta-ui(?:\/[^'"]*)?)['"]/
+
+// main.js 实际引入的 ta-ui 入口决定哪些 ta-* 全局可用：lite.js 只注册一小部分，其余必须页面内 import。
+// 优先读已安装的包；未安装时退回项目内 src/ 副本并标明未核实。
+function componentRegistration(root, dependency, notes) {
+  const pagesFile = ['src/pages.json', 'pages.json'].map(item => path.join(root, item)).find(existsFile)
+  let easycom = null
+  const pagesText = pagesFile ? readText(pagesFile, notes) : null
+  if (pagesText !== null) {
+    try {
+      const config = JSON.parse(stripComments(pagesText.replace(/^\uFEFF/, ''))).easycom || {}
+      easycom = { autoscan: config.autoscan !== false, custom: config.custom && typeof config.custom === 'object' ? config.custom : {} }
+    } catch (error) { notes.push({ file: pagesFile, reason: `Invalid pages.json: ${error.message}` }) }
+  }
+  const empty = { entry: null, entryKind: null, source: null, file: null, registered: null, globals: null, easycom, unregisteredTags: null }
+  const mainFile = ['src/main.js', 'main.js'].map(item => path.join(root, item)).find(existsFile)
+  const mainText = mainFile ? readText(mainFile, notes) : null
+  const match = mainText && TA_UI_IMPORT.exec(stripComments(mainText))
+  if (!match) return empty
+  const entry = match[1]
+  const packageDir = dependency && dependency.installed ? path.dirname(dependency.installed.file) : null
+  let subpath = entry.slice('@topinfoapp/ta-ui'.length).replace(/^\//, '')
+  if (!subpath) {
+    const pkg = packageDir && jsonEvidence(path.join(packageDir, 'package.json'), notes)
+    subpath = pkg && typeof pkg.data.main === 'string' ? pkg.data.main.replace(/^\.\//, '') : 'index.js'
+  }
+  if (!/\.js$/.test(subpath)) subpath += '.js'
+  const entryKind = /(^|\/)lite\.js$/.test(subpath) ? 'lite' : /(^|\/)index\.js$/.test(subpath) ? 'full' : 'other'
+  if (subpath.split('/').includes('..')) return { ...empty, entry, entryKind }
+  const candidates = [...(packageDir ? [['installed', path.join(packageDir, ...subpath.split('/'))]] : []), ['project-copy-unverified', path.join(root, 'src', ...subpath.split('/'))]]
+  const found = candidates.find(([, file]) => existsFile(file))
+  if (!found) return { ...empty, entry, entryKind }
+  const [source, entryFile] = found
+  const text = stripComments(readText(entryFile, notes) || '')
+  const registered = [...new Set([...text.matchAll(/from\s+['"][^'"]*\/(ta-[a-z0-9-]+)\.vue['"]/g)].map(m => m[1]))].sort()
+  const globals = [...new Set([...text.matchAll(/Vue\.prototype(?:\[\s*['"](\$[\w$]+)['"]\s*\]|\.(\$[\w$]+))\s*=/g)].map(m => m[1] || m[2]))].sort()
+  const custom = easycom ? Object.keys(easycom.custom).map(key => { try { return new RegExp(key) } catch { return null } }).filter(Boolean) : []
+  const autoscan = !easycom || easycom.autoscan
+  const componentsDir = path.join(path.dirname(entryFile), 'components')
+  const entryDir = path.posix.dirname(subpath)
+  const prefix = `@topinfoapp/ta-ui/${entryDir === '.' ? '' : `${entryDir}/`}components`
+  const componentDirs = childDirectories(componentsDir, notes).flatMap(category => childDirectories(path.join(componentsDir, category), notes).map(dir => [category, dir]))
+  const locate = tag => {
+    const hit = componentDirs.find(([category, dir]) => existsFile(path.join(componentsDir, category, dir, `${tag}.vue`)))
+    return hit ? `${prefix}/${hit[0]}/${hit[1]}/${tag}.vue` : null
+  }
+  const pagesRoot = path.join(root, 'src', 'pages')
+  const scan = listFiles(pagesRoot, name => name.endsWith('.vue'), notes)
+  if (scan.truncated) notes.push({ file: pagesRoot, reason: 'Only the first 600 page files (depth 6) were scanned for ta-* tags; unregisteredTags may be incomplete.' })
+  const missing = new Map()
+  for (const file of scan.files) {
+    const { template, script } = vueParts(readText(file, notes) || '')
+    const imported = new Set([...script.matchAll(/import\s+([\w$]+)\s+from\s+['"][^'"]+['"]/g)].map(m => m[1].replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase()))
+    for (const tagMatch of template.matchAll(TA_TAG)) {
+      const tag = tagMatch[1]
+      if (registered.includes(tag) || imported.has(tag) || custom.some(rule => rule.test(tag))) continue
+      if (autoscan && existsFile(path.join(root, 'src', 'components', tag, `${tag}.vue`))) continue
+      if (!missing.has(tag)) missing.set(tag, new Set())
+      missing.get(tag).add(path.relative(pagesRoot, file).split(path.sep).join('/'))
+    }
+  }
+  const unregisteredTags = [...missing.keys()].sort().map(tag => ({ tag, files: [...missing.get(tag)].sort(), importPath: locate(tag) }))
+  return { entry, entryKind, source, file: entryFile, registered, globals, easycom, unregisteredTags }
+}
+
+// 只读列出：团队规则、项目本地 ta-/cu- 包装组件、可照抄的现成增删改查模块、ta-ui 实际注册范围。
+function taAppInfo(root, dependency, notes) {
+  const rules = path.join(root, '.agents', 'rules', 'project_rules.md')
+  const localComponents = childDirectories(path.join(root, 'src', 'components'), notes).filter(name => /^(ta|cu)-/.test(name)).slice(0, 40)
+  const references = referenceModules(root, notes)
+  return {
+    ...taUiLine(dependency),
+    teamRules: existsFile(rules) ? rules : null,
+    localComponents,
+    referenceModules: references.modules,
+    skippedReferenceModules: references.skipped,
+    componentRegistration: componentRegistration(root, dependency, notes)
+  }
+}
+
+function taAppReview(root, taApp) {
+  const reg = taApp.componentRegistration
+  const review = []
+  if (taApp.skippedReferenceModules.length) {
+    review.push(`Not usable as reference modules: ${taApp.skippedReferenceModules.map(item => `${item.module} (${item.reasons.join('; ')})`).join(', ')}. Pick another module or read its code before copying.`)
+  }
+  if (!reg.registered) {
+    review.push(`TA-UI component registration could not be resolved ${reg.entry ? `(${reg.entry} is neither installed nor copied under src/)` : '(no @topinfoapp/ta-ui import found in main.js)'}; confirm how ta-* tags are registered before using them.`)
+    return review
+  }
+  if (reg.entryKind === 'lite') review.push(`main.js registers TA-UI through ${reg.entry}, which registers only ${reg.registered.length} components (${reg.registered.join(', ')}); any other ta-* component must be imported in the page itself, otherwise it renders nothing and reports no error.`)
+  if (reg.source === 'project-copy-unverified') review.push(`The TA-UI registration list was parsed from the project copy ${path.relative(root, reg.file).split(path.sep).join('/')}, not the installed package; check it against the locked version before relying on it.`)
+  if (reg.unregisteredTags.length) {
+    const list = reg.unregisteredTags.slice(0, 12).map(item => `${item.tag} (${item.files.slice(0, 3).join(', ')}${item.files.length > 3 ? ', ...' : ''})`).join(', ')
+    review.push(`Existing pages use ta-* tags that are neither registered nor imported: ${list}${reg.unregisteredTags.length > 12 ? ', ...' : ''}. These pages are not proof the tags render; in new pages import them locally (see importPath) instead of copying the tag.`)
+  }
+  return review
 }
 
 function frontendUnit(root, notes) {
@@ -188,7 +381,8 @@ function frontendUnit(root, notes) {
       ...(profiles.includes('screen-fb-candidate') && !entries.length ? ['No static screen entry identified in recognized config files; locate the active entry before generating.'] : []),
       ...(taApp && taApp.teamRules ? ['Team rules exist at .agents/rules/project_rules.md; read them before generating and follow them where they match this project.'] : []),
       ...(taApp && taApp.uiLine === '1.x' ? ['TA-UI is on the 1.x line while ta-app-trae templates target 0.1.x: customResultMapp, fileSize, @fileExceedLimit and lgnoreDelIds do not exist in 1.0.37 and would be silently ignored; copy this project\'s existing usage instead.'] : []),
-      ...(taApp && taApp.uiLine === 'unknown' ? ['TA-UI version (UI line 0.1 vs 1.x) could not be determined from installed, locked or declared versions; resolve it before choosing component props.'] : [])
+      ...(taApp && taApp.uiLine === 'unknown' ? ['TA-UI version (UI line 0.1 vs 1.x) could not be determined from installed, locked or declared versions; resolve it before choosing component props.'] : []),
+      ...(taApp ? taAppReview(root, taApp) : [])
     ]
   }
 }
