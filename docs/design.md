@@ -37,6 +37,24 @@
 
 **两个技术线，一套开发规范**：Playbook 针对正在开发的新后端 v3.1.0（Java 21 / Boot 3.5），是正式规范和未来主线；本机现行工程全是 2.2.x（Java 8 / Boot 2.2~2.7），技术栈不同但开发规范相通。深核结果：`JsonResponse`（成功码 1）、`buildPassKey`、`@Authorization(businessKey)`、`CommonDateUtil`、`SessionHolder`、`IPage` 两代一致；`@Authorization(perms/logical)`、`DataScopeHelper`、`common.enums.ErrorCode`（2.2.x 在 `bean` 包）、`BlockAttackInnerInterceptor` 在 2.2.x 无证据。因此**现行 2.2.x 工程按"实际代码 + Playbook"处理**：规范层（鉴权三列、passKey 成对、一码一义、分页出参、逻辑删除）照 Playbook，新代码必须遵守、老代码的问题不照抄；实现层照实际 jar/源码，缺的能力先 `javap` 确认，没有就用目标现有手段实现同一规范并记待办。`topinfo-versions.md` 每条"已核实"都有 jar/源码路径对应。
 
+## 移动端团队 ta-app-trae 的融合取舍（2026-11-24）
+
+移动端团队发布了 `@topinfoapp/ta-app-trae@0.0.9`：一份 `project_rules.md` 加两个 skill（生成业务模块、按设计图生成首页），靠 postinstall 装进项目 `.agents/`。本 Skill 原有的移动端参考只有通用原则，缺团队的具体写法。
+
+**吸收了什么**：
+- 提炼为 `references/frameworks/ta-app-mobile.md`：目录与命名、列表/新增/详情闭环、字段→控件对照、`txHeight` 换算、图标与上传规则、首页拆区域要点。组件属性逐个对 `ta-ui@0.1.208` 源码核实。
+- `detect.cjs` 对 `mobile-ta-uni` 输出 `taApp{uiLine, uiLineSource, teamRules, localComponents, referenceModules}`：自动找到项目自己的团队规则、本地 `ta-/cu-` 组件和可照抄的现成模块，开发人员不用再说“参考某某页面”。
+- 可核对的检查并入 `pitfalls.md` 移动端一节。
+
+**版本线**：ta-ui 有两条并行发布线。0.1.x 持续发布（0.1.208 于 2026-11-10），registry `latest` 指向它，团队模板按它写；1.x 停在 1.0.37（2025-10-14）。两版注册表相同，但 1.0.37 删掉了团队模板会用到的 `customResultMapp`、`fileSize`、`@fileExceedLimit`、`lgnoreDelIds` 等属性。Vue 2 对未知属性静默忽略，所以错用不会报错、只会功能失效。探测因此按“实装/锁定版本优先、其次声明”判定版本线，1.x 时给出提醒，读不出时报 `unknown` 不猜。本机 3 个移动端工程均锁定 1.x、均未装团队规则。
+
+**没吸收什么，为什么**：
+- postinstall 全量覆盖 `.agents/`：与本 Skill“预览 → 批准 → 只清理指纹一致文件”相反；项目里已有的团队文件归为不认识的内容，原样保留，并由探测提示 AI 先读。
+- 每次手输作者名：本 Skill 的显示名登记一次后复用（见下节），`@author` 直接用登记值。
+- 写死 `targetshutdown`、`cu-page-frame` 等参考路径：改为探测项目里实际存在的模块与组件。
+- “只做 H5”：只在目标项目本身如此配置时遵守，不升格为所有 uni-app 的规则。
+- 团队模板自身的缺口（`onShow` 刷新与 `callPreDataFun` 双重请求、修改页只靠 Store 回显、保存无防重）写成“照抄时注意”，不原样复制。
+
 ## 可执行门禁与留痕
 
 - 身份只登记一次：有效项目档案优先，其次有效全局档案，直接复用，不重复询问姓名或保存。仅没有有效档案时自动获取 Git/SVN/系统候选，由用户自报/确认后首次持久化；旧无确认、invalidated、fixture 或损坏档案不自动升级。复用显示名不等于批准当前方案。

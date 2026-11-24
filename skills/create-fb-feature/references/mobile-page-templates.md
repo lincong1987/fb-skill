@@ -2,6 +2,8 @@
 
 **何时读**：目标为 uni-app 移动页面。检测 pages.json/manifest.json 与实际插件/easycom，不把任何移动项目都套成 TA-UI。
 
+探测为 `mobile-ta-uni` 时，团队的目录/命名、字段→控件对照、保存闭环、`txHeight` 与 ta-ui 两条版本线差异见 [TA 移动端团队规范](frameworks/ta-app-mobile.md)；本文的闭环与生命周期要求仍然适用。
+
 ## 可得证据
 
 主参考 `mew-manage-app-ui` 声明 TA-UI、ta-js 和 Vue 2.7，页面使用 `cu-page-frame`、ta-*；旧 `xzhapp-gov-zjindustry` 是 TX/ColorUI 与本地请求体系。后者未被本任务宣布废弃；修改旧目标就先核对其真实体系。

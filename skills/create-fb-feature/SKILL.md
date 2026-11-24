@@ -36,6 +36,7 @@ node "<skill-root>/scripts/resolve-identity.cjs" --project-root "<目标工程>"
 | PC 启动、拦截器、布局配置 | [PC 基础装配](references/pc-infrastructure.md) |
 | TA/uni-app 页面、导航、刷新 | [移动页面](references/mobile-page-templates.md) |
 | 移动请求、主题、Store、上传、跨端能力 | [移动基础能力](references/mobile-infrastructure.md) |
+| 探测报 `mobile-ta-uni`（看 `taApp` 的版本线、团队规则、可照抄模块） | [TA 移动端团队规范](references/frameworks/ta-app-mobile.md) |
 | 大屏入口、布局、缩放、主题 | [大屏布局](references/screen-templates.md) |
 | 图表、轮询、地图、播放器 | [大屏数据与资源](references/screen-data-theme.md) |
 | Java 接口、业务、Mapper、测试 | [Java 后端](references/backend-java.md) |

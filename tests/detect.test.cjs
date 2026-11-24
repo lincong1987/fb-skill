@@ -56,6 +56,63 @@ test('TA declaration without installed library stays unverified; router declarat
   assert.ok(unit.requiresReview.some(item => item.includes('assuming it is enabled')))
 })
 
+test('TA app reports UI line, team rules, local wrappers and an existing CRUD module to copy from', t => {
+  const f = fixture(t)
+  f.write('src/pages.json', {})
+  f.write('src/manifest.json', {})
+  f.write('package.json', { name: 'ta-app', dependencies: { vue: '2.6.11', '@topinfoapp/ta-ui': '^0.1.200' } })
+  f.write('.agents/rules/project_rules.md', '# team rules')
+  f.write('src/components/cu-page-frame/cu-page-frame.vue', '<template><view/></template>')
+  f.write('src/components/ta-list/ta-list.vue', '<template><view/></template>')
+  f.write('src/pages/notice/notice-list.vue', '')
+  f.write('src/pages/notice/notice-add.vue', '')
+  f.write('src/pages/notice/notice-view.vue', '')
+  f.write('src/pages/index/index.vue', '')
+  const unit = detectProject({ projectRoot: f.root }).units[0]
+  assert.deepEqual(unit.profiles, ['mobile-ta-uni'])
+  assert.equal(unit.taApp.uiLine, '0.1')
+  assert.equal(unit.taApp.uiLineSource, 'declared')
+  assert.equal(unit.taApp.teamRules, path.join(fs.realpathSync(f.root), '.agents', 'rules', 'project_rules.md'))
+  assert.deepEqual(unit.taApp.localComponents, ['cu-page-frame', 'ta-list'])
+  assert.deepEqual(unit.taApp.referenceModules, [{ module: 'notice', pages: ['notice-add.vue', 'notice-list.vue', 'notice-view.vue'] }])
+  assert.ok(unit.requiresReview.some(item => item.includes('project_rules.md')))
+  assert.ok(!unit.requiresReview.some(item => item.includes('customResultMapp')))
+})
+
+test('TA 1.x line is taken from the lock and warns that 0.1-only template props are silently ignored', t => {
+  const f = fixture(t)
+  f.write('src/pages.json', {})
+  f.write('src/manifest.json', {})
+  f.write('package.json', { name: 'ta-app', dependencies: { '@topinfoapp/ta-ui': '^0.1.0' } })
+  f.write('package-lock.json', { packages: { 'node_modules/@topinfoapp/ta-ui': { version: '1.0.37' } } })
+  const unit = detectProject({ projectRoot: f.root }).units[0]
+  assert.equal(unit.taApp.uiLine, '1.x')
+  assert.equal(unit.taApp.uiLineSource, 'effective')
+  assert.equal(unit.taApp.teamRules, null)
+  assert.deepEqual(unit.taApp.localComponents, [])
+  assert.deepEqual(unit.taApp.referenceModules, [])
+  assert.ok(unit.requiresReview.some(item => item.includes('customResultMapp')))
+})
+
+test('TA UI line stays unknown for an unparseable declaration instead of guessing', t => {
+  const f = fixture(t)
+  f.write('pages.json', {})
+  f.write('manifest.json', {})
+  f.write('package.json', { name: 'ta-app', dependencies: { '@topinfoapp/ta-ui': 'latest' } })
+  const unit = detectProject({ projectRoot: f.root }).units[0]
+  assert.equal(unit.taApp.uiLine, 'unknown')
+  assert.equal(unit.taApp.uiLineSource, null)
+  assert.ok(unit.requiresReview.some(item => /UI line/.test(item)))
+})
+
+test('non-TA units carry no TA app section', t => {
+  const f = fixture(t)
+  f.write('pages.json', {})
+  f.write('manifest.json', {})
+  f.write('package.json', { name: 'legacy-tx', dependencies: { vue: '^2.6.0' } })
+  assert.equal(detectProject({ projectRoot: f.root }).units[0].taApp, undefined)
+})
+
 test('Vue 3 installed evidence cannot borrow Vue 2 contract', t => {
   const f = fixture(t)
   f.write('package.json', { dependencies: { vue: '^3.0.0', 'fb-ui': '^1.0.0' } })

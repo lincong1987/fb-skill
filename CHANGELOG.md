@@ -7,6 +7,7 @@
 - 修正旧演练说明：合成身份和“同意”不属于真实批准，静态模板/脚本检查不称端到端验收。
 
 ### Added
+- 融合移动端团队 `@topinfoapp/ta-app-trae@0.0.9` 的 TA 移动端规范：新增 `references/frameworks/ta-app-mobile.md`（目录命名、列表/新增/详情闭环、字段→控件对照、`txHeight` 换算、图标与上传、首页拆区域），组件属性按 `ta-ui@0.1.208` 源码核实并附 `1.0.37` 差异表。`detect-project.cjs` 对 `mobile-ta-uni` 输出 `taApp`（ta-ui 版本线、项目团队规则、本地 `ta-/cu-` 组件、可照抄的现成模块），1.x 版本线提示团队模板中 4 个属性会被静默忽略，版本读不出时报 `unknown`。`@author` 沿用已登记的显示名；**未引入** postinstall 全量覆盖与每次询问作者名。
 - 融合后端团队 `ai-playbook` 的 TopInfo 框架规范：新增 `references/frameworks/`（接口口径、表约定、两代版本差异对照），`detect-project.cjs` 识别 pom 的 `topinfo-platform` 版本并按 2.x/3.x 路由。Playbook 是正在开发的新后端 v3.1.0 的正式规范；现行 2.2.x 工程按"实际代码 + Playbook"处理——开发规范照 Playbook、实现细节照目标 jar，差异表逐条标注"2.2.x 已核实 / 待 javap 确认 / 不存在"。Playbook 的鉴权三列、passKey 成对、错误码一码一义、级联删除纪律、交付说明七项并入验证清单与归档约定；**未引入**其多轮签字流程与常驻 AGENTS.md。
 - `host-plan` 真实宿主计划批准留痕：明确区分界面结果与聊天原话，绑定原方案、工程及派生计划；已展示日志标签可一次保存，公开生成材料剥离身份/批准内容。
 - `0.2.1` 私有验证包、实际tgz消费者安装/重复安装/自定义保留检查及Codex宿主发现检查；不自动公开发布。

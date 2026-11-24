@@ -25,6 +25,9 @@
 - pages.json/分包/导航目标真实存在，传参编码，详情可直达；保存成功刷新一次，取消不刷新。
 - 校验/结果 helper 按目标定义，变量和返回值一致。H5-only 全局不误用于 native。
 - 页面/组件生命周期清理；上传认证与附件归属明确；Store 持久路径对应真实模块名。
+- TA 项目（[团队规范](frameworks/ta-app-mobile.md)）：`jpx-icon-*` 类名在项目 iconfont CSS 中真实存在，不编造；`txHeight` 由设计稿 `topY`/`bottomGap` 换算并注释取值，不写死经验值。
+- 图片/附件用 `ta-image-uploader`/`ta-file-uploader`，新增与详情 `referType` 一致；1.x 版本线不出现 `customResultMapp`、`fileSize`、`@fileExceedLimit`、`lgnoreDelIds`。
+- pages.json 注册方式（主包/分包、`navigationStyle`）与目标现有页面一致；修改页可凭 id 直达，不只靠 Store 回显；保存不重复提交。
 
 ## 大屏
 

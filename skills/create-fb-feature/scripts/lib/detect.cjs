@@ -79,6 +79,43 @@ function lockedPackages(root, notes) {
   return locks
 }
 
+// TA-UI 有两条并行发布线：0.1.x 持续发布（ta-app-trae 团队模板按它写），1.x 停在 1.0.37。
+// 实装/锁定版本优先，其次声明范围；读不出就是 unknown，不猜。
+function taUiLine(dependency) {
+  for (const [source, value] of [['effective', dependency.effectiveVersion], ['declared', dependency.declared]]) {
+    const match = typeof value === 'string' && /(\d+)\.(\d+)/.exec(value)
+    if (!match) continue
+    const major = Number(match[1])
+    return { uiLine: major === 0 ? `0.${match[2]}` : `${major}.x`, uiLineSource: source }
+  }
+  return { uiLine: 'unknown', uiLineSource: null }
+}
+
+function childDirectories(directory, notes) {
+  try {
+    return fs.readdirSync(directory, { withFileTypes: true }).filter(child => child.isDirectory() && !child.isSymbolicLink()).map(child => child.name).sort()
+  } catch (error) {
+    if (error.code !== 'ENOENT') notes.push({ file: directory, reason: error.message })
+    return []
+  }
+}
+
+// 只读列出：团队规则、项目本地 ta-/cu- 包装组件、可照抄的现成增删改查模块（list + add/update/edit/view）。
+function taAppInfo(root, dependency, notes) {
+  const rules = path.join(root, '.agents', 'rules', 'project_rules.md')
+  const localComponents = childDirectories(path.join(root, 'src', 'components'), notes).filter(name => /^(ta|cu)-/.test(name)).slice(0, 40)
+  const referenceModules = []
+  const pagesRoot = path.join(root, 'src', 'pages')
+  for (const module of childDirectories(pagesRoot, notes)) {
+    let files
+    try { files = fs.readdirSync(path.join(pagesRoot, module)).sort() } catch (error) { notes.push({ file: path.join(pagesRoot, module), reason: error.message }); continue }
+    const pages = files.filter(name => new RegExp(`^${module.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}-(list|add|update|edit|view)\\.vue$`).test(name))
+    if (pages.includes(`${module}-list.vue`) && pages.length > 1) referenceModules.push({ module, pages })
+    if (referenceModules.length === 5) break
+  }
+  return { ...taUiLine(dependency), teamRules: existsFile(rules) ? rules : null, localComponents, referenceModules }
+}
+
 function frontendUnit(root, notes) {
   const file = path.join(root, 'package.json')
   const pkg = jsonEvidence(file, notes)
@@ -130,6 +167,7 @@ function frontendUnit(root, notes) {
     'src/util/Page.js', 'src/service-util.js', 'src/util/service-util.js', 'src/global-blending.js',
     'src/mixin/global-blending.js', 'src/router.js', 'router.js', 'main.js'
   ].map(item => path.join(root, item)).filter(existsFile)
+  const taApp = profiles.includes('mobile-ta-uni') ? taAppInfo(root, dependencies['@topinfoapp/ta-ui'], notes) : null
   return {
     root,
     kind: 'frontend',
@@ -141,12 +179,16 @@ function frontendUnit(root, notes) {
     configurations,
     screenEntryCandidates: entries,
     contextFiles,
+    ...(taApp ? { taApp } : {}),
     requiresReview: [
       'Confirm actual component registration, local overrides and target entry; dependencies alone do not prove active UI.',
       'Read service interceptors and the matching backend before choosing response, date, paging or permission contracts.',
       ...(uni && has('uni-simple-router') ? ['uni-simple-router is declared; read actual bootstrap before assuming it is enabled.'] : []),
       ...(has('@topinfoapp/ta-ui') && !dependencies['@topinfoapp/ta-ui'].installed ? ['TA-UI dependency is not installed here; call sites are leads, not a complete API contract.'] : []),
-      ...(profiles.includes('screen-fb-candidate') && !entries.length ? ['No static screen entry identified in recognized config files; locate the active entry before generating.'] : [])
+      ...(profiles.includes('screen-fb-candidate') && !entries.length ? ['No static screen entry identified in recognized config files; locate the active entry before generating.'] : []),
+      ...(taApp && taApp.teamRules ? ['Team rules exist at .agents/rules/project_rules.md; read them before generating and follow them where they match this project.'] : []),
+      ...(taApp && taApp.uiLine === '1.x' ? ['TA-UI is on the 1.x line while ta-app-trae templates target 0.1.x: customResultMapp, fileSize, @fileExceedLimit and lgnoreDelIds do not exist in 1.0.37 and would be silently ignored; copy this project\'s existing usage instead.'] : []),
+      ...(taApp && taApp.uiLine === 'unknown' ? ['TA-UI version (UI line 0.1 vs 1.x) could not be determined from installed, locked or declared versions; resolve it before choosing component props.'] : [])
     ]
   }
 }
