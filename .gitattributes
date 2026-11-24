@@ -1,0 +1,8 @@
+# 仓库统一 LF：npm 安装会去掉 bin shebang 行的 CR，测试 fixture 也按 LF 字节比对。
+# 不受本机 core.autocrlf 影响。
+* text=auto eol=lf
+
+*.zip binary
+*.tgz binary
+*.png binary
+*.jpg binary
